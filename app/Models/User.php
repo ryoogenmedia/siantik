@@ -18,10 +18,31 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
+        'phone_number',
+        'avatar',
+        'roles',
         'email',
+        'email_verified_at',
         'password',
     ];
+
+    public function leader(){
+        return $this->hasOne(Leader::class,'user_id','id')->withDefault();
+    }
+
+    public function personnel(){
+        return $this->hasOne(Personnel::class,'user_id','id')->withDefault();
+    }
+
+    // GET AVATAR URL
+    public function avatarUrl()
+    {
+        return $this->avatar
+            ? url('storage/' . $this->avatar)
+            : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
