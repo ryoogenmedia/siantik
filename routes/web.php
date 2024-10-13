@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::redirect('/', '/login');
+
+Route::namespace('App\Livewire')->group(function(){
+    Route::get('dashboard', Dashboard\Index::class)->name('dashboard');
 });
