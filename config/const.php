@@ -5,8 +5,8 @@ return [
     'roles' => [
         'admin',
         'super admin',
-        'pimpinan',
-        'personil',
+        'leader',
+        'personnel',
     ],
 
     'sex' => [
