@@ -12,7 +12,7 @@ return [
     ],
 
     [
-        'title' => 'Data Pengguna',
+        'title' => 'Pengguna',
         'icon' => 'home',
         'icon-active' => 'home-active',
         'route-name' => 'user.index',

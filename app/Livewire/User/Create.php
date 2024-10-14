@@ -60,7 +60,7 @@ class Create extends Component
             session()->flash('alert', [
                 'type' => 'danger',
                 'message' => 'Gagal!',
-                'detail' => 'Pengguna gagal disunting.' . $e,
+                'detail' => 'Pengguna gagal disunting.',
             ]);
 
             return redirect()->back();

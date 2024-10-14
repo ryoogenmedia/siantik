@@ -9,7 +9,7 @@
 
     <x-alert />
 
-    @foreach ($this->rows as $row)
+    @forelse ($this->rows as $row)
         <div class="order-item mb-2 mt-3">
             <div class="img">
                 <img src="{{ $row->akun->avatarUrl() }}" alt="img">
@@ -33,5 +33,7 @@
                 </span>
             </div>
         </div>
-    @endforeach
+    @empty
+        <x-datatable.empty />
+    @endforelse
 </div>

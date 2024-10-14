@@ -26,8 +26,8 @@
             placeholder="masukkan nama institusi" autofocus required />
 
 
-        <x-backend.form.input wire:model='radius' label="Radius" name="radius" min="0" type="number"
-            required />
+        <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran" name="radiusLingkaran"
+            min="0" type="number" required />
 
         <div wire:ignore class="row px-3 my-5">
             <div class="col-12" id="map"></div>

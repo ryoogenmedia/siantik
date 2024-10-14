@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Permission extends Model
 {
     use HasFactory;
 
-    protected $table = 'attendances';
+    protected $table = 'permissions';
 
     protected $fillable = [
         'user_id',
-        'name',
-        'check_in',
-        'check_out',
-        'status_attendance',
+        'file',
+        'status_permission',
+        'information',
     ];
 
     public function akun(){

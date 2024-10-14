@@ -26,12 +26,13 @@
                     <li class="text-sm-start text-uppercase fw-7 text-2">MENU APLIKASI</li>
 
                     @foreach (config('sidebar') as $sidebar)
-                        <li class="mt-18 sub-menu" id="accordionExample">
-                            <a href="{{ route($sidebar['route-name']) }}" class="nav-link-item not-link">
-                                <i class="icon icon-{{ $sidebar['icon'] }}"></i>
-                                <span>{{ $sidebar['title'] }}</span>
-                            </a>
-                        </li>
+                        @if (in_array(auth()->user()->roles, $sidebar['roles']))
+                            <li class="mt-18 sub-menu" id="accordionExample">
+                                <a href="{{ route($sidebar['route-name']) }}" class="nav-link-item not-link">
+                                    <span>{{ $sidebar['title'] }}</span>
+                                </a>
+                            </li>
+                        @endif
                     @endforeach
 
                     <li class="mt-16">
@@ -39,9 +40,6 @@
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                             class="nav-link-item not-link">
-
-                            <x-icon.sidebar.logout />
-
                             <span>Logout</span>
                         </a>
                     </li>

@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <x-footer />
+        {{-- <x-footer /> --}}
         <x-sidebar />
     </div>
 @endsection

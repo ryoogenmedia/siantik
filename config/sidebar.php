@@ -14,7 +14,15 @@ return [
         'icon' => 'home',
         'route-name' => 'institution.index',
         'description' => 'Untuk melihat daftar institusi.',
-        'roles' => ['admin', 'superadmin'],
+        'roles' => ['superadmin'],
+    ],
+
+    [
+        'title' => 'Perizinan',
+        'icon' => 'home',
+        'route-name' => 'permission.index',
+        'description' => 'Untuk melihat daftar izin personnel & pimpinan.',
+        'roles' => ['admin'],
     ],
 
     [
@@ -22,7 +30,7 @@ return [
         'icon' => 'home',
         'route-name' => 'personnel.index',
         'description' => 'Untuk melihat daftar personnel.',
-        'roles' => ['admin', 'superadmin'],
+        'roles' => ['superadmin'],
     ],
 
     [
@@ -30,7 +38,7 @@ return [
         'icon' => 'home',
         'route-name' => 'user.index',
         'description' => 'Untuk melihat daftar pengguna.',
-        'roles' => ['admin', 'superadmin'],
+        'roles' => ['superadmin'],
     ],
 
     [

@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Leader;
 use App\Models\Personnel;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -18,7 +16,7 @@ class UserTableSeeder extends Seeder
         $leaders = [
             [
                 'username' => 'leader',
-                'name' => 'Leader',
+                'name' => 'Jendral Fery Fadul Rahman',
                 'phone_number' => '0340340390',
                 'roles' => 'leader',
                 'email' => 'leader@mail.com',
@@ -29,19 +27,12 @@ class UserTableSeeder extends Seeder
 
         foreach($leaders as $leader){
             $akun = User::create($leader);
-
-            Leader::create([
-                'user_id' => $akun->id,
-                'name' => $akun->name,
-                'address' => 'Jl Perintis Kemerdekaan KM 18',
-                'sex' => 'laki-laki',
-            ]);
         }
 
         $personnels = [
             [
                 'username' => 'personnel',
-                'name' => 'Personnel',
+                'name' => 'Andi Subroto',
                 'phone_number' => '0340340390',
                 'roles' => 'personnel',
                 'email' => 'personnel@mail.com',
