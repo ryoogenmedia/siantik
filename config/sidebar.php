@@ -10,6 +10,14 @@ return [
     ],
 
     [
+        'title' => 'Personnel',
+        'icon' => 'home',
+        'route-name' => 'personnel.index',
+        'description' => 'Untuk melihat daftar personnel.',
+        'roles' => ['admin', 'superadmin'],
+    ],
+
+    [
         'title' => 'Pengguna',
         'icon' => 'home',
         'route-name' => 'user.index',

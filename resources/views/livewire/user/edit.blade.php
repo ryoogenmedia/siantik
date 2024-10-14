@@ -1,7 +1,7 @@
 <div>
-    <x-slot name="title">Tambah Pengguna</x-slot>
-    <x-slot name="pageTitle">Tambah Pengguna</x-slot>
-    <x-slot name="pagePretitle">Menambah pengguna.</x-slot>
+    <x-slot name="title">Sunting Pengguna</x-slot>
+    <x-slot name="pageTitle">Sunting Pengguna</x-slot>
+    <x-slot name="pagePretitle">Menyunting pengguna.</x-slot>
 
     <x-slot name="button">
         <a href="{{ route('user.index') }}" class="btn btn-sm tf-btn primary">Kembali</a>

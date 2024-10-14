@@ -28,10 +28,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function leader(){
-        return $this->hasOne(Leader::class,'user_id','id')->withDefault();
-    }
-
     public function personnel(){
         return $this->hasOne(Personnel::class,'user_id','id')->withDefault();
     }

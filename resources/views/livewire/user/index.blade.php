@@ -25,8 +25,9 @@
                             <a wire:click="delete({{ $row->id }})"
                                 wire:confirm="Apakah anda yakin ingin menghapus? apa yang anda lakukan tidak adapat di kembalikan."
                                 class="btn btn-sm btn-danger me-2">Hapus</a>
-                            <a href="{{ route('user.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         @endif
+
+                        <a href="{{ route('user.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
                     </div>
                 </span>
             </div>

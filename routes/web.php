@@ -26,6 +26,12 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
+    Route::prefix('personnel')->name('personnel.')->middleware('roles:superadmin,admin')->group(function(){
+        Route::get('/', Personnel\Index::class)->name('index');
+        Route::get('/tambah', Personnel\Create::class)->name('create');
+        Route::get('/{id}/sunting', Personnel\Edit::class)->name('edit');
+    });
+
     Route::prefix('profil')->name('profile.')->group(function () {
         Route::get('/', Profile\Index::class)
             ->middleware('roles:admin,superadmin,leader,personel')

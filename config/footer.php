@@ -1,4 +1,4 @@
-<?php    
+<?php
 
 return [
     [
@@ -10,6 +10,17 @@ return [
         'description' => 'Untuk melihat ringkasan aplikasi.',
         'roles' => ['admin', 'superadmin','personnel','leader'],
     ],
+
+    [
+        'title' => 'Data Pengguna',
+        'icon' => 'home',
+        'icon-active' => 'home-active',
+        'route-name' => 'user.index',
+        'is-active' => 'user.index',
+        'description' => 'Untuk melihat daftar pengguna.',
+        'roles' => ['admin', 'superadmin'],
+    ],
+
     [
         'title' => 'Profil',
         'icon' => 'profile',

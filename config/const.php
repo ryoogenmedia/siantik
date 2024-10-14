@@ -14,6 +14,11 @@ return [
         'perempuan',
     ],
 
+    'position' => [
+        'atasan',
+        'bawahan'
+    ],
+
     'category_attendance' => [
         'hadir',
         'sakit',

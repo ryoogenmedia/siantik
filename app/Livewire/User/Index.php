@@ -3,7 +3,6 @@
 namespace App\Livewire\User;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\File;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
