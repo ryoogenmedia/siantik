@@ -1,4 +1,4 @@
-<fieldset class="mt-20 input-fill">
+<fieldset class="{{ $classFormGroup ?? 'mt-20' }} input-fill">
     @isset($label)
         <label for="{{ $name }}">{{ $label }}
             @isset($required)

@@ -18,6 +18,14 @@ return [
     ],
 
     [
+        'title' => 'Laporan',
+        'icon' => 'home',
+        'route-name' => 'report.admin',
+        'description' => 'Untuk melihat daftar laoran admin.',
+        'roles' => ['admin'],
+    ],
+
+    [
         'title' => 'Perizinan',
         'icon' => 'home',
         'route-name' => 'permission.index',

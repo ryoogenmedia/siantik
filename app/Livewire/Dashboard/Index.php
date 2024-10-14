@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Attendance;
 use App\Models\Institution;
+use App\Models\Permission;
 use App\Models\Personnel;
 use App\Models\User;
 use Livewire\Component;
@@ -13,6 +15,134 @@ class Index extends Component
     public $jmlPengguna;
     public $radiusLingkaran;
 
+    public $jmlHadir;
+    public $jmlSakit;
+    public $jmlCuti;
+    public $jmlIzin;
+    public $jmlTugas;
+    public $jmlPendidikan;
+    public $jmlTerlambat;
+
+    public $bulan;
+
+    public function getCounterData(){
+        if(auth()->user()->roles == 'admin'){
+            $this->jmlHadir = Attendance::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->count();
+
+            $this->jmlSakit = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission','sakit')
+                ->count();
+
+            $this->jmlCuti = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'cuti')
+                ->count();
+
+            $this->jmlIzin = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'izin')
+                ->count();
+
+            $this->jmlTugas = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'tugas')
+                ->count();
+
+            $this->jmlPendidikan = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'pendidikan')
+                ->count();
+
+            $this->jmlTerlambat = Attendance::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_attendance', 'terlambat')
+                ->count();
+        }
+    }
+
+    public function updatedBulan(){
+        if(auth()->user()->roles == 'admin'){
+            $this->jmlHadir = Attendance::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->count();
+
+            $this->jmlSakit = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission','sakit')
+                ->count();
+
+            $this->jmlCuti = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'cuti')
+                ->count();
+
+            $this->jmlIzin = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'izin')
+                ->count();
+
+            $this->jmlTugas = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'tugas')
+                ->count();
+
+            $this->jmlPendidikan = Permission::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_permission', 'pendidikan')
+                ->count();
+
+            $this->jmlTerlambat = Attendance::query()
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })
+                ->where('status_attendance', 'terlambat')
+                ->count();
+        }
+    }
+
     public function mount(){
 
         if(auth()->user()->roles == 'superadmin'){
@@ -20,6 +150,8 @@ class Index extends Component
             $this->jmlPersonnel = Personnel::count();
             $this->radiusLingkaran = Institution::first()->radius ?? null;
         }
+
+        $this->getCounterData();
     }
 
     public function render()

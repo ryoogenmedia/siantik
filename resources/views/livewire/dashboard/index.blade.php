@@ -6,7 +6,7 @@
     @if (auth()->user()->roles == 'superadmin')
         <div class="row">
             <div class="col-6">
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header text-primary">Jumlah Pengguna</div>
                     <div class="card-body">
                         <h3>{{ $this->jmlPengguna }}</h3>
@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-6">
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header text-primary">Jumlah Personnel</div>
                     <div class="card-body">
                         <h3>{{ $this->jmlPersonnel }}</h3>
@@ -26,10 +26,83 @@
 
         <div class="row mt-5">
             <div class="col-12">
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header text-primary">Radius Lingkaran Absensi</div>
                     <div class="card-body">
                         <h3>{{ $this->radiusLingkaran }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if (auth()->user()->roles == 'admin')
+        <div class="line4-bt pb-12">
+            <div class="tf-container">
+                <div class="d-flex gap-12 justify-content-between align-items-center">
+                    <div class="search-box">
+                        <x-backend.form.select wire:model.lazy='bulan' name="bulan" class-form-group>
+                            <option value="">- semua bulan -</option>
+                            @foreach (config('const.month') as $bulan)
+                                <option value="{{ $loop->iteration }}">{{ $bulan }}</option>
+                            @endforeach
+                        </x-backend.form.select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Hadir</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlHadir }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Izin</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlIzin }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Cuti</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlCuti }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Tugas</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlTugas }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Pendidikan</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlPendidikan }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Terlambat</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlTerlambat }}</h3>
                     </div>
                 </div>
             </div>

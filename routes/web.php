@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CetakLaporanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +27,20 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
+    Route::prefix('cetak')->name('print.')->group(function(){
+        Route::get('/laporan-admin', [CetakLaporanController::class,'admin'])->name('admin');
+        Route::get('/laporan-pimpinan', [CetakLaporanController::class,'leader'])->name('leader');
+    });
+
     Route::prefix('permission')->name('permission.')->middleware('roles:admin')->group(function(){
         Route::get('/', Permission\Index::class)->name('index');
         Route::get('/tambah', Permission\Create::class)->name('create');
         Route::get('/{id}/sunting', Permission\Edit::class)->name('edit');
+    });
+
+    Route::prefix('laporan')->name('report.')->group(function(){
+        Route::get('/laporan-admin', Report\Admin::class)->middleware('roles:admin')->name('admin');
+        Route::get('/laporan-leader', Report\Leader::class)->middleware('roles:leader')->name('leader');
     });
 
     Route::prefix('institution')->name('institution.')->middleware('roles:superadmin')->group(function(){
