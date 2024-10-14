@@ -24,7 +24,7 @@
     @livewireStyles
 
     <!-- Component Style -->
-    @stack('styles')
+    @yield('styles')
 </head>
 
 <body class="app-wallet">

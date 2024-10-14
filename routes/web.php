@@ -26,6 +26,10 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
+    Route::prefix('institution')->name('institution.')->middleware('roles:superadmin,admin')->group(function(){
+        Route::get('/', Institution\Index::class)->name('index');
+    });
+
     Route::prefix('personnel')->name('personnel.')->middleware('roles:superadmin,admin')->group(function(){
         Route::get('/', Personnel\Index::class)->name('index');
         Route::get('/tambah', Personnel\Create::class)->name('create');
