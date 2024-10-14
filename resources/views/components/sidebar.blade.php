@@ -6,8 +6,7 @@
                     <img src="{{ asset('logo/tik-polri-logo.png') }}" alt="img">
                 </a>
                 <div>
-                    <p>Sistem Pesensi Kehadiran</p>
-                    <p>TIK POLRI</p>
+                    <p>Sistem Presensi Kehadiran</p>
                 </div>
             </div>
 
