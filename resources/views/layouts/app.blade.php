@@ -8,11 +8,7 @@
         <x-header />
 
         <div class="app-content style-3">
-            <x-backend.content :page-title="$pageTitle" :page-pretitle="$pagePretitle" />
-
-            <x-slot name="button">
-                {{ $button ?? '' }}
-            </x-slot>
+            <x-backend.content :page-title="$pageTitle" :page-pretitle="$pagePretitle" :button="$button ?? null" />
 
             <div class="line4-bt pt-16 pb-16">
                 <div class="tf-container">

@@ -5,7 +5,12 @@
                 <h5>{{ $pageTitle }}</h5>
                 <p class="small">{{ $pagePretitle }}</p>
             </div>
-            {{ $button ?? '' }}
+
+            @isset($button)
+                <div style="width: 120px;">
+                    {{ $button ?? '' }}
+                </div>
+            @endisset
         </div>
     </div>
 </div>

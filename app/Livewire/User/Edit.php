@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire\Profile;
+namespace App\Livewire\User;
 
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
-class Index extends Component
+class Edit extends Component
 {
     use WithFileUploads;
 
@@ -19,8 +19,10 @@ class Index extends Component
     public $konfirmasiKataSandi;
     public $avatar;
 
-    public $userId;
     public $avatarUrl;
+    public $userId;
+
+    public $roles;
 
     public function rules(){
         return [
@@ -51,6 +53,7 @@ class Index extends Component
                 'username' => $this->username,
                 'email' => $this->surel,
                 'name' => $this->namaLengkap,
+                'roles' => $this->roles,
             ]);
 
             if ($this->avatar) {
@@ -72,7 +75,7 @@ class Index extends Component
             session()->flash('alert', [
                 'type' => 'danger',
                 'message' => 'Gagal!',
-                'detail' => 'Profil gagal disunting.',
+                'detail' => 'Pengguna gagal disunting.',
             ]);
 
             return redirect()->back();
@@ -81,25 +84,26 @@ class Index extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil!',
-            'detail' => 'Proil berhasil disunting.',
+            'detail' => 'Pengguna berhasil disunting.',
         ]);
 
-        return redirect()->back();
+        return redirect()->route('user.index');
     }
 
-    public function mount(){
-        $user = User::findOrFail(auth()->user()->id);
+    public function mount($id){
+        $user = User::findOrFail($id);
 
         $this->userId = $user->id;
         $this->username = $user->username;
         $this->surel = $user->email;
         $this->namaLengkap = $user->name;
+        $this->roles = $user->roles;
 
         $this->avatarUrl = $user->avatarUrl();
     }
 
     public function render()
     {
-        return view('livewire.profile.index');
+        return view('livewire.user.edit');
     }
 }
