@@ -4,7 +4,7 @@ return [
 
     'roles' => [
         'admin',
-        'super admin',
+        'superadmin',
         'leader',
         'personnel',
     ],

@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
-Route::namespace('App\Livewire')->group(function(){
-    Route::get('dashboard', Dashboard\Index::class)->name('dashboard');
+Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function(){
+    Route::get('dashboard', Dashboard\Index::class)
+        ->middleware('roles:admin,superadmin,leader,personnel')
+        ->name('dashboard');
+
+    Route::prefix('profil')->name('profile.')->group(function () {
+        Route::get('/', Profile\Index::class)
+            ->middleware('roles:admin,superadmin,leader,personel')
+            ->name('index');
+    });
 });
