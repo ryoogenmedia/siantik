@@ -11,7 +11,7 @@ class Auth extends Component
     /**
      * Create a new component instance.
      */
-    public $title = 'LOGIN';
+    public $title = 'Login';
 
     public function __construct()
     {

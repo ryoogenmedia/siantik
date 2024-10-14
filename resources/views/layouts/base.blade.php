@@ -16,8 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/styles.css') }}" />
     <link rel="manifest" href="{{ asset('assets/_manifest.json') }}" data-pwa-version="set_in_manifest_and_pwa_js">
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/logo/168.png') }}" />
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/logo/168.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <title>Aplikasi School | @yield('title')</title>
 
