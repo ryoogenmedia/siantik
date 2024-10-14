@@ -2,4 +2,38 @@
     <x-slot name="title">Profil</x-slot>
     <x-slot name="pageTitle">Profil</x-slot>
     <x-slot name="pagePretitle">Profil akun anda.</x-slot>
+
+    <x-alert />
+
+    <form wire:submit.prevent='edit' autocomplete="off">
+
+        <div class="d-flex justify-content-center">
+            @if ($this->avatar)
+                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                    src="{{ $this->avatar->temporaryUrl() }}" alt="img">
+            @else
+                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                    src="{{ $this->avatarUrl }}" alt="img">
+            @endif
+        </div>
+
+        <x-backend.form.input wire:model.lazy='avatar' label="Avatar / Foto" name="avatar" type="file" required />
+
+        <x-backend.form.input wire:model='namaLengkap' label="Nama Lengkap" name="namaLengkap" type="text"
+            placeholder="masukkan nama lengkap" autofocus required />
+
+        <x-backend.form.input wire:model='username' label="Username" name="username" type="text"
+            placeholder="masukkan username" required />
+
+        <x-backend.form.input wire:model='surel' label="Alamat Surel (email)" name="surel" type="email"
+            placeholder="contoh@gmail.com" optional="Abaikan jika tidak ingin mengubah." required />
+
+        <x-backend.form.input wire:model='kataSandi' label="Kata Sandi" name="kataSandi" type="password"
+            placeholder="*********" optional="Kosongkan jika tidak ingin mengubah." />
+
+        <x-backend.form.input wire:model='konfirmasiKataSandi' label="Konfirmasi Kata Sandi" name="konfirmasiKataSandi"
+            type="password" placeholder="*********" optional="Kosongkan jika tidak ingin mengubah." />
+
+        <x-backend.button.save name="Simpan Perubahan" target="edit" />
+    </form>
 </div>

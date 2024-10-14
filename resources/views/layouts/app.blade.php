@@ -14,7 +14,11 @@
                 {{ $button ?? '' }}
             </x-slot>
 
-            {{ $slot }}
+            <div class="line4-bt pt-16 pb-16">
+                <div class="tf-container">
+                    {{ $slot }}
+                </div>
+            </div>
         </div>
 
         <x-footer />
