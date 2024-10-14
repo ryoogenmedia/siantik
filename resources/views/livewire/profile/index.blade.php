@@ -17,7 +17,7 @@
             @endif
         </div>
 
-        <x-backend.form.input wire:model.lazy='avatar' label="Avatar / Foto" name="avatar" type="file" required />
+        <x-backend.form.input wire:model.lazy='avatar' label="Avatar / Foto" name="avatar" type="file" />
 
         <x-backend.form.input wire:model='namaLengkap' label="Nama Lengkap" name="namaLengkap" type="text"
             placeholder="masukkan nama lengkap" autofocus required />
