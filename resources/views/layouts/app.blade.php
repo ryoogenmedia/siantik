@@ -8,6 +8,12 @@
         <x-header />
 
         <div class="app-content style-3">
+            <x-backend.content :page-title="$pageTitle" :page-pretitle="$pagePretitle" />
+
+            <x-slot name="button">
+                {{ $button ?? '' }}
+            </x-slot>
+
             {{ $slot }}
         </div>
 

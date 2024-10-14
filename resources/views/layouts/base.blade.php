@@ -35,16 +35,16 @@
     <!-- Livewire Styles -->
     @livewireScripts
 
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/carousel.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/nouislider.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/rangle-slider.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/count-down.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/init.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/multiple-modal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/carousel.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/rangle-slider.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/count-down.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/init.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/multiple-modal.js') }}"></script>
 
     @stack('scripts')
 </body>

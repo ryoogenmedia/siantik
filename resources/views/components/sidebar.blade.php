@@ -1,24 +1,26 @@
 <div class="modal fade modalLeft" id="sidebar">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-sidebar">
-            <div class="sidebar-header" style="background-image: url('images/background/line-logo.html')">
-                <a href="index.html" class="sidebar-logo">
-                    <img src="images/logo/168.png" alt="img">
+            <div class="sidebar-header">
+                <a href="{{ route('dashboard') }}" class="sidebar-logo">
+                    <img src="{{ asset('logo/tik-polri-logo.png') }}" alt="img">
                 </a>
-                <p>Grocery Delivery Mobile Template</p>
+                <p>Sistem Aplikasi Presensi TIK POLRI</p>
             </div>
+
             <div class="sidebar-content">
                 <div class="d-flex gap-10 align-items-center pb-20 line-bt">
                     <div class="avatar avt-40">
-                        <img src="images/avt/avt1.jpg" alt="img">
+                        <img src="{{ auth()->user()->avatarUrl() }}" alt="img">
                     </div>
                     <div class="content-right">
-                        <p class="text-1">Good morning</p>
-                        <h6 class="fw-7">Tony Nguyen</h6>
+                        <p class="text-1">{{ auth()->user()->roles }}</p>
+                        <h6 class="fw-7">{{ auth()->user()->name }}</h6>
                     </div>
                 </div>
+
                 <ul class="pt-20 pb-20">
-                    <li class="text-sm-start text-uppercase fw-7 text-2">Main menu</li>
+                    <li class="text-sm-start text-uppercase fw-7 text-2">MENU APLIKASI</li>
                     <li class="mt-18 sub-menu" id="accordionExample">
                         <a href="index.html" class="nav-link-item not-link">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -48,61 +50,13 @@
                             <span>Pages</span>
                         </a>
                     </li>
+
                     <li class="mt-16">
-                        <a href="javascript:void(0);" class="nav-link-item btn-choose-component">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none">
-                                <path opacity="0.4"
-                                    d="M13.3947 1.66675H16.2164C17.3849 1.66675 18.3318 2.62162 18.3318 3.80005V6.64552C18.3318 7.82395 17.3849 8.77882 16.2164 8.77882H13.3947C12.2262 8.77882 11.2793 7.82395 11.2793 6.64552V3.80005C11.2793 2.62162 12.2262 1.66675 13.3947 1.66675Z"
-                                    fill="#D3D5DA" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M3.78145 1.66675H6.60309C7.77165 1.66675 8.71853 2.62162 8.71853 3.80005V6.64552C8.71853 7.82395 7.77165 8.77882 6.60309 8.77882H3.78145C2.6129 8.77882 1.66602 7.82395 1.66602 6.64552V3.80005C1.66602 2.62162 2.6129 1.66675 3.78145 1.66675ZM3.78145 11.2213H6.60309C7.77165 11.2213 8.71853 12.1762 8.71853 13.3546V16.2001C8.71853 17.3777 7.77165 18.3334 6.60309 18.3334H3.78145C2.6129 18.3334 1.66602 17.3777 1.66602 16.2001V13.3546C1.66602 12.1762 2.6129 11.2213 3.78145 11.2213ZM16.2172 11.2213H13.3956C12.227 11.2213 11.2802 12.1762 11.2802 13.3546V16.2001C11.2802 17.3777 12.227 18.3334 13.3956 18.3334H16.2172C17.3858 18.3334 18.3327 17.3777 18.3327 16.2001V13.3546C18.3327 12.1762 17.3858 11.2213 16.2172 11.2213Z"
-                                    fill="#D3D5DA" />
-                            </svg>
-                            <span>Components</span>
-                        </a>
-                    </li>
-                    <li class="mt-16">
-                        <a href="list-shop.html" class="nav-link-item not-link">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 21 20" fill="none">
-                                <path
-                                    d="M5.92631 16.9079C6.75567 16.9079 7.43514 17.6018 7.43514 18.459C7.43514 19.3061 6.75567 20 5.92631 20C5.08697 20 4.4075 19.3061 4.4075 18.459C4.4075 17.6018 5.08697 16.9079 5.92631 16.9079ZM17.1676 16.9079C17.9969 16.9079 18.6764 17.6018 18.6764 18.459C18.6764 19.3061 17.9969 20 17.1676 20C16.3282 20 15.6487 19.3061 15.6487 18.459C15.6487 17.6018 16.3282 16.9079 17.1676 16.9079ZM1.27823 0.00011949L1.38006 0.0087383L3.7632 0.375101C4.10293 0.437352 4.35274 0.722074 4.38272 1.06905L4.57257 3.35499C4.60254 3.68257 4.86234 3.92749 5.18209 3.92749H18.6766C19.2861 3.92749 19.6858 4.1418 20.0855 4.61123C20.4852 5.08067 20.5551 5.7542 20.4652 6.36549L19.5159 13.06C19.3361 14.3469 18.2569 15.2949 16.9879 15.2949H6.08639C4.75742 15.2949 3.65828 14.255 3.54837 12.908L2.62908 1.7834L1.12026 1.51807C0.72057 1.44664 0.440788 1.04864 0.510734 0.640433C0.580679 0.223045 0.970376 -0.0535127 1.38006 0.0087383L1.27823 0.00011949ZM15.3891 7.70236H12.6213C12.2016 7.70236 11.8719 8.03912 11.8719 8.46774C11.8719 8.88615 12.2016 9.23312 12.6213 9.23312H15.3891C15.8088 9.23312 16.1386 8.88615 16.1386 8.46774C16.1386 8.03912 15.8088 7.70236 15.3891 7.70236Z"
-                                    fill="#D3D5DA" />
-                            </svg>
-                            <span>All Shop</span>
-                        </a>
-                    </li>
-                    <li class="mt-16">
-                        <a href="profile.html" class="nav-link-item not-link">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none">
-                                <path
-                                    d="M9.99815 12.6455C6.40398 12.6455 3.33398 13.2122 3.33398 15.4788C3.33398 17.7463 6.38482 18.333 9.99815 18.333C13.5923 18.333 16.6623 17.7672 16.6623 15.4997C16.6623 13.2322 13.6123 12.6455 9.99815 12.6455Z"
-                                    fill="#D3D5DA" />
-                                <path opacity="0.4"
-                                    d="M9.99789 10.4865C12.4462 10.4865 14.4079 8.524 14.4079 6.0765C14.4079 3.629 12.4462 1.6665 9.99789 1.6665C7.55039 1.6665 5.58789 3.629 5.58789 6.0765C5.58789 8.524 7.55039 10.4865 9.99789 10.4865Z"
-                                    fill="#D3D5DA" />
-                            </svg>
-                            <span>Profile</span>
-                        </a>
-                    </li>
-                    <li class="mt-16">
-                        <a href="chat.html" class="nav-link-item not-link">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none">
-                                <path opacity="0.4"
-                                    d="M10.016 1.66675C5.17435 1.66675 1.66602 5.61675 1.66602 10.0001C1.66602 11.4001 2.07435 12.8417 2.79102 14.1584C2.92435 14.3751 2.94102 14.6501 2.84935 14.9084L2.29102 16.7751C2.16602 17.2251 2.54935 17.5584 2.97435 17.4251L4.65768 16.9251C5.11602 16.7751 5.47435 16.9667 5.90018 17.2251C7.11685 17.9417 8.63268 18.3084 9.99935 18.3084C14.1327 18.3084 18.3327 15.1167 18.3327 9.97508C18.3327 5.54175 14.7493 1.66675 10.016 1.66675Z"
-                                    fill="#D3D5DA" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M9.98289 11.0751C9.39122 11.0668 8.91622 10.5918 8.91622 10.0001C8.91622 9.41676 9.39955 8.93342 9.98289 8.94176C10.5746 8.94176 11.0496 9.41676 11.0496 10.0084C11.0496 10.5918 10.5746 11.0751 9.98289 11.0751ZM6.14089 11.0751C5.55755 11.0751 5.07422 10.5918 5.07422 10.0084C5.07422 9.41678 5.54922 8.94178 6.14089 8.94178C6.73255 8.94178 7.20755 9.41678 7.20755 10.0084C7.20755 10.5918 6.73255 11.0668 6.14089 11.0751ZM12.7577 10.0084C12.7577 10.5918 13.2327 11.0751 13.8244 11.0751C14.4161 11.0751 14.8911 10.5918 14.8911 10.0084C14.8911 9.41676 14.4161 8.94176 13.8244 8.94176C13.2327 8.94176 12.7577 9.41676 12.7577 10.0084Z"
-                                    fill="#D3D5DA" />
-                            </svg>
-                            <span>Chat</span>
-                        </a>
-                    </li>
-                    <li class="mt-16">
-                        <a href="log-in.html" class="nav-link-item not-link">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"
+                            class="nav-link-item not-link">
+
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                 viewBox="0 0 20 20" fill="none">
                                 <path opacity="0.4"
@@ -112,11 +66,16 @@
                                     d="M18.149 9.54579L15.7775 7.12162C15.5324 6.87162 15.138 6.87162 14.8937 7.12329C14.6502 7.37495 14.651 7.78079 14.8953 8.03079L16.1947 9.35828H14.9489H7.95696C7.61203 9.35828 7.33203 9.64579 7.33203 9.99995C7.33203 10.355 7.61203 10.6416 7.95696 10.6416H16.1947L14.8953 11.9691C14.651 12.2191 14.6502 12.625 14.8937 12.8766C15.0162 13.0025 15.1761 13.0658 15.3368 13.0658C15.4959 13.0658 15.6558 13.0025 15.7775 12.8783L18.149 10.455C18.2667 10.3341 18.3333 10.1708 18.3333 9.99995C18.3333 9.82995 18.2667 9.66662 18.149 9.54579Z"
                                     fill="#D3D5DA" />
                             </svg>
+
                             <span>Logout</span>
                         </a>
                     </li>
                 </ul>
             </div>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </div>
     </div>
 </div>

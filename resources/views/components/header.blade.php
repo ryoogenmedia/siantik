@@ -1,18 +1,14 @@
 <div class="header-style2 fixed-top">
     <div class="inner-left">
-        <p class="text-sm-start">Your Location</p>
+        <p class="text-sm-start">Lokasi Instansi.</p>
         <a href="javascript:void(0);" class="mt-4 text-caption fw-4 d-flex align-items-center gap-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path
-                    d="M10.5 5C10.5 8.5 6 11.5 6 11.5C6 11.5 1.5 8.5 1.5 5C1.5 3.80653 1.97411 2.66193 2.81802 1.81802C3.66193 0.974106 4.80653 0.5 6 0.5C7.19347 0.5 8.33807 0.974106 9.18198 1.81802C10.0259 2.66193 10.5 3.80653 10.5 5Z"
-                    stroke="#E65223" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M6 6.5C6.82843 6.5 7.5 5.82843 7.5 5C7.5 4.17157 6.82843 3.5 6 3.5C5.17157 3.5 4.5 4.17157 4.5 5C4.5 5.82843 5.17157 6.5 6 6.5Z"
-                    stroke="#E65223" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            2464 Royal Ln, New Jersey
+
+            <x-svg.marker />
+
+            Makassar
         </a>
     </div>
+
     <div class="inner-right">
         <span>
             <a href="#sidebar" data-bs-toggle="modal">
@@ -27,41 +23,5 @@
                 </svg>
             </a>
         </span>
-        <a href="chat.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                    d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
-                    stroke="#787982" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </a>
-        <a href="my-cart-selectAll.html" class="badge-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
-                <path
-                    d="M7.24947 18.3332C7.70971 18.3332 8.0828 17.9601 8.0828 17.4998C8.0828 17.0396 7.70971 16.6665 7.24947 16.6665C6.78923 16.6665 6.41614 17.0396 6.41614 17.4998C6.41614 17.9601 6.78923 18.3332 7.24947 18.3332Z"
-                    stroke="#787982" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M16.4163 18.3332C16.8766 18.3332 17.2497 17.9601 17.2497 17.4998C17.2497 17.0396 16.8766 16.6665 16.4163 16.6665C15.9561 16.6665 15.583 17.0396 15.583 17.4998C15.583 17.9601 15.9561 18.3332 16.4163 18.3332Z"
-                    stroke="#787982" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M0.583008 0.833008H3.91634L6.14967 11.9913C6.22588 12.375 6.4346 12.7196 6.7393 12.9649C7.04399 13.2102 7.42526 13.3405 7.81634 13.333H15.9163C16.3074 13.3405 16.6887 13.2102 16.9934 12.9649C17.2981 12.7196 17.5068 12.375 17.583 11.9913L18.9163 4.99967H4.74967"
-                    stroke="#787982" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <i class="badge danger">2</i>
-        </a>
-        <a href="#noti" class="d-inline-flex flex-column align-items-center badge-icon mt-2" data-bs-toggle="modal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" fill="none">
-                <path
-                    d="M14 6.6665C14 5.34042 13.4732 4.06865 12.5355 3.13097C11.5979 2.19329 10.3261 1.6665 9 1.6665C7.67392 1.6665 6.40215 2.19329 5.46447 3.13097C4.52678 4.06865 4 5.34042 4 6.6665C4 12.4998 1.5 14.1665 1.5 14.1665H16.5C16.5 14.1665 14 12.4998 14 6.6665Z"
-                    stroke="#787982" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 4" fill="none">
-                <path
-                    d="M4.44168 1.5C4.29517 1.75256 4.08488 1.96221 3.83187 2.10794C3.57886 2.25367 3.292 2.33038 3.00002 2.33038C2.70803 2.33038 2.42117 2.25367 2.16816 2.10794C1.91515 1.96221 1.70486 1.75256 1.55835 1.5"
-                    stroke="#787982" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <i class="badge danger">2</i>
-
-        </a>
-
     </div>
 </div>
