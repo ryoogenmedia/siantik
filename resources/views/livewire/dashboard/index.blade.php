@@ -4,16 +4,15 @@
     <x-slot name="pagePretitle">Ringkasan aplikasi anda berada disini.</x-slot>
 
     @if (auth()->user()->roles == 'personnel' || auth()->user()->roles == 'leader')
-
-        @if (isset($this->isAbsence))
-            <div class="row mb-2">
-                <div class="col-12">
-                    <div class="card border border-success">
-                        <div class="card-header text-success">Anda Telah Melakukan Absensi Hari Ini.</div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <div class="card border border-success">
+                    <div class="card-header text-success">
+                        <h3>Selamat datang kembali, {{ auth()->user()->name }} 👋</h3>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
 
         <div class="row">
             <div class="col-6">
