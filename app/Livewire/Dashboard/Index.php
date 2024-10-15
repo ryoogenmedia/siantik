@@ -184,14 +184,12 @@ class Index extends Component
 
             $this->jmlPerizinan = Permission::query()
                 ->whereDate('created_at', now()->toDateString())
-                ->where('created_at', '<=', now()->endOfDay())
                 ->whereNot('user_id', auth()->user()->id)
                 ->count();
 
             $absence = Attendance::query()
                 ->where('user_id',auth()->user()->id)
                 ->whereDate('created_at', now()->toDateString())
-                ->where('created_at', '<=', now()->endOfDay())
                 ->first();
 
             if(isset($absence) && $absence){
