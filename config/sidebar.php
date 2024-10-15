@@ -22,7 +22,7 @@ return [
         'icon' => 'home',
         'route-name' => 'absence.index',
         'description' => 'Untuk melakukan absensi.',
-        'roles' => ['personnel'],
+        'roles' => ['personnel','leader'],
     ],
 
     [

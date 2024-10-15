@@ -27,7 +27,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
-    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel')->group(function(){
+    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel,leader')->group(function(){
         Route::get('/', Absence\Index::class)->name('index');
     });
 
