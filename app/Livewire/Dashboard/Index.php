@@ -170,7 +170,7 @@ class Index extends Component
                 ->where('created_at', '<=', now()->endOfDay())
                 ->first();
 
-            if(isset($absence)){
+            if(isset($absence) && $absence){
                 $this->isAbsence = true;
             }
         }
@@ -194,7 +194,7 @@ class Index extends Component
                 ->where('created_at', '<=', now()->endOfDay())
                 ->first();
 
-            if(isset($absence)){
+            if(isset($absence) && $absence){
                 $this->isAbsence = true;
             }
         }
