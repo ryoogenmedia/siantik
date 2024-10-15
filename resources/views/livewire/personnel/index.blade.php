@@ -17,18 +17,19 @@
             <div class="content">
 
                 <div class="left">
-                    <h6>{{ $row->name }}</h6>
-                    <p class="text-black mt-8"><b>NIP :</b> {{ $row->nip }}</p>
-                    <p class="text-black mt-8"><b>NRP :</b> {{ $row->nrp }}</p>
+                    <h6 style="font-size: 12px">{{ $row->name }}</h6>
+                    <p class="text-black" style="font-size: 12px"><b>NIP :</b> {{ $row->nip }}</p>
+                    <p class="text-black" style="font-size: 12px"><b>NRP :</b> {{ $row->nrp }}</p>
                 </div>
 
                 <span class="price">
                     <div class="d-flex flex-wrap">
                         <a wire:click="delete({{ $row->id }})"
                             wire:confirm="Apakah anda yakin ingin menghapus? apa yang anda lakukan tidak adapat di kembalikan."
-                            class="btn btn-sm btn-danger me-2">Hapus</a>
+                            class="btn btn-sm btn-danger me-2" style="font-size: 12px">Hapus</a>
 
-                        <a href="{{ route('personnel.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('personnel.edit', $row->id) }}" class="btn btn-sm btn-primary"
+                            style="font-size: 12px">Edit</a>
                     </div>
                 </span>
             </div>

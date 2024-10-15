@@ -9,7 +9,7 @@
                 <div class="card mb-2">
                     <div class="card-header text-primary">Jumlah Pengguna</div>
                     <div class="card-body">
-                        <h3>{{ $this->jmlPengguna }}</h3>
+                        <h3>{{ $this->jmlPengguna ?? 0 }}</h3>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="card mb-2">
                     <div class="card-header text-primary">Jumlah Personnel</div>
                     <div class="card-body">
-                        <h3>{{ $this->jmlPersonnel }}</h3>
+                        <h3>{{ $this->jmlPersonnel ?? 0 }}</h3>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <div class="card mb-2">
                     <div class="card-header text-primary">Radius Lingkaran Absensi</div>
                     <div class="card-body">
-                        <h3>{{ $this->radiusLingkaran }}</h3>
+                        <h3>{{ $this->radiusLingkaran ?? 0 }}</h3>
                     </div>
                 </div>
             </div>

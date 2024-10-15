@@ -15,6 +15,9 @@ class Institution extends Model
         'name',
         'longitude',
         'latitude',
+        'address',
+        'time_check_in',
+        'time_check_out',
         'radius',
     ];
 }

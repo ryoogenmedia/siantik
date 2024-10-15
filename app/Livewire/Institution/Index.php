@@ -18,12 +18,19 @@ class Index extends Component
     public $latitude;
     public $radiusLingkaran = 0;
 
+    public $alamat;
+    public $absensiPagi;
+    public $absensiSiang;
+
     public function rules(){
         return [
             'namaInstitusi' => ['required','string','min:2','max:255'],
             'radiusLingkaran' => ['required'],
             'longitude' => ['required','min:2','max:255'],
             'latitude' => ['required','min:2','max:255'],
+            'alamat' => ['required','string','min:2'],
+            'absensiPagi' => ['required'],
+            'absensiSiang' => ['required'],
         ];
     }
 
@@ -47,6 +54,9 @@ class Index extends Component
                     'longitude' => $this->longitude,
                     'latitude' => $this->latitude,
                     'radius' => $this->radiusLingkaran,
+                    'address' => $this->alamat,
+                    'time_check_in' => $this->absensiPagi,
+                    'time_check_out' => $this->absensiSiang,
                 ]);
             }else{
                 $institution = Institution::create([
@@ -54,6 +64,9 @@ class Index extends Component
                     'longitude' => $this->longitude,
                     'latitude' => $this->latitude,
                     'radius' => $this->radiusLingkaran,
+                    'address' => $this->alamat,
+                    'time_check_in' => $this->absensiPagi,
+                    'time_check_out' => $this->absensiSiang,
                 ]);
             }
 
@@ -85,6 +98,10 @@ class Index extends Component
             $this->radiusLingkaran = $institution->radius;
             $this->longitude = $institution->longitude;
             $this->latitude = $institution->latitude;
+
+            $this->alamat = $institution->address;
+            $this->absensiPagi = $institution->time_check_in;
+            $this->absensiSiang = $institution->time_check_out;
         }
     }
 

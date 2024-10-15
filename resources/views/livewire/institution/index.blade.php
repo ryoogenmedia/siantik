@@ -24,7 +24,13 @@
     <form wire:submit.prevent='save' autocomplete="off">
         <x-backend.form.input wire:model='namaInstitusi' label="Nama Institusi" name="namaInstitusi" type="text"
             placeholder="masukkan nama institusi" autofocus required />
+            
+        <x-backend.form.input wire:model='alamat' label="Alamat" name="alamat" type="text"
+            placeholder="Nama Kota, Nama Jl, Kode Pos" required />
 
+        <x-backend.form.input wire:model='absensiPagi' label="Waktu Absensi Pagi" name="absensiPagi" type="time" required />
+        
+        <x-backend.form.input wire:model='absensiSiang' label="Waktu Absensi Siang" name="absensiSiang" type="time" required />
 
         <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran" name="radiusLingkaran"
             min="0" type="number" required />

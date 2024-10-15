@@ -1,11 +1,12 @@
 <div class="header-style2 fixed-top">
     <div class="inner-left">
-        <p class="text-sm-start">Lokasi Instansi.</p>
-        <a href="javascript:void(0);" class="mt-4 text-caption fw-4 d-flex align-items-center gap-6">
+        <p class="text-sm-start">TIK POLRI MAKASSAR</p>
+        <a href="javascript:void(0);" class="mt-4 text-caption fw-4 d-flex align-items-center gap-6"
+            style="font-size: 12px">
 
             <x-svg.marker />
 
-            Makassar
+            Makassar, Jl Perintis Kemerdekaan Km 18, 9980
         </a>
     </div>
 

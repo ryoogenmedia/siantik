@@ -16,18 +16,19 @@
             </div>
             <div class="content">
                 <div class="left">
-                    <h6>{{ $row->name }}</h6>
-                    <p class="text-black mt-8">{{ strtolower($row->roles) }}</p>
+                    <h6 style="font-size: 12px">{{ $row->name }}</h6>
+                    <p class="text-black" style="font-size: 12px">{{ strtolower($row->roles) }}</p>
                 </div>
                 <span class="price">
                     <div class="d-flex flex-wrap">
                         @if ($row->id != auth()->user()->id)
                             <a wire:click="delete({{ $row->id }})"
                                 wire:confirm="Apakah anda yakin ingin menghapus? apa yang anda lakukan tidak adapat di kembalikan."
-                                class="btn btn-sm btn-danger me-2">Hapus</a>
+                                class="btn btn-sm btn-danger me-2" style="font-size: 12px">Hapus</a>
                         @endif
 
-                        <a href="{{ route('user.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('user.edit', $row->id) }}" class="btn btn-sm btn-primary"
+                            style="font-size: 12px">Edit</a>
                     </div>
                 </span>
             </div>

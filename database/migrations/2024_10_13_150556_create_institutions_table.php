@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->string('name')->nullable();
+            $table->text('address')->nullable();
+            $table->time('time_check_in')->nullable();
+            $table->time('time_check_out')->nullable();
             $table->string('radius')->nullable();
             $table->timestamps();
         });

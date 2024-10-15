@@ -78,12 +78,12 @@
             </div>
             <div class="content">
                 <div class="left">
-                    <h6>{{ $row->akun->name }}</h6>
+                    <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
                     <p class="text-black" style="font-size: .8rem"><b>waktu :</b>
                         {{ $row->created_at->format('d-m-Y H:i:s') }}</p>
                     <p class="text-black" style="font-size: .8rem"><b>status :</b>
                         {{ $row->status_permission }}</p>
-                    <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2 py-1"
+                    <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
                             style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
                     </p>
                 </div>
