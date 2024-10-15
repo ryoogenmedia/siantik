@@ -3,7 +3,7 @@
     <x-slot name="pageTitle">Dashboard</x-slot>
     <x-slot name="pagePretitle">Ringkasan aplikasi anda berada disini.</x-slot>
 
-    @if (auth()->user()->roles == 'personnel')
+    @if (auth()->user()->roles == 'personnel' || auth()->user()->roles == 'leader')
 
         @if (isset($this->isAbsence))
             <div class="row mb-2">
