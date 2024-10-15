@@ -27,7 +27,7 @@ class Index extends Component
 
     public $jmlKehadiran;
     public $jmlPerizinan;
-    public $isAbsence = false;
+    public $isAbsence = true;
 
     public function getCounterData(){
         if(auth()->user()->roles == 'admin'){
@@ -171,7 +171,7 @@ class Index extends Component
                 ->first();
 
             if(isset($absence) && $absence){
-                $this->isAbsence = true;
+                $this->isAbsence = false;
             }
         }
 
@@ -195,7 +195,7 @@ class Index extends Component
                 ->first();
 
             if(isset($absence) && $absence){
-                $this->isAbsence = true;
+                $this->isAbsence = false;
             }
         }
 
