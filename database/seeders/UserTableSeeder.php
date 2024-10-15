@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
         $leaders = [
             [
                 'username' => 'leader',
-                'name' => 'Jendral Fery Fadul Rahman',
+                'name' => 'Pimpinan Personel',
                 'phone_number' => '0340340390',
                 'roles' => 'leader',
                 'email' => 'leader@mail.com',
@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
         $personnels = [
             [
                 'username' => 'personnel',
-                'name' => 'Andi Subroto',
+                'name' => 'Personel',
                 'phone_number' => '0340340390',
                 'roles' => 'personnel',
                 'email' => 'personnel@mail.com',
@@ -57,7 +57,7 @@ class UserTableSeeder extends Seeder
         $admins = [
             [
                 'username' => 'admin',
-                'name' => 'Admin',
+                'name' => 'Akun Admin',
                 'phone_number' => '398498394',
                 'roles' => 'admin',
                 'email' => 'admin@mail.com',
@@ -91,7 +91,7 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'username' => 'superadmin',
-                'name' => 'Super Admin',
+                'name' => 'Akun Super Admin',
                 'phone_number' => '374837773',
                 'roles' => 'superadmin',
                 'email' => 'superadmin@mail.com',
