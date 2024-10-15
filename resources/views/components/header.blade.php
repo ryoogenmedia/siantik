@@ -6,7 +6,7 @@
 
             <x-svg.marker />
 
-            Makassar, Jl Perintis Kemerdekaan Km 18, 9980
+            Makassar, Jl. Perintis Kemerdekaan km 16, 90243
         </a>
     </div>
 
