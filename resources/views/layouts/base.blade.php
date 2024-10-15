@@ -14,7 +14,7 @@
     <link rel="stylesheet"type="text/css" href="{{ asset('assets/css/nouislider.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/styles.css') }}" />
-    <link rel="manifest" href="{{ asset('assets/_manifest.json') }}" data-pwa-version="set_in_manifest_and_pwa_js">
+    {{-- <link rel="manifest" href="{{ asset('assets/_manifest.json') }}" data-pwa-version="set_in_manifest_and_pwa_js"> --}}
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 

@@ -27,6 +27,10 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
+    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel')->group(function(){
+        Route::get('/', Absence\Index::class)->name('index');
+    });
+
     Route::prefix('cetak')->name('print.')->group(function(){
         Route::get('/laporan-admin', [CetakLaporanController::class,'admin'])->name('admin');
         Route::get('/laporan-pimpinan', [CetakLaporanController::class,'leader'])->name('leader');

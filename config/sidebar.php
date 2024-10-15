@@ -18,10 +18,18 @@ return [
     ],
 
     [
+        'title' => 'Absensi',
+        'icon' => 'home',
+        'route-name' => 'absence.index',
+        'description' => 'Untuk melakukan absensi.',
+        'roles' => ['personnel'],
+    ],
+
+    [
         'title' => 'Laporan',
         'icon' => 'home',
         'route-name' => 'report.admin',
-        'description' => 'Untuk melihat daftar laoran admin.',
+        'description' => 'Untuk melihat daftar laporan admin.',
         'roles' => ['admin'],
     ],
 
