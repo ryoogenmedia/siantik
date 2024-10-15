@@ -3,6 +3,39 @@
     <x-slot name="pageTitle">Dashboard</x-slot>
     <x-slot name="pagePretitle">Ringkasan aplikasi anda berada disini.</x-slot>
 
+    @if (auth()->user()->roles == 'personnel')
+
+        @if (isset($this->isAbsence))
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="card border border-success">
+                        <div class="card-header text-success">Anda Telah Melakukan Absensi Hari Ini.</div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Kehadiran</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlKehadiran ?? 0 }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card mb-2">
+                    <div class="card-header text-primary">Pengajuan Perizinan</div>
+                    <div class="card-body">
+                        <h3>{{ $this->jmlPerizinan ?? 0 }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if (auth()->user()->roles == 'superadmin')
         <div class="row">
             <div class="col-6">

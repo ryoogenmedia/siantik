@@ -31,6 +31,10 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/', Absence\Index::class)->name('index');
     });
 
+    Route::prefix('riwayat')->name('history.')->middleware('roles:personnel')->group(function(){
+        Route::get('/', History\Absence::class)->name('absence');
+    });
+
     Route::prefix('cetak')->name('print.')->group(function(){
         Route::get('/laporan-admin', [CetakLaporanController::class,'admin'])->name('admin');
         Route::get('/laporan-pimpinan', [CetakLaporanController::class,'leader'])->name('leader');
@@ -59,7 +63,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
 
     Route::prefix('profil')->name('profile.')->group(function () {
         Route::get('/', Profile\Index::class)
-            ->middleware('roles:admin,superadmin,leader,personel')
+            ->middleware('roles:admin,superadmin,leader,personnel')
             ->name('index');
     });
 });

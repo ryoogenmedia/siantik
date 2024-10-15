@@ -74,15 +74,15 @@
     @forelse ($this->rows as $row)
         <div class="order-item mb-2 mt-3">
             <div class="img">
-                <img src="{{ $row->akun->avatarUrl() }}" alt="img">
+                <img src="{{ asset($row->image) }}" alt="img">
             </div>
             <div class="content">
                 <div class="left">
                     <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
-                    <p class="text-black" style="font-size: .8rem"><b>waktu :</b>
-                        {{ $row->created_at->format('d-m-Y H:i:s') }}</p>
-                    <p class="text-black" style="font-size: .8rem"><b>status :</b>
-                        {{ $row->status_permission }}</p>
+                    <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
+                        {{ $row->check_in }}</p>
+                    <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
+                        {{ $row->check_out ?? 'belum dilakukan.' }}</p>
                     <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
                             style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
                     </p>

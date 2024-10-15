@@ -25,6 +25,10 @@ class Index extends Component
 
     public $bulan;
 
+    public $jmlKehadiran;
+    public $jmlPerizinan;
+    public $isAbsence = false;
+
     public function getCounterData(){
         if(auth()->user()->roles == 'admin'){
             $this->jmlHadir = Attendance::query()
@@ -149,6 +153,26 @@ class Index extends Component
             $this->jmlPengguna = User::count();
             $this->jmlPersonnel = Personnel::count();
             $this->radiusLingkaran = Institution::first()->radius ?? null;
+        }
+
+        if(auth()->user()->roles == 'personnel'){
+            $this->jmlKehadiran = Attendance::query()
+                ->where('user_id',auth()->user()->id)
+                ->count();
+
+            $this->jmlPerizinan = Permission::query()
+                ->where('user_id', auth()->user()->id)
+                ->count();
+
+            $absence = Attendance::query()
+                ->where('user_id',auth()->user()->id)
+                ->whereDate('created_at', now()->toDateString())
+                ->where('created_at', '<=', now()->endOfDay())
+                ->first();
+
+            if(isset($absence)){
+                $this->isAbsence = true;
+            }
         }
 
         $this->getCounterData();

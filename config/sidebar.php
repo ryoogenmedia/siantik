@@ -26,6 +26,14 @@ return [
     ],
 
     [
+        'title' => 'Riwayat Kehadiran',
+        'icon' => 'home',
+        'route-name' => 'history.absence',
+        'description' => 'Untuk melihat riawyat kehadiran.',
+        'roles' => ['personnel'],
+    ],
+
+    [
         'title' => 'Laporan',
         'icon' => 'home',
         'route-name' => 'report.admin',
