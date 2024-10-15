@@ -18,6 +18,14 @@ return [
     ],
 
     [
+        'title' => 'Laporan Harian',
+        'icon' => 'home',
+        'route-name' => 'daily-report.leader',
+        'description' => 'Untuk melihat daftar laporan presensi harian personnel.',
+        'roles' => ['leader'],
+    ],
+
+    [
         'title' => 'Absensi',
         'icon' => 'home',
         'route-name' => 'absence.index',

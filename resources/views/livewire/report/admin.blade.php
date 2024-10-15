@@ -16,7 +16,6 @@
             class="btn btn-sm tf-btn danger position-absolute" style="width: 90px;top: -90px; right: 0">Cetak</a>
     </div>
 
-
     <x-alert />
 
     <div class="line4-bt pb-12">

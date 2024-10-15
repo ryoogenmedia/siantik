@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
                 'roles' => 'leader',
                 'email' => 'leader@mail.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('leader'),
+                'password' => bcrypt('leader123'),
             ]
         ];
 
@@ -88,6 +88,15 @@ class UserTableSeeder extends Seeder
                 'email' => 'feryfadulrahman@gmail.com',
                 'email_verified_at' => now(),
                 'password' => bcrypt('fery123'),
+            ],
+            [
+                'username' => 'superadmin',
+                'name' => 'Super Admin',
+                'phone_number' => '374837773',
+                'roles' => 'superadmin',
+                'email' => 'superadmin@mail.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('superadmin123'),
             ],
         ];
 
