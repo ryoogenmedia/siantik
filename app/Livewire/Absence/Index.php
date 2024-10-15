@@ -56,7 +56,7 @@ class Index extends Component
             ->whereDate('created_at', now()->toDateString())
             ->where('created_at', '<=', now()->endOfDay())
             ->first();
-            
+
         $permit = Permission::query()
             ->where('user_id', $user->id)
             ->whereDate('created_at', now()->toDateString())
@@ -66,7 +66,7 @@ class Index extends Component
         $this->isPermit = $permit ? true : false;
 
         if($absence || $permit){
-            $this->checkAbsence = false; 
+            $this->checkAbsence = false;
 
             session()->flash('alert', [
                 'type' => 'warning',
@@ -143,11 +143,11 @@ class Index extends Component
             ->whereDate('created_at', now()->toDateString())
             ->where('created_at', '<=', now()->endOfDay())
             ->first();
-            
+
         $absence->update([
             'check_out' => now()->format('d-m-Y H:i:s'),
         ]);
-        
+
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil.',
@@ -162,13 +162,13 @@ class Index extends Component
 
         $user = User::findOrFail(auth()->user()->id);
         $this->userId = $user->id;
-                
+
         $absence = Attendance::query()
             ->where('user_id', $user->id)
             ->whereDate('created_at', now()->toDateString())
             ->where('created_at', '<=', now()->endOfDay())
             ->first();
-            
+
         $permit = Permission::query()
             ->where('user_id', $user->id)
             ->whereDate('created_at', now()->toDateString())
@@ -176,15 +176,15 @@ class Index extends Component
             ->first();
 
         if($absence || $permit){
-            $this->checkAbsence = false; 
+            $this->checkAbsence = false;
         }
 
         $isCheckOut = Institution::query()
             ->where('time_check_out', '<=', now()->format('H:i:s'))
             ->first();
-        
+
         if ($isCheckOut) {
-            if($absence->check_out){
+            if(isset($absence->check_out)){
                 $this->isCheckOut = false;
             }else{
                 $this->isCheckOut = true;

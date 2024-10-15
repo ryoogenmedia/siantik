@@ -12,7 +12,7 @@
     </style>
 @endpush
 
-<div>
+<div wire:poll.10s>
     <x-slot name="title">Absensi</x-slot>
     <x-slot name="pageTitle">Absensi</x-slot>
     <x-slot name="pagePretitle">Melakukan absensi.</x-slot>
