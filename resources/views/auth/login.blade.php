@@ -1,6 +1,6 @@
 <x-layouts.auth title="Login">
     <form class="mt-32" action="{{ route('login') }}" method="POST" autocomplete="off">
-
+        <h4 class="text-center mb-5">Masuk Ke Aplikasi</h4>
         @csrf
 
         <fieldset>
@@ -17,7 +17,10 @@
             </div>
         </fieldset>
 
-        <a href="reset-pass.html" class="text-caption d-inline-block text-secondary mt-12">Forgot Password?</a>
+        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="text-caption d-inline-block text-secondary mt-12">Forgot
+                Password?</a>
+        @endif
         <button type="submit" class="mt-32 tf-btn primary">Masuk</button>
     </form>
 </x-layouts.auth>
