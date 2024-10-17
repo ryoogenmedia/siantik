@@ -10,7 +10,7 @@ return [
     ],
 
     [
-        'title' => 'Institusi',
+        'title' => 'Lokasi',
         'icon' => 'home',
         'route-name' => 'institution.index',
         'description' => 'Untuk melihat daftar institusi.',
@@ -58,7 +58,7 @@ return [
     ],
 
     [
-        'title' => 'Personnel',
+        'title' => 'Tambah Personil',
         'icon' => 'home',
         'route-name' => 'personnel.index',
         'description' => 'Untuk melihat daftar personnel.',
@@ -66,7 +66,7 @@ return [
     ],
 
     [
-        'title' => 'Pengguna',
+        'title' => 'Tambah Pengguna',
         'icon' => 'home',
         'route-name' => 'user.index',
         'description' => 'Untuk melihat daftar pengguna.',
