@@ -1,7 +1,7 @@
 <div>
-    <x-slot name="title">Personnel</x-slot>
-    <x-slot name="pageTitle">Personnel</x-slot>
-    <x-slot name="pagePretitle">Daftar personnel.</x-slot>
+    <x-slot name="title">Personil</x-slot>
+    <x-slot name="pageTitle">Personil</x-slot>
+    <x-slot name="pagePretitle">Daftar Personil.</x-slot>
 
     <x-slot name="button">
         <a href="{{ route('personnel.create') }}" class="btn btn-sm tf-btn primary">Tambah</a>
