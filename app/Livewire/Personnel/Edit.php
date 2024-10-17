@@ -35,8 +35,8 @@ class Edit extends Component
     public function rules(){
         return [
             'namaLengkap' => ['required','string','min:2','max:255'],
-            'nip' => ['required','string','min:2','max:255'],
-            'nrp' => ['required','string','min:2','max:255'],
+            'nip' => ['nullable','string','min:2','max:255'],
+            'nrp' => ['nullable','string','min:2','max:255'],
             'jenisKelamin' => ['required','string','min:2','max:255',Rule::in(config('const.sex'))],
             'jabatan' => ['required','string','min:2','max:255',Rule::in(config('const.position'))],
 

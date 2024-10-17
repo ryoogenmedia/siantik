@@ -14,7 +14,7 @@
             <option value="">- pilih -</option>
             @foreach (config('const.roles') as $role)
                 @if ($role != 'superadmin' && $role != 'admin')
-                    <option value="{{ $role }}">{{ $role == 'leader' ? 'Pimpinan' : 'Personel' }}</option>
+                    <option value="{{ $role }}">{{ $role == 'leader' ? 'Pimpinan' : 'Personil' }}</option>
                 @endif
             @endforeach
         </x-backend.form.select>
@@ -29,11 +29,17 @@
         @endif
 
         @if ($this->pengguna)
-            <x-backend.form.select wire:model.lazy='statusIzin' name="statusIzin" label="Pilih Jenis Akun" required>
+            <x-backend.form.select wire:model.lazy='statusIzin' name="statusIzin" label="Keterangan" required>
                 <option value="">- pilih -</option>
                 @foreach (config('const.category_attendance') as $attendance)
-                    @if ($attendance != 'hadir')
-                        <option value="{{ $attendance }}">{{ ucwords($attendance) }}</option>
+                    @if ($this->roles != 'leader')
+                        @if ($attendance != 'terlambat')
+                            <option value="{{ $attendance }}">{{ ucwords($attendance) }}</option>
+                        @endif
+                    @else
+                        @if ($attendance != 'hadir' && $attendance != 'terlambat')
+                            <option value="{{ $attendance }}">{{ ucwords($attendance) }}</option>
+                        @endif
                     @endif
                 @endforeach
             </x-backend.form.select>
@@ -41,8 +47,9 @@
             <x-backend.form.input wire:model='fileIzin' label="File Izin (Surat, Dokumen) (PDF, JPG, PNG)"
                 name="fileIzin" type="file" />
 
-            <x-backend.form.input wire:model='keterangan' label="Keterangan" name="keterangan" type="text"
-                placeholder="masukkan keterangan" />
+            <x-backend.form.input wire:model='tanggalAwal' label="Tanggal Awal" name="tanggalAwal" type="date" />
+
+            <x-backend.form.input wire:model='tanggalAkhir' label="Tanggal Akhir" name="tanggalAkhir" type="date" />
 
             <h6 class="mt-5 mb-3 text-muted text-center">- DATA PENGGUNA -</h6>
 
@@ -68,6 +75,6 @@
                 placeholder="masukkan nama lengkap" required />
         @endif
 
-        <x-backend.button.save name="Simpan Perubahan" target="edit" />
+        <x-backend.button.save name="Simpan" target="edit" />
     </form>
 </div>

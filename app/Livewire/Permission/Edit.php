@@ -4,7 +4,6 @@ namespace App\Livewire\Permission;
 
 use App\Models\Permission;
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -27,6 +26,8 @@ class Edit extends Component
     public $nip;
     public $nrp;
     public $jabatan;
+    public $tanggalAkhir;
+    public $tanggalAwal;
 
     public $avatarUrl;
 
@@ -96,6 +97,8 @@ class Edit extends Component
                 'user_id' => $pengguna->id,
                 'status_permission' => $this->statusIzin,
                 'information' => $this->keterangan,
+                'date_start' => $this->tanggalAwal,
+                'date_end' => $this->tanggalAkhir,
             ]);
 
             if($this->fileIzin){
@@ -137,6 +140,8 @@ class Edit extends Component
         $this->pengguna = $permission->akun->id;
         $this->keterangan = $permission->information;
         $this->statusIzin = $permission->status_permission;
+        $this->tanggalAkhir = $permission->date_end;
+        $this->tanggalAwal = $permission->date_start;
         $this->avatarUrl = $permission->akun->avatarUrl();
 
         if($this->roles){

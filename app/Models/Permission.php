@@ -16,6 +16,8 @@ class Permission extends Model
         'file',
         'status_permission',
         'information',
+        'date_start',
+        'date_end',
     ];
 
     public function akun(){

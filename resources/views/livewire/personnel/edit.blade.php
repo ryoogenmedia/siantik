@@ -13,11 +13,11 @@
         <x-backend.form.input wire:model='namaLengkap' label="Nama Lengkap" name="namaLengkap" type="text"
             placeholder="masukkan nama lengkap" autofocus required />
 
-        <x-backend.form.input wire:model='nip' label="NIP" name="nip" type="number" placeholder="masukkan nip"
-            required />
+        <x-backend.form.input wire:model='nip' label="NIP" name="nip" type="number"
+            placeholder="masukkan nip" />
 
-        <x-backend.form.input wire:model='nrp' label="NRP" name="nrp" type="number" placeholder="masukkan nrp"
-            required />
+        <x-backend.form.input wire:model='nrp' label="NRP" name="nrp" type="number"
+            placeholder="masukkan nrp" />
 
         <x-backend.form.select wire:model='jenisKelamin' name="jenisKelamin" label="Pilih Jenis Kelamin" required>
             <option value="">- pilih -</option>

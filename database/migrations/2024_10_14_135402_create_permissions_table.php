@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->string('status_permission')->nullable();
             $table->text('information')->nullable();
+            $table->date('date_start')->nullable();
+            $table->date('date_end')->nullable();
             $table->timestamps();
         });
     }

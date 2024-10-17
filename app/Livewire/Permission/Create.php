@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Permission;
 
+use App\Models\Attendance;
 use App\Models\Permission;
 use App\Models\User;
 use Carbon\Carbon;
@@ -30,6 +31,9 @@ class Create extends Component
     public $avatarUrl;
 
     public $listUser;
+
+    public $tanggalAwal;
+    public $tanggalAkhir;
 
     public function rules(){
         return [
@@ -107,6 +111,8 @@ class Create extends Component
                 'user_id' => $pengguna->id,
                 'status_permission' => $this->statusIzin,
                 'information' => $this->keterangan,
+                'date_start' => $this->tanggalAwal,
+                'date_end' => $this->tanggalAkhir,
             ]);
 
             if($this->fileIzin){

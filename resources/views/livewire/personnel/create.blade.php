@@ -13,11 +13,11 @@
         <x-backend.form.input wire:model='namaLengkap' label="Nama Lengkap" name="namaLengkap" type="text"
             placeholder="masukkan nama lengkap" autofocus required />
 
-        <x-backend.form.input wire:model='nip' label="NIP" name="nip" type="number" placeholder="masukkan nip"
-            required />
+        <x-backend.form.input wire:model='nip' label="NIP" name="nip" type="number"
+            placeholder="masukkan nip" />
 
-        <x-backend.form.input wire:model='nrp' label="NRP" name="nrp" type="number" placeholder="masukkan nrp"
-            required />
+        <x-backend.form.input wire:model='nrp' label="NRP" name="nrp" type="number"
+            placeholder="masukkan nrp" />
 
         <x-backend.form.select wire:model='jenisKelamin' name="jenisKelamin" label="Pilih Jenis Kelamin" required>
             <option value="">- pilih -</option>
@@ -26,12 +26,8 @@
             @endforeach
         </x-backend.form.select>
 
-        <x-backend.form.select wire:model='jabatan' name="jabatan" label="Pilih Jabatan" required>
-            <option value="">- pilih -</option>
-            @foreach (config('const.position') as $jabatan)
-                <option value="{{ $jabatan }}">{{ $jabatan }}</option>
-            @endforeach
-        </x-backend.form.select>
+        <x-backend.form.input wire:model='jabatan' name='jabatan' type="text" label="Pilih Jabatan" required
+            placeholder="Masukkan nama jabatan" />
 
         <p class="text-center fw-bold my-5">- DATA AKUN -</p>
 
