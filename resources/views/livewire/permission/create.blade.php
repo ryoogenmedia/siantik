@@ -32,7 +32,7 @@
             <x-backend.form.select wire:model.lazy='statusIzin' name="statusIzin" label="Keterangan" required>
                 <option value="">- pilih -</option>
                 @foreach (config('const.category_attendance') as $attendance)
-                    @if ($this->roles != 'leader')
+                    @if ($this->roles == 'leader')
                         @if ($attendance != 'terlambat')
                             <option value="{{ $attendance }}">{{ ucwords($attendance) }}</option>
                         @endif
