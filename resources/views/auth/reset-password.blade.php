@@ -1,6 +1,6 @@
 <x-layouts.auth title="Lupa Kata Sandi">
     <div class="card-body">
-        <form class="mt-5" action="{{ route('password.email') }}" method="POST" autocomplete="off">
+        <form class="mt-5" action="{{ route('password.update') }}" method="POST" autocomplete="off">
             @csrf
 
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
