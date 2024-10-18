@@ -1,7 +1,13 @@
 @extends('layouts.base')
 
 @section('title', $title)
-
+@section('styles')
+<style>
+   body {
+           overflow: hidden;
+       }
+</style>
+@endsection
 @section('content')
     <div class="signin-area pb-30">
         <div class="tf-container">
