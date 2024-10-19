@@ -1,7 +1,13 @@
 @extends('layouts.base')
 
 @section('title', $title)
-
+@section('styles')
+<style>
+   body {
+           overflow: hidden;
+       }
+</style>
+@endsection
 @section('content')
     <div class="signin-area pb-30">
         <div class="tf-container">
@@ -9,7 +15,7 @@
                 <img style="width: 5em" src="{{ asset('logo/tik-polri-logo.png') }}" alt="tik-polri">
             </div>
 
-            <h6 class="mt-20 text-center">Masuk Ke Aplikasi</h6>
+            {{-- <h6 class="mt-20 text-center">Masuk Ke Aplikasi</h6> --}}
 
             @if ($errors->any())
                 <div class="alert alert-warning light alert-dismissible fade show mb-10 mt-5" role="alert">
