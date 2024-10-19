@@ -40,6 +40,14 @@ class User extends Authenticatable
             : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
     }
 
+    public function attendances(){
+        return $this->hasMany(Attendance::class,'user_id','id');
+    }
+
+    public function permissions(){
+        return $this->hasMany(Permission::class,'user_id','id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

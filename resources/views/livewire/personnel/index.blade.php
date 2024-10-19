@@ -15,7 +15,6 @@
                 <img src="{{ $row->akun->avatarUrl() }}" alt="img">
             </div>
             <div class="content">
-
                 <div class="left" style="width: 50%">
                     <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $row->name }}</h6>
                     <table>
