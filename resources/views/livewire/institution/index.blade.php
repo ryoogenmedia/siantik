@@ -74,9 +74,9 @@
         </div>
 
         <div wire:ignore class="row px-3 mb-5 mt-3">
-            <div class="col-4 mb-2 px-0 mx-0">
-                <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset Lokasi
-                    Map</button>
+            <div class="col-5 mb-2 px-0 mx-0">
+                <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset
+                    Lokasi</button>
             </div>
 
             <div class="col-12 px-3" id="map"></div>
