@@ -6,7 +6,6 @@ use App\Models\Attendance;
 use App\Models\Institution;
 use App\Models\Permission;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -103,6 +102,8 @@ class Index extends Component
             'user_id' => $user->id,
             'name' => $user->name,
             'check_in' => now()->format('d-m-Y H:i:s'),
+            'longitude' => $this->longitude,
+            'latitude' => $this->latitude,
             'image' => $fileUrl,
         ]);
 

@@ -92,8 +92,8 @@
                     video: true,
                 })
                 .then((stream) => {
-                    video.srcObject = stream;
                     video.style.transform = `scaleX(-1)`;
+                    video.srcObject = stream;
                     video.addEventListener("loadedmetadata", () => {
                         video.play();
                     });
