@@ -22,6 +22,9 @@
     <x-alert />
 
     <form wire:submit.prevent='save' autocomplete="off">
+        <x-backend.form.input wire:model='logo' label="Logo" name="logo" type="file"
+            optional="Abaikan jika tidak ingin mengubah" />
+
         <x-backend.form.input wire:model='namaInstitusi' label="Nama Institusi" name="namaInstitusi" type="text"
             placeholder="masukkan nama institusi" autofocus required />
 
@@ -38,7 +41,12 @@
             min="0" type="number" required />
 
         <div wire:ignore class="row px-3 my-5">
-            <div class="col-12" id="map"></div>
+            <div class="col-4 mb-2 px-0 mx-0">
+                <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset Lokasi
+                    Map</button>
+            </div>
+
+            <div class="col-12 px-3" id="map"></div>
         </div>
 
         <x-backend.form.input wire:model='longitude' label="Longitude" name="longitude" type="text" disabled
@@ -119,6 +127,16 @@
                     var marker = L.marker([lat, lon], {
                         draggable: true,
                     }).addTo(map);
+                }
+
+                if (@this.showLogo) {
+                    var customIcon = L.icon({
+                        iconUrl: @this.showLogo,
+                        iconSize: [38, 38],
+                        popupAnchor: [-3, -38],
+                    });
+
+                    marker.setIcon(customIcon);
                 }
 
                 if (@this.radiusLingkaran) {

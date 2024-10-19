@@ -5,6 +5,8 @@ namespace App\Livewire\Institution;
 use App\Models\Institution;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -22,6 +24,9 @@ class Index extends Component
     public $absensiPagi;
     public $absensiSiang;
 
+    public $logo;
+    public $showLogo;
+
     public function rules(){
         return [
             'namaInstitusi' => ['required','string','min:2','max:255'],
@@ -30,8 +35,26 @@ class Index extends Component
             'latitude' => ['required','min:2','max:255'],
             'alamat' => ['required','string','min:2'],
             'absensiPagi' => ['required'],
+            'logo' => ['nullable','image'],
             'absensiSiang' => ['required'],
         ];
+    }
+
+    public function resetLocation(){
+        $institution = Institution::first();
+
+        $institution->latitude = null;
+        $institution->longitude = null;
+
+        $institution->save();
+
+        session()->flash('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil.',
+            'detail' => "data lokasi berhasil direset.",
+        ]);
+
+        return redirect()->route('institution.index');
     }
 
     #[On('location')]
@@ -58,6 +81,16 @@ class Index extends Component
                     'time_check_in' => $this->absensiPagi,
                     'time_check_out' => $this->absensiSiang,
                 ]);
+
+                if($this->logo){
+                    if($institution->logo){
+                        File::delete(public_path('storage/' . $institution->logo));
+                    }
+
+                    $institution->update([
+                        'logo' => $this->logo->store('logo', 'public'),
+                    ]);
+                }
             }else{
                 $institution = Institution::create([
                     'name' => $this->namaInstitusi,
@@ -67,6 +100,7 @@ class Index extends Component
                     'address' => $this->alamat,
                     'time_check_in' => $this->absensiPagi,
                     'time_check_out' => $this->absensiSiang,
+                    'logo' => $this->logo->store('logo', 'public'),
                 ]);
             }
 
@@ -102,6 +136,7 @@ class Index extends Component
             $this->alamat = $institution->address;
             $this->absensiPagi = $institution->time_check_in;
             $this->absensiSiang = $institution->time_check_out;
+            $this->showLogo = $institution->logo ? Storage::url($institution->logo) : null;
         }
     }
 

@@ -18,6 +18,7 @@ class Institution extends Model
         'address',
         'time_check_in',
         'time_check_out',
+        'logo',
         'radius',
     ];
 }
