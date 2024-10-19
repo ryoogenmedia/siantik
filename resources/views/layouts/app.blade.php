@@ -11,7 +11,7 @@
             <x-backend.content :page-title="$pageTitle" :page-pretitle="$pagePretitle" :button="$button ?? null" />
 
             <div class="line4-bt pt-16 pb-16 mb-5">
-                <div class="tf-container">
+                <div class="tf-container mb-5">
                     {{ $slot }}
                 </div>
             </div>
