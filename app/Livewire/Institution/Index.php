@@ -24,6 +24,8 @@ class Index extends Component
     public $absensiPagi;
     public $absensiSiang;
 
+    public $checkLocation = false;
+
     public $logo;
     public $showLogo;
 
@@ -128,6 +130,10 @@ class Index extends Component
         $institution = Institution::first();
 
         if(isset($institution) && $institution){
+            if($institution->longitude && $institution->latitude){
+                $this->checkLocation = true;
+            }
+
             $this->namaInstitusi = $institution->name;
             $this->radiusLingkaran = $institution->radius;
             $this->longitude = $institution->longitude;

@@ -40,7 +40,27 @@
         <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran (per Meter)" name="radiusLingkaran"
             min="0" type="number" required />
 
-        <div wire:ignore class="row px-3 my-5">
+
+        <div class="row mt-5">
+            @unless ($this->checkLocation)
+                <div class="col-12">
+                    <div class="alert alert-info light alert-dismissible fade show mb-10" role="alert">
+
+                        <x-icon.alert.info />
+
+                        <span>Lokasi belum ditentukan, secara ototmatis akan berada dilokasi anda berada sekarang.
+                            Silahkan simpan data lokasi
+                            untuk menetapkan wilayah presensi.</span>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <i class="icon-close"></i>
+                        </button>
+                    </div>
+                </div>
+            @endunless
+        </div>
+
+        <div wire:ignore class="row px-3 mb-5 mt-3">
             <div class="col-4 mb-2 px-0 mx-0">
                 <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset Lokasi
                     Map</button>
