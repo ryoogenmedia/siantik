@@ -18,7 +18,7 @@
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <title>Aplikasi School | @yield('title')</title>
+    <title>SIANTIK APP | @yield('title')</title>
 
     <!-- Livewire Styles -->
     @livewireStyles
