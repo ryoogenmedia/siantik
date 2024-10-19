@@ -13,7 +13,7 @@
                     src="{{ $this->avatar->temporaryUrl() }}" alt="img">
             @else
                 <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
-                    src="{{ $this->avatarUrl }}" alt="img">
+                    src="{{ asset($this->avatarUrl) }}" alt="img">
             @endif
         </div>
 

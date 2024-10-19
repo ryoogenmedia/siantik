@@ -22,6 +22,19 @@
     <x-alert />
 
     <form wire:submit.prevent='save' autocomplete="off">
+
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                @if ($this->logo)
+                    <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                        src="{{ $this->logo->temporaryUrl() }}" alt="img">
+                @else
+                    <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                        src="{{ asset($this->showLogo) }}" alt="img">
+                @endif
+            </div>
+        </div>
+
         <x-backend.form.input wire:model='logo' label="Logo" name="logo" type="file"
             optional="Abaikan jika tidak ingin mengubah" />
 
