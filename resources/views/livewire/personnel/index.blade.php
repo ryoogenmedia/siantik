@@ -16,12 +16,12 @@
             </div>
             <div class="content">
 
-                <div class="left" style="width: 80%">
+                <div class="left" style="width: 70%">
                     <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $row->name }}</h6>
                     <table>
                         <tr>
                             <td>
-                                <p class="text-black fw-bold" style="font-size: 12px">Nama</p>
+                                <p class="text-black fw-bold" style="font-size: 12px">NIP / NRP</p>
                             </td>
                             <td>
                                 <p class="text-black px-1 fw-bold" style="font-size: 12px">:</p>
