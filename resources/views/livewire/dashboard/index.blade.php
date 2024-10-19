@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-12">
                 <div class="card mb-2">
                     <div class="card-header text-primary">Radius Lingkaran Absensi</div>

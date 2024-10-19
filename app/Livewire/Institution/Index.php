@@ -56,7 +56,7 @@ class Index extends Component
             'detail' => "data lokasi berhasil direset.",
         ]);
 
-        return redirect()->route('institution.index');
+        return redirect()->back();
     }
 
     #[On('location')]
@@ -114,7 +114,7 @@ class Index extends Component
                 'detail' => "data intitusi gagal disunting.",
             ]);
 
-            return redirect()->route('institution.index');
+            return redirect()->back();
         }
 
         session()->flash('alert', [
@@ -123,7 +123,7 @@ class Index extends Component
             'detail' => "data institusi berhasil disunting.",
         ]);
 
-        return redirect()->route('institution.index');
+        return redirect()->back();
     }
 
     public function mount(){
