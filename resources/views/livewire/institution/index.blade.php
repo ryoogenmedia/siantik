@@ -37,7 +37,7 @@
         <x-backend.form.input wire:model='absensiSiang' label="Waktu Absensi Siang" name="absensiSiang" type="time"
             required />
 
-        <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran" name="radiusLingkaran"
+        <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran (per Meter)" name="radiusLingkaran"
             min="0" type="number" required />
 
         <div wire:ignore class="row px-3 my-5">
