@@ -74,7 +74,7 @@ return [
     ],
 
     [
-        'title' => 'Profile',
+        'title' => 'Profil',
         'icon' => 'profile',
         'route-name' => 'profile.index',
         'description' => 'Untuk melihat profil akun.',

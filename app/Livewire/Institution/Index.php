@@ -56,7 +56,7 @@ class Index extends Component
             'detail' => "data lokasi berhasil direset.",
         ]);
 
-        return redirect()->back();
+        return redirect()->route('institution.index');
     }
 
     #[On('location')]
@@ -123,7 +123,7 @@ class Index extends Component
             'detail' => "data institusi berhasil disunting.",
         ]);
 
-        return redirect()->back();
+        return redirect()->route('institution.index');
     }
 
     public function mount(){
