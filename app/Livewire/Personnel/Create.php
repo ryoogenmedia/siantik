@@ -15,8 +15,7 @@ class Create extends Component
     use WithFileUploads;
 
     public $namaLengkap;
-    public $nip;
-    public $nrp;
+    public $nomorIdentitas;
     public $jenisKelamin;
     public $jabatan;
 
@@ -29,10 +28,9 @@ class Create extends Component
     public function rules(){
         return [
             'namaLengkap' => ['required','string','min:2','max:255'],
-            'nip' => ['nullable','string','min:2','max:255'],
-            'nrp' => ['nullable','string','min:2','max:255'],
+            'nomorIdentitas' => ['required','string','min:2','max:255'],
             'jenisKelamin' => ['required','string','min:2','max:255',Rule::in(config('const.sex'))],
-            'jabatan' => ['required','string','min:2','max:255',Rule::in(config('const.position'))],
+            'jabatan' => ['required','string','min:2','max:255'],
 
             'surel' => [
                 'required',
@@ -68,8 +66,7 @@ class Create extends Component
             Personnel::create([
                 'user_id' => $user->id,
                 'name' => $this->namaLengkap,
-                'nip' => $this->nip,
-                'nrp' => $this->nrp,
+                'number_identity' => $this->nomorIdentitas,
                 'position' => $this->jabatan,
                 'sex' => $this->jenisKelamin,
             ]);
