@@ -16,7 +16,7 @@
             </div>
             <div class="content">
 
-                <div class="left">
+                <div class="left" style="width: 80%">
                     <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $row->name }}</h6>
                     <table>
                         <tr>
