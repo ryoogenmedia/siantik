@@ -27,7 +27,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
-    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel,leader')->group(function(){
+    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel')->group(function(){
         Route::get('/', Absence\Index::class)->name('index');
     });
 
@@ -54,7 +54,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/leader', Report\Leader::class)->middleware('roles:leader')->name('leader');
     });
 
-    Route::prefix('institution')->name('institution.')->middleware('roles:superadmin')->group(function(){
+    Route::prefix('lokasi')->name('institution.')->middleware('roles:superadmin')->group(function(){
         Route::get('/', Institution\Index::class)->name('index');
     });
 
