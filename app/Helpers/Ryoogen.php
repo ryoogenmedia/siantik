@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 if (!function_exists('presensi')) {
     function presensi($id) {
-        // Mencari pengguna berdasarkan ID
         $pengguna = User::findOrFail($id);
 
         $hadir = 0;
@@ -18,12 +17,12 @@ if (!function_exists('presensi')) {
         $pendidikan = 0;
 
         $permissions = Permission::where('user_id', $pengguna->id)
-            ->select('status_permission', DB::raw('count(*) as total')) // Menggunakan agregat count()
+            ->select('status_permission', DB::raw('count(*) as total'))
             ->groupBy('status_permission')
             ->get();
 
         $attendances = Attendance::where('user_id', $pengguna->id)
-            ->select('status_attendance', DB::raw('count(*) as total')) // Menggunakan agregat count()
+            ->select('status_attendance', DB::raw('count(*) as total'))
             ->groupBy('status_attendance')
             ->get();
 
