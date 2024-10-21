@@ -7,7 +7,7 @@ use App\Models\Institution;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
-class Detail extends Component
+class AdminDetail extends Component
 {
     public $imageAbsence;
     public $personnelName;
@@ -49,8 +49,9 @@ class Detail extends Component
             $this->institutionName = $institution->name_institution;
         }
     }
+
     public function render()
     {
-        return view('livewire.report.detail');
+        return view('livewire.report.admin-detail');
     }
 }
