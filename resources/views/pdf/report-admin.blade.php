@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DATA LAPORAN {{ strtoupper($kategori) }}</title>
+    <title>DATA LAPORAN BULANAN PRESENSI</title>
 
     <style>
         * {
@@ -68,7 +68,7 @@
 </head>
 
 <body>
-    <h4>DATA LAPORAN {{ strtoupper($kategori) }}</h4>
+    <h4>DATA LAPORAN BULANAN PRESENSI</h4>
 
     @if ($bulan)
         <h3>{{ strtoupper(config("const.month.$bulan")) }}</h3>
