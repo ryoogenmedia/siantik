@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Permission;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -13,35 +14,9 @@ class CetakLaporanController extends Controller
         $kategori = $request->kategori;
         $data = [];
 
-        if($kategori == 'izin'){
-            $data = Permission::query()
-                ->when($request->date_start, function($query, $tanggalMulai){
-                    $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-                })
-                ->when($request->date_end, function($query, $tanggalSelesai){
-                    $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-                    $query->where('created_at', '<=', $date_end);
-                })
-                ->when($request->bulan, function($query, $bulan){
-                    $query->whereMonth('created_at', $bulan)
-                        ->whereYear('created_at', now()->year);
-                })->get();
-        }
-
-        if($kategori == 'kehadiran'){
-            $data = Attendance::query()
-            ->when($request->date_start, function($query, $tanggalMulai){
-                $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-            })
-            ->when($request->date_end, function($query, $tanggalSelesai){
-                $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-                $query->where('created_at', '<=', $date_end);
-            })
-            ->when($request->bulan, function($query, $bulan){
-                $query->whereMonth('created_at', $bulan)
-                    ->whereYear('created_at', now()->year);
-            })->get();
-        }
+        $data = User::query()
+            ->where('roles', 'personnel')
+            ->get();
 
         $pdf = \PDF::loadView('pdf.report-admin', [
             'date_start' => $request->date_start ? Carbon::parse($request->date_start) : null,

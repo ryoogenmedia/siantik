@@ -220,7 +220,7 @@
 
                 var popupinstitution = `<table cellpadding="5">
                     <tr>
-                        <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='${@this.institutionLogo}' alt='gambar-lembaga'/></td>
+                        <td class="text-center" colspan="3"><img class="rounded-circle" style="object-fit: cover; width: 50px" src='${@this.institutionLogo}' alt='gambar-lembaga'/></td>
                     </tr>
                     <tr>
                         <td class="text-center"><b>${@this.institutionName}</b></td>

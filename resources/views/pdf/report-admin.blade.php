@@ -82,21 +82,34 @@
     <table>
         <thead>
             <tr>
-                <th style="text-align: center">NO</th>
-                <th style="text-align: center">NAMA</th>
-                <th style="text-align: center">STATUS</th>
-                <th style="text-align: center">TANGGAL</th>
-                <th style="text-align: center">JAM</th>
+                <th rowspan="2" style="text-align: center">NO</th>
+                <th rowspan="2" style="text-align: center">NAMA</th>
+                <th rowspan="2" style="text-align: center">NRP/NIP</th>
+                <th style="text-align: center">KETERANGAN</th>
+                <th rowspan="2" style="text-align: center">TOTAL</th>
             </tr>
+
+            <tr>
+                <th>H</th>
+                <th>S</th>
+                <th>C</th>
+                <th>I</th>
+                <th>T</th>
+                <th>PK</th>
+                <th>TR</th>
+            </tr>
+
         </thead>
         <tbody>
             @foreach ($data as $absence)
+                @php
+                    $result = presensi($absence->id);
+                @endphp
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td style="text-align: left">{{ $absence->akun->name ?? '-' }}</td>
-                    <td>{{ $kategori == 'kehadiran' ? $absence->status_attendance : $absence->status_permission }}</td>
-                    <td>{{ $absence->created_at->format('d-m-Y') ?? '-' }}</td>
-                    <td>{{ $absence->created_at->format('H:i:s') ?? '-' }}</td>
+                    <td style="text-align: left">{{ $absence->akun->personnel->number_identity ?? '-' }}</td>
+                    <td></td>
                 </tr>
             @endforeach
         </tbody>
