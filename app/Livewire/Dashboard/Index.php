@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Helpers\HomeChart;
 use App\Models\Attendance;
 use App\Models\Institution;
 use App\Models\Permission;
@@ -186,6 +187,7 @@ class Index extends Component
         }
 
         if(auth()->user()->roles == 'leader'){
+
             $institution = Institution::first();
 
             if(isset($institution) && $institution){
@@ -201,6 +203,8 @@ class Index extends Component
                 $this->institutionAddress = $institution->address;
                 $this->institutionLogo = $institution->logo ? Storage::url($institution->logo) : null;
             }
+
+
             $this->jmlKehadiran = Attendance::query()
                 ->whereDate('created_at', now()->toDateString())
                 ->where('created_at', '<=', now()->endOfDay())

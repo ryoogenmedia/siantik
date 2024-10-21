@@ -253,7 +253,7 @@
                 var bounds = L.latLngBounds([lat, lon]);
 
                 var routes = {
-                    detailAttendance: "{{ route('dashboard', ['id' => 'REPLACE_ID']) }}"
+                    detailAttendance: "{{ route('report.admin-detail', ['id' => 'REPLACE_ID']) }}"
                 };
 
                 attendanceData.forEach(function(value) {
