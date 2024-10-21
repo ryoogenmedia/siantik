@@ -29,8 +29,10 @@
                     <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
                         src="{{ $this->logo->temporaryUrl() }}" alt="img">
                 @else
-                    <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
-                        src="{{ asset($this->showLogo) }}" alt="img">
+                    @if (isset($this->showLogo) && $this->showLogo)
+                        <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                            src="{{ asset($this->showLogo) }}" alt="img">
+                    @endif
                 @endif
             </div>
         </div>

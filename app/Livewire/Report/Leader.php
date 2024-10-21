@@ -3,6 +3,7 @@
 namespace App\Livewire\Report;
 
 use App\Models\Attendance;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -19,25 +20,38 @@ class Leader extends Component
     public function getDataRows(){
         $rows = [];
 
-        $rows = Attendance::query()
-            ->when($this->search, function($query, $search){
-                $query->where('name', 'LIKE', "%$search%");
-            })
-            ->when($this->keterangan, function($query, $keterangan){
-                $query->where('status_attendance', $keterangan);
-            })
-            ->when($this->tanggalMulai, function($query, $tanggalMulai){
-                $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-            })
-            ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
-                $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-                $query->where('created_at', '<=', $date_end);
-            })
-            ->whereDate('created_at', now()->toDateString())
-            ->where('created_at', '<=', now()->endOfDay())
-            ->whereHas('akun', function($query){
-                $query->where('roles', 'personnel');
-            })
+        $rows = User::query()
+            // ->whereHas('permissions', function($query){
+            //     $query->when($this->keterangan, function($query, $keterangan){
+            //         $query->where('status_permission', $keterangan);
+            //     })
+            //     ->when($this->tanggalMulai, function($query, $tanggalMulai){
+            //         $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
+            //     })
+            //     ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
+            //         $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
+            //         $query->where('created_at', '<=', $date_end);
+            //     })
+            //     ->whereDate('created_at', now()->toDateString())
+            //     ->where('created_at', '<=', now()->endOfDay());
+            // })
+            // ->whereHas('attendances', function($query){
+            //     $query->when($this->search, function($query, $search){
+            //         $query->where('name', 'LIKE', "%$search%");
+            //     })
+            //     ->when($this->keterangan, function($query, $keterangan){
+            //         $query->where('status_attendance', $keterangan);
+            //     })
+            //     ->when($this->tanggalMulai, function($query, $tanggalMulai){
+            //         $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
+            //     })
+            //     ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
+            //         $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
+            //         $query->where('created_at', '<=', $date_end);
+            //     })
+            //     ->whereDate('created_at', now()->toDateString())
+            //     ->where('created_at', '<=', now()->endOfDay());
+            // })->where('roles', 'personnel')
             ->get();
 
         $this->rows = $rows;
@@ -53,6 +67,7 @@ class Leader extends Component
 
     public function mount(){
         $this->getDataRows();
+        // dd($this->rows);
     }
 
     public function resetFilter(){

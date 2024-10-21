@@ -15,11 +15,32 @@
                 <img src="{{ $row->akun->avatarUrl() }}" alt="img">
             </div>
             <div class="content">
-
-                <div class="left">
-                    <h6 style="font-size: 12px">{{ $row->name }}</h6>
-                    <p class="text-black" style="font-size: 12px"><b>NIP :</b> {{ $row->nip }}</p>
-                    <p class="text-black" style="font-size: 12px"><b>NRP :</b> {{ $row->nrp }}</p>
+                <div class="left" style="width: 50%">
+                    <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $row->name }}</h6>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="text-black fw-bold" style="font-size: 12px">NIP / NRP</p>
+                            </td>
+                            <td>
+                                <p class="text-black px-1 fw-bold" style="font-size: 12px">:</p>
+                            </td>
+                            <td>
+                                <p class="text-black" style="font-size: 12px">{{ $row->number_identity }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="text-black fw-bold" style="font-size: 12px">Alamat Surel</p>
+                            </td>
+                            <td>
+                                <p class="text-black px-1 fw-bold" style="font-size: 12px">:</p>
+                            </td>
+                            <td>
+                                <p class="text-black" style="font-size: 12px">{{ $row->akun->email }}</p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <span class="price">

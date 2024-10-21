@@ -1,7 +1,7 @@
 <div>
-    <x-slot name="title">Sunting Personnel</x-slot>
-    <x-slot name="pageTitle">Sunting Personnel</x-slot>
-    <x-slot name="pagePretitle">Menyunting personnel.</x-slot>
+    <x-slot name="title">Sunting Personil</x-slot>
+    <x-slot name="pageTitle">Sunting Personil</x-slot>
+    <x-slot name="pagePretitle">Menyunting Personil.</x-slot>
 
     <x-slot name="button">
         <a href="{{ route('personnel.index') }}" class="btn btn-sm tf-btn primary">Kemabali</a>
@@ -13,11 +13,8 @@
         <x-backend.form.input wire:model='namaLengkap' label="Nama Lengkap" name="namaLengkap" type="text"
             placeholder="masukkan nama lengkap" autofocus required />
 
-        <x-backend.form.input wire:model='nip' label="NIP" name="nip" type="number"
-            placeholder="masukkan nip" />
-
-        <x-backend.form.input wire:model='nrp' label="NRP" name="nrp" type="number"
-            placeholder="masukkan nrp" />
+        <x-backend.form.input wire:model='nomorIdentitas' label="Nomor Identitas (NIP / NRP)" name="nomorIdentitas"
+            type="number" placeholder="masukkan nip / nrp" required />
 
         <x-backend.form.select wire:model='jenisKelamin' name="jenisKelamin" label="Pilih Jenis Kelamin" required>
             <option value="">- pilih -</option>
@@ -26,21 +23,21 @@
             @endforeach
         </x-backend.form.select>
 
-        <x-backend.form.select wire:model='jabatan' name="jabatan" label="Pilih Jabatan" required>
+        <x-backend.form.select wire:model='jabatan' name="jabatan" label="Jabatan" required>
             <option value="">- pilih -</option>
             @foreach (config('const.position') as $jabatan)
                 <option value="{{ $jabatan }}">{{ $jabatan }}</option>
             @endforeach
         </x-backend.form.select>
 
-        <p class="text-center fw-bold my-5">- DATA AKUN -</p>
+        <hr class="mt-5">
 
         <div class="d-flex justify-content-center">
             @if ($this->avatar)
-                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle mt-3"
                     src="{{ $this->avatar->temporaryUrl() }}" alt="img">
             @else
-                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle"
+                <img style="width: 80px;height:80px; object-fit:cover;" class="rounded-circle mt-3"
                     src="{{ $this->avatarUrl }}" alt="img">
             @endif
         </div>

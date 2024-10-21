@@ -47,8 +47,7 @@ class UserTableSeeder extends Seeder
             Personnel::create([
                 'user_id' => $akun->id,
                 'name' => $akun->name,
-                'nip' => '99304934',
-                'nrp' => '888353',
+                'number_identity' => '99304934',
                 'position' => '999343',
                 'sex' => 'laki-laki',
             ]);

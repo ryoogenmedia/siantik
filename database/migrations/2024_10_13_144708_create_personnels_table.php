@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('nip')->nullable();
-            $table->string('nrp')->nullable();
+            $table->string('number_identity')->nullable();
             $table->string('position')->nullable();
             $table->string('sex')->nullable();
             $table->timestamps();

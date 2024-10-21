@@ -12,14 +12,44 @@
             </div>
             <div class="content">
                 <div class="left">
-                    <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
-                    <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
-                        {{ $row->check_in }}</p>
-                    <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
-                        {{ $row->check_out ?? 'belum dilakukan.' }}</p>
+                    <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $row->akun->name }}</h6>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>absen pagi</b>
+                            </td>
+                            <td>
+                                <p class="text-black px-3" style="font-size: .8rem"><b>:</b>
+                            </td>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>{{ $row->check_in }}</b>
+                            </td>
+                        </tr>
 
-                    <p class="text-black" style="font-size: .8rem"><b>status :</b>
-                        {{ $row->status_attendance }}</p>
+                        <tr>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>absen siang</b>
+                            </td>
+                            <td>
+                                <p class="text-black px-3" style="font-size: .8rem"><b>:</b>
+                            </td>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>{{ $row->check_out }}</b>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>keterangan</b>
+                            </td>
+                            <td>
+                                <p class="text-black px-3" style="font-size: .8rem"><b>:</b>
+                            </td>
+                            <td>
+                                <p class="text-black" style="font-size: .8rem"><b>{{ $row->status_attendance }}</b>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
