@@ -7,6 +7,7 @@ use App\Models\Institution;
 use App\Models\Permission;
 use App\Models\Personnel;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Index extends Component
@@ -14,6 +15,14 @@ class Index extends Component
     public $jmlPersonnel;
     public $jmlPengguna;
     public $radiusLingkaran;
+    public $attendance;
+
+    public $institutionLat;
+    public $institutionLng;
+    public $institutionName;
+    public $institutionLogo;
+    public $institutionAddress;
+
 
     public $jmlHadir;
     public $jmlSakit;
@@ -27,6 +36,7 @@ class Index extends Component
 
     public $jmlKehadiran;
     public $jmlPerizinan;
+    public $checkLocation = false;
     public $isAbsence = true;
 
     public function getCounterData(){
@@ -176,6 +186,21 @@ class Index extends Component
         }
 
         if(auth()->user()->roles == 'leader'){
+            $institution = Institution::first();
+
+            if(isset($institution) && $institution){
+                if($institution->longitude && $institution->latitude){
+                    $this->checkLocation = true;
+                }
+
+                $this->institutionName = $institution->name;
+                $this->radiusLingkaran = $institution->radius;
+                $this->institutionLat = $institution->latitude;
+                $this->institutionLng = $institution->longitude;
+
+                $this->institutionAddress = $institution->address;
+                $this->institutionLogo = $institution->logo ? Storage::url($institution->logo) : null;
+            }
             $this->jmlKehadiran = Attendance::query()
                 ->whereDate('created_at', now()->toDateString())
                 ->where('created_at', '<=', now()->endOfDay())

@@ -1,3 +1,19 @@
+@once
+    @section('styles')
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+            integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
+        <style>
+            #map {
+                height: 400px;
+            }
+        </style>
+    @endsection
+@endonce
+
 <div>
     <x-slot name="title">Beranda</x-slot>
     <x-slot name="pageTitle">Dashboard</x-slot>
@@ -32,6 +48,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row mt-5 ms-1">
+                <h3>Daftar Absensi Hari Ini</h3>
+                <div class="col-12">
+                    <div wire:ignore.self class="row p-2">
+                        <div class="col-12" id="map"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="attendance-data" data-attendance="{{ json_encode($this->attendance) }}"></div>
+
         </div>
     @endif
 
@@ -141,3 +169,173 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            function getLatLon() {
+                return new Promise((resolve, reject) => {
+                    let latitude = @this.institutionLat;
+                    let longitude = @this.institutionLng;
+
+                    resolve({
+                        latitude,
+                        longitude
+                    });
+                });
+            }
+
+            getLatLon().then((coords) => {
+                initMap(coords.latitude, coords.longitude);
+            }).catch((error) => {
+                console.error("Gagal mendapatkan lokasi: ", error);
+                initMap({{ $this->institutionLat ?? -5.147665 }},
+                    {{ $this->institutionLng ?? 119.432732 }});
+            });
+
+            function initMap(lat, lon) {
+                var osm = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                });
+
+                var institutionLocation = L.latLng(lat, lon);
+
+                var institutionLogo = L.icon({
+                    iconUrl: @this.institutionLogo,
+                    iconSize: [38, 38],
+                });
+
+                var absenceIcon = L.icon({
+                    iconUrl: @this.markerIcon,
+                    iconSize: [38, 38],
+                });
+
+                var popupinstitution = `<table cellpadding="5">
+                    <tr>
+                        <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='${@this.institutionLogo}' alt='gambar-lembaga'/></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><b>${@this.institutionName}</b></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Polres Tabes Makassar</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">${@this.institutionAddress}</td>
+                    </tr>
+                </table>`;
+
+                var map = L.map('map', {
+                    center: [lat, lon],
+                    zoom: 5,
+                    layers: [osm],
+                    minZoom: 5,
+                    maxZoom: 18,
+                });
+
+                var institutionMarker = L.marker([lat, lon], {
+                        icon: institutionLogo
+                    }).addTo(map)
+                    .bindPopup(popupinstitution)
+                    .openPopup();
+
+                const attendanceData = JSON.parse(document.getElementById('attendance-data').getAttribute(
+                    'data-attendance'));
+
+                var bounds = L.latLngBounds([lat, lon]);
+
+                var routes = {
+                    detailAttendance: "{{ route('dashboard', ['id' => 'REPLACE_ID']) }}"
+                };
+
+                attendanceData.forEach(function(value) {
+                    map.setZoom(10);
+                    var attendanceId = value.id;
+                    var attendanceLat = value.latitude;
+                    var attendanceLng = value.longitude;
+                    var absenceLocation = L.latLng(attendanceLat, attendanceLng);
+                    var comparationLatLang = [institutionLocation, absenceLocation];
+                    var route = routes.detailAttendance.replace('REPLACE_ID', value.id);
+
+                    bounds.extend(absenceLocation);
+
+                    if (value.akun.avatar) {
+                        var avatar = `
+                                <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='{{ asset('storage/' . '${value.akun.avatar}') }}' alt='gambar-user'/></td>
+                        `;
+                    } else {
+                        var avatar = `
+                            <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='https://gravatar.com/avatar?s=1024' alt='gambar-user'/></td>
+                        `;
+                    }
+
+                    L.marker([attendanceLat, attendanceLng], {
+                            icon: absenceIcon,
+                        }).addTo(map)
+                        .bindPopup(`<table cellpadding="5">
+                            <tr>
+                                ${avatar}
+                            </tr>
+                            <tr>
+                                <td>Nama</td>
+                                <td>:</td>
+                                <td><b>${value.akun.dosen.name}</b></td>
+                            </tr>
+                            <tr>
+                                <td>NIDN</td>
+                                <td>:</td>
+                                <td><b>${value.akun.dosen.nidn}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Nomor Ponsel</td>
+                                <td>:</td>
+                                <td><b>${value.akun.dosen.phone}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td><b>${value.akun.dosen.email}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Shift</td>
+                                <td>:</td>
+                                <td>
+                                    <b>${value.shift.name_shift}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td>
+                                    <b>${value.status}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  class='text-center' colspan='3'>
+                                    <a href="${route}" class="btn bg-success-lt mt-3">Detail Absensi</a>
+                                </td>
+                            </tr>
+                        </table>`);
+                });
+
+                if (@this.radiusLingkaran) {
+                    var circle = L.circle(institutionLocation, {
+                        radius: parseInt(@this.radiusLingkaran),
+                        color: '#500A94',
+                    }).addTo(map);
+                }
+
+                map.fitBounds(bounds);
+                map.setMaxBounds(bounds);
+            }
+        });
+    </script>
+@endpush
