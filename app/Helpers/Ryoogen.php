@@ -14,6 +14,7 @@ if (!function_exists('presensi')) {
         $izin = 0;
         $cuti = 0;
         $tugas = 0;
+        $sakit = 0;
         $pendidikan = 0;
 
         $permissions = Permission::where('user_id', $pengguna->id)
@@ -49,6 +50,9 @@ if (!function_exists('presensi')) {
                 case 'tugas' :
                     $tugas += $permission->total;
                 break;
+                case 'sakit' :
+                    $sakit += $permission->total;
+                break;
             }
         }
 
@@ -68,6 +72,9 @@ if (!function_exists('presensi')) {
             'tugas' => $tugas,
             'pendidikan' => $pendidikan,
             'terlambat' => $terlambat,
+            'sakit' => $sakit,
+
+            'total' => $hadir + $terlambat + $izin + $cuti + $tugas + $pendidikan + $terlambat + $sakit,
         ];
     }
 }
