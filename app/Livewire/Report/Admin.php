@@ -45,17 +45,17 @@ class Admin extends Component
 
         if($this->kategori == 'kehadiran'){
             $rows = Attendance::query()
-            ->when($this->tanggalMulai, function($query, $tanggalMulai){
-                $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-            })
-            ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
-                $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-                $query->where('created_at', '<=', $date_end);
-            })
-            ->when($this->bulan, function($query, $bulan){
-                $query->whereMonth('created_at', $bulan)
-                    ->whereYear('created_at', now()->year);
-            })->get();
+                ->when($this->tanggalMulai, function($query, $tanggalMulai){
+                    $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
+                })
+                ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
+                    $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
+                    $query->where('created_at', '<=', $date_end);
+                })
+                ->when($this->bulan, function($query, $bulan){
+                    $query->whereMonth('created_at', $bulan)
+                        ->whereYear('created_at', now()->year);
+                })->get();
         }
 
         $this->rows = $rows;
