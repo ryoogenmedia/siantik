@@ -62,7 +62,7 @@
             <div class="col-12">
                 <div class="card border border-success">
                     <div class="card-header text-success">
-                        <h3>Selamat datang kembali, {{ auth()->user()->name }} 👋</h3>
+                        <h6>Selamat datang kembali, {{ auth()->user()->name }} 👋</h6>
                     </div>
                 </div>
             </div>
