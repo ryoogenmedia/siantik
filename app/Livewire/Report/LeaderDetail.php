@@ -25,7 +25,7 @@ class LeaderDetail extends Component
     public $institutionAddress;
     public $institutionName;
     public $markerIcon;
-
+    public $phoneNumber;
     public $absenceId;
 
     public function mount($id)
@@ -39,10 +39,10 @@ class LeaderDetail extends Component
         $this->status = $absence->status_attendance;
         $this->numberIdentity = $absence->akun->personnel->number_identity;
         $this->emailPersonnel = $absence->akun->email;
-
+        $this->phoneNumber = $absence->akun->phone_number;
+        $this->absenceImg = $absence->akun->avatarUrl();
         $this->absenceLat = $absence->latitude;
         $this->absenceLng = $absence->longitude;
-        $this->absenceImg = $absence->akun->avatarUrl();
         $this->markerIcon = asset('assets/images/marker-maps.webp');
 
         if (isset($institution) && $institution) {

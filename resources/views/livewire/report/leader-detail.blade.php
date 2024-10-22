@@ -10,6 +10,7 @@
             #map {
                 height: 400px;
             }
+
             .avatar {
                 width: 50px;
                 height: 50px;
@@ -23,26 +24,64 @@
                 border-radius: 0.25rem;
                 color: #fff;
             }
+
             .bg-success-lt {
                 background-color: #28a745;
             }
+
             .bg-red-lt {
                 background-color: #dc3545;
             }
+
             .bg-orange-lt {
                 background-color: #fd7e14;
             }
+
             .bg-yellow-lt {
                 background-color: #ffc107;
             }
+
             .bg-blue-lt {
                 background-color: #007bff;
             }
+
             .bg-purple-lt {
                 background-color: #6f42c1;
             }
+
             .bg-grey-lt {
                 background-color: #6c757d;
+            }
+
+            .popup-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .popup-table th,
+            .popup-table td {
+                padding: 5px;
+                text-align: left;
+            }
+
+            .popup-table th {
+                font-weight: bold;
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .rounded-circle {
+                border-radius: 50%;
+            }
+
+            .header-img {
+                object-fit: cover;
+                width: 50px;
+                height: 50px;
             }
         </style>
     @endsection
@@ -77,18 +116,19 @@
 
                 <div class="col-lg-7 col-12">
                     <div class="mt-lg-0 mt-3">
-                        <h4 class="mb-2">Nama</h4>
+                        <h6 class="mb-2">Nama</h6>
                         <p class="mb-2">{{ $this->personnelName }}</p>
                         <hr class="my-0 mt-3">
                     </div>
 
                     <div class="mt-3">
-                        <h4 class="mb-2">Waktu Masuk</h4>
-                        <p class="mb-2"><b>{{ \Carbon\Carbon::parse($this->date)->format('H:i') }}</b> |
+                        <h6 class="mb-2">Waktu Masuk</h6>
+                        <p class="mb-2 fs-6"><b>{{ \Carbon\Carbon::parse($this->date)->format('H:i') }}</b> |
                             {{ \Carbon\Carbon::parse($this->date)->format('d/m/Y') }}
                         </p>
                         <p class="mb-2">
-                            <span class="badge
+                            <span
+                                class="badge
                                 {{ $this->status == 'hadir' ? 'bg-success-lt' : '' }}
                                 {{ $this->status == 'terlambat' ? 'bg-red-lt' : '' }}
                                 {{ $this->status == 'izin' ? 'bg-orange-lt' : '' }}
@@ -99,25 +139,32 @@
                                 {{ $this->status }}
                             </span>
                         </p>
-
                     </div>
                 </div>
             </div>
         </div>
 
+        <hr>
+
         <div class="card-body">
-            Detail Lokasi Absensi
+            <h6>Detail Lokasi Absensi</h6>
         </div>
+
+        <hr>
 
         <div class="card-body">
             <div class="row">
-                <div class="col-12" id="map"></div>
+                <div class="col-12" id="map" style="height: 300px;"></div>
             </div>
         </div>
 
+        <hr>
+
         <div class="card-body">
-            Hasil Komparasi
+            <h6>Hasil Komparasi</h6>
         </div>
+
+        <hr>
 
         <div class="card-body">
             <div class="row">
@@ -135,17 +182,14 @@
                     </div>
                 </div>
 
-                <div class="col-9">
-                    <div class="row">
-                        <div class="col-12">
-                            <h4>Kesimpulan</h4>
-                            <p id="distanceFromCircleEdge"></p>
-                        </div>
-                    </div>
+                <div class="col-lg-9">
+                    <h6 class="mb-4">Kesimpulan</h6>
+                    <p id="distanceFromCircleEdge"></p>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 @push('scripts')
@@ -175,12 +219,13 @@
             }).catch((error) => {
                 console.error("Gagal mendapatkan lokasi: ", error);
                 initMap({{ $this->institutionLat ?? -5.147665 }},
-                         {{ $this->institutionLng ?? 119.432732 }});
+                    {{ $this->institutionLng ?? 119.432732 }});
             });
 
             function initMap(lat, lon) {
-                var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                var osm = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
                 });
 
                 var institutionLocation = L.latLng(lat, lon);
@@ -196,7 +241,7 @@
                 });
 
                 var popupInstitution = `
-                    <table cellpadding="5">
+                    <table class="popup-table" cellpadding="5">
                         <tr>
                             <td class="text-center" colspan="3">
                                 <img class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;" src='${@this.institutionLogo}' alt='gambar-lembaga'/>
@@ -214,10 +259,10 @@
                     </table>`;
 
                 var popupAbsence = `
-                    <table cellpadding="5">
+                    <table class="popup-table" cellpadding="5">
                         <tr>
                             <td class="text-center" colspan="3">
-                                <img class="avatar rounded-circle" style="object-fit: cover; width: 50px; height: 50px;" src='${@this.imageAbsence}' alt='gambar-user'/>
+                                <img class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;" src='${@this.absenceImg}' alt='gambar-lembaga'/>
                             </td>
                         </tr>
                         <tr>
@@ -230,6 +275,11 @@
                             <td>:</td>
                             <td><b>${@this.numberIdentity}</b></td>
                         </tr>
+                         <tr>
+                                <td>Nomor Ponsel</td>
+                                <td>:</td>
+                                <td><b>${@this.phoneNumber}</b></td>
+                         </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
@@ -269,14 +319,14 @@
                     }).addTo(map);
                 }
 
-                document.getElementById('distanceToAbsence').innerText = Math.floor(map.distance(
+                document.getElementById('distanceToAbsence').innerText =  Math.floor(map.distance(
                     institutionLocation,
                     L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
-                document.getElementById('distanceFromCircleEdge').innerText = Math.floor(
-                    Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) - @this.radiusLingkaran)) + ' Meter';
+                document.getElementById('distanceFromCircleEdge').innerText = 'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
+                    Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
+                        @this.radiusLingkaran)) + ' Meter';
             }
         });
     </script>
 @endpush
-

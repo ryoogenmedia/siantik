@@ -16,9 +16,41 @@
                 height: 50px;
                 object-fit: cover;
             }
+
+            .popup-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .popup-table th,
+            .popup-table td {
+                padding: 5px;
+                text-align: left;
+            }
+
+            .popup-table th {
+                font-weight: bold;
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .rounded-circle {
+                border-radius: 50%;
+            }
+
+            .header-img {
+                object-fit: cover;
+                width: 50px;
+                height: 50px;
+            }
         </style>
     @endsection
 @endonce
+
 
 <div>
     <x-slot name="title">Beranda</x-slot>
@@ -234,7 +266,7 @@
                     iconSize: [38, 38],
                 });
 
-                var popupinstitution = `<table cellpadding="5">
+                var popupinstitution = `<table class="popup-table" cellpadding="5">
                     <tr>
                         <td class="text-center" colspan="3"><img class="rounded-circle" style="object-fit: cover; width: 50px" src='${@this.institutionLogo}' alt='gambar-lembaga'/></td>
                     </tr>
@@ -303,22 +335,30 @@
                     L.marker([attendanceLat, attendanceLng], {
                             icon: absenceIcon,
                         }).addTo(map)
-                        .bindPopup(`<table cellpadding="5">
+                        .bindPopup(`
+                        <table class="popup-table" cellpadding="5">
                              <tr>
                                 ${avatar}
                             </tr>
                             <tr>
-                                <td class="text-center" colspan="3"><b>${value.name}</b></td>
+                                <td>Nama</td>
+                                <td>:</td>
+                                <td><b>${value.akun.name}</b></td>
                             </tr>
                             <tr>
-                                <td>Absen Pagi</td>
+                                <td>Nomor Identitas</td>
                                 <td>:</td>
-                                <td><b>${value.check_in}</b></td>
+                                <td><b>${value.akun.personnel.number_identity}</b></td>
                             </tr>
                             <tr>
-                                <td>Absen Siang</td>
+                                <td>Nomor Ponsel</td>
                                 <td>:</td>
-                                <td><b>${value.check_out}</b></td>
+                                <td><b>${value.akun.phone_number}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td><b>${value.akun.email}</b></td>
                             </tr>
                             <tr>
                                 <td>Keterangan</td>
