@@ -10,6 +10,40 @@
             #map {
                 height: 400px;
             }
+            .avatar {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+            }
+
+            .badge {
+                padding: 0.5em 1em;
+                font-size: 0.875rem;
+                font-weight: 500;
+                border-radius: 0.25rem;
+                color: #fff;
+            }
+            .bg-success-lt {
+                background-color: #28a745;
+            }
+            .bg-red-lt {
+                background-color: #dc3545;
+            }
+            .bg-orange-lt {
+                background-color: #fd7e14;
+            }
+            .bg-yellow-lt {
+                background-color: #ffc107;
+            }
+            .bg-blue-lt {
+                background-color: #007bff;
+            }
+            .bg-purple-lt {
+                background-color: #6f42c1;
+            }
+            .bg-grey-lt {
+                background-color: #6c757d;
+            }
         </style>
     @endsection
 @endonce
@@ -51,16 +85,21 @@
                     <div class="mt-3">
                         <h4 class="mb-2">Waktu Masuk</h4>
                         <p class="mb-2"><b>{{ \Carbon\Carbon::parse($this->date)->format('H:i') }}</b> |
-                            {{ \Carbon\Carbon::parse($this->date)->format('d/m/Y') }}</p>
-                        <p class="mb-2"> <span @class([
-                            'badge',
-                            'bg-success-lt' => $this->status == 'tepat waktu',
-                            'bg-red-lt' => $this->status == 'terlambat',
-                            'bg-orange-lt' => $this->status == 'izin',
-                        ])>
+                            {{ \Carbon\Carbon::parse($this->date)->format('d/m/Y') }}
+                        </p>
+                        <p class="mb-2">
+                            <span class="badge
+                                {{ $this->status == 'hadir' ? 'bg-success-lt' : '' }}
+                                {{ $this->status == 'terlambat' ? 'bg-red-lt' : '' }}
+                                {{ $this->status == 'izin' ? 'bg-orange-lt' : '' }}
+                                {{ $this->status == 'cuti' ? 'bg-yellow-lt' : '' }}
+                                {{ $this->status == 'tugas' ? 'bg-blue-lt' : '' }}
+                                {{ $this->status == 'pendidikan' ? 'bg-purple-lt' : '' }}
+                                {{ $this->status == 'sakit' ? 'bg-grey-lt' : '' }}">
                                 {{ $this->status }}
                             </span>
                         </p>
+
                     </div>
                 </div>
             </div>
@@ -120,7 +159,7 @@
     <script>
         document.addEventListener('livewire:init', () => {
             function getLatLon() {
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                     let latitude = @this.institutionLat;
                     let longitude = @this.institutionLng;
 
@@ -135,8 +174,8 @@
                 initMap(coords.latitude, coords.longitude);
             }).catch((error) => {
                 console.error("Gagal mendapatkan lokasi: ", error);
-                initMap({{ $this->institutionLat ?? -5.155978984099238 }},
-                    {{ $this->institutionLng ?? 119.40353393554689 }});
+                initMap({{ $this->institutionLat ?? -5.147665 }},
+                         {{ $this->institutionLng ?? 119.432732 }});
             });
 
             function initMap(lat, lon) {
@@ -145,51 +184,63 @@
                 });
 
                 var institutionLocation = L.latLng(lat, lon);
-                var absenceLocation = L.latLng(@this.absenceLat, @this.absenceLng);
-                var comparationLatLang = [institutionLocation, absenceLocation];
 
-                var instiIcon = L.icon({
+                var institutionLogo = L.icon({
                     iconUrl: @this.institutionLogo,
                     iconSize: [38, 38],
                 });
 
-                var popupInstitution = `<table cellpadding="5">
-                <tr>
-                    <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='${@this.institutionLogo}' alt='gambar-kost'/></td>
-                </tr>
-                <tr>
-                    <td class="text-center"><b>${@this.institutionName}</b></td>
-                </tr>
-                <tr>
-                    <td class="text-center">Polres Tabes Makassar</td>
-                </tr>
-                <tr>
-                    <td class="text-center">${@this.institutionAddress}</td>
-                </tr>
-            </table>`;
+                var absenceIcon = L.icon({
+                    iconUrl: @this.markerIcon,
+                    iconSize: [38, 38],
+                });
 
-                var popupAbsence = `<table cellpadding="5">
-                <tr>
-                    <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='${@this.absenceImg}' alt='gambar-kost'/></td>
-                </tr>
-                <tr>
-                    <td>Nama</td>
-                    <td>:</td>
-                    <td><b>${@this.personnelName}</b></td>
-                </tr>
-                <tr>
-                    <td>Nomor Identitas</td>
-                    <td>:</td>
-                    <td><b>${@this.numberIdentity}</b></td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>:</td>
-                    <td>
-                        ${@this.status}
-                    </td>
-                </tr>
-            </table>`;
+                var popupInstitution = `
+                    <table cellpadding="5">
+                        <tr>
+                            <td class="text-center" colspan="3">
+                                <img class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;" src='${@this.institutionLogo}' alt='gambar-lembaga'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><b>${@this.institutionName}</b></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Polres Tabes Makassar</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">${@this.institutionAddress}</td>
+                        </tr>
+                    </table>`;
+
+                var popupAbsence = `
+                    <table cellpadding="5">
+                        <tr>
+                            <td class="text-center" colspan="3">
+                                <img class="avatar rounded-circle" style="object-fit: cover; width: 50px; height: 50px;" src='${@this.imageAbsence}' alt='gambar-user'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <td>:</td>
+                            <td><b>${@this.personnelName}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Nomor Identitas</td>
+                            <td>:</td>
+                            <td><b>${@this.numberIdentity}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>:</td>
+                            <td><b>${@this.emailPersonnel}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>:</td>
+                            <td><b>${@this.status}</b></td>
+                        </tr>
+                    </table>`;
 
                 var map = L.map('map', {
                     center: [lat, lon],
@@ -199,45 +250,33 @@
                     maxZoom: 18,
                 });
 
-                var institutionMarker = L.marker([lat, lon]).addTo(map)
-                    .bindPopup(popupinstitution)
+                var institutionMarker = L.marker([lat, lon], {
+                        icon: institutionLogo
+                    }).addTo(map)
+                    .bindPopup(popupInstitution)
                     .openPopup();
 
-                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng]).addTo(map)
+                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng], {
+                        icon: absenceIcon
+                    }).addTo(map)
                     .bindPopup(popupAbsence)
                     .openPopup();
 
                 if (@this.radiusLingkaran) {
-                    var circle = L.circle(institutionLocation, {
+                    L.circle(institutionLocation, {
                         radius: parseInt(@this.radiusLingkaran),
                         color: '#500A94',
                     }).addTo(map);
                 }
 
-                if (@this.institutionLogo) {
-                    institutionMarker.setIcon(instiIcon);
-                }
+                document.getElementById('distanceToAbsence').innerText = Math.floor(map.distance(
+                    institutionLocation,
+                    L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
-                var polyline = L.polyline(comparationLatLang, {
-                    color: 'red',
-                    weight: 4,
-                    opacity: 0.7,
-                    smoothFactor: 1
-                }).addTo(map);
-
-                var distanceToAbsence = institutionLocation.distanceTo(absenceLocation);
-                var radius = circle.getRadius();
-                var distanceFromCircleEdge = Math.max(0, distanceToAbsence - radius);
-
-                document.getElementById('distanceToAbsence').append(Math.round(distanceToAbsence) +
-                    ' Meter');
-
-                document.getElementById('distanceFromCircleEdge').append(
-                    "Jarak dari tepi luar lingkaran ke lokasi absensi : " + Math.round(distanceFromCircleEdge) +
-                    " Meter")
-
-                map.fitBounds(polyline.getBounds());
+                document.getElementById('distanceFromCircleEdge').innerText = Math.floor(
+                    Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) - @this.radiusLingkaran)) + ' Meter';
             }
         });
     </script>
 @endpush
+
