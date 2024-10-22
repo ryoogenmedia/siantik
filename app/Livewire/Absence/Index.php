@@ -28,14 +28,16 @@ class Index extends Component
     public $isPermit = false;
 
     #[On('location')]
-    public function getLocationAttendace($latitude, $longitude, $distance){
+    public function getLocationAttendace($latitude, $longitude, $distance)
+    {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->distance = $distance;
     }
 
     #[On('takePicture')]
-    public function attendanceNow($base_64){
+    public function attendanceNow($base_64)
+    {
         if (preg_match('/^data:image\/(\w+);base64,/', $base_64, $type)) {
             $data = substr($base_64, strpos($base_64, ',') + 1);
             $data = str_replace(' ', '+', $data);
@@ -51,94 +53,94 @@ class Index extends Component
 
             $user = User::findOrFail($this->userId);
             $absence = Attendance::query()
-            ->where('user_id', $user->id)
-            ->whereDate('created_at', now()->toDateString())
-            ->where('created_at', '<=', now()->endOfDay())
-            ->first();
+                ->where('user_id', $user->id)
+                ->whereDate('created_at', now()->toDateString())
+                ->where('created_at', '<=', now()->endOfDay())
+                ->first();
 
-        $permit = Permission::query()
-            ->where('user_id', $user->id)
-            ->whereDate('created_at', now()->toDateString())
-            ->where('created_at', '<=', now()->endOfDay())
-            ->first();
+            $permit = Permission::query()
+                ->where('user_id', $user->id)
+                ->whereDate('created_at', now()->toDateString())
+                ->where('created_at', '<=', now()->endOfDay())
+                ->first();
 
-        $this->isPermit = $permit ? true : false;
+            $this->isPermit = $permit ? true : false;
 
-        if($absence || $permit){
-            $this->checkAbsence = false;
+            if ($absence || $permit) {
+                $this->checkAbsence = false;
+
+                session()->flash('alert', [
+                    'type' => 'warning',
+                    'message' => 'Bahaya.',
+                    'detail' => "anda hanya dapat sekali dalam sehari melakukan absensi.",
+                ]);
+
+                return redirect()->back();
+            }
+
+            if (!$this->instLatitude && !$this->instLongitude) {
+                session()->flash('alert', [
+                    'type' => 'warning',
+                    'message' => 'Bahaya.',
+                    'detail' => "admin belum meng-aktifkan lokasi instansi, anda tidak bisa absen sekarang.",
+                ]);
+
+                return back();
+            }
+
+            if (!$this->longitude || !$this->latitude || is_null($this->distance)) {
+                session()->flash('alert', [
+                    'type' => 'warning',
+                    'message' => 'Bahaya.',
+                    'detail' => "aktifkan lokasi anda sekarang, untuk melakukan absensi.",
+                ]);
+
+                return back();
+            }
+
+            $institution = Institution::first();
+
+            $attendance = Attendance::create([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'check_in' => now()->format('d-m-Y H:i:s'),
+                'longitude' => $this->longitude,
+                'latitude' => $this->latitude,
+                'image' => $fileUrl,
+            ]);
+
+            if ($this->distance == 0) {
+                $status = now()->greaterThanOrEqualTo($institution->time_check_in) && now()->lessThanOrEqualTo($institution->time_check_out)
+                    ? 'terlambat'
+                    : (now()->greaterThan($institution->time_check_out) ? 'terlambat' : 'hadir');
+
+                $attendance->update([
+                    'status_attendance' => $status,
+                ]);
+            } else {
+                session()->flash('alert', [
+                    'type' => 'warning',
+                    'message' => 'Bahaya.',
+                    'detail' => "anda berada di luar jangkauan radius absensi.",
+                ]);
+
+                return redirect()->route('absence.index');
+            }
 
             session()->flash('alert', [
-                'type' => 'warning',
-                'message' => 'Bahaya.',
-                'detail' => "anda hanya dapat sekali dalam sehari melakukan absensi.",
+                'type' => 'success',
+                'message' => 'Berhasil.',
+                'detail' => "anda sekarang telah hadir.",
             ]);
 
             return redirect()->back();
-        }
-
-        if(!$this->instLatitude && !$this->instLongitude){
-            session()->flash('alert', [
-                'type' => 'warning',
-                'message' => 'Bahaya.',
-                'detail' => "admin belum meng-aktifkan lokasi instansi, anda tidak bisa absen sekarang.",
-            ]);
-
-            return back();
-        }
-
-        if(!$this->longitude || !$this->latitude || is_null($this->distance)){
-            session()->flash('alert', [
-                'type' => 'warning',
-                'message' => 'Bahaya.',
-                'detail' => "aktifkan lokasi anda sekarang, untuk melakukan absensi.",
-            ]);
-
-            return back();
-        }
-
-        $institution = Institution::first();
-
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'name' => $user->name,
-            'check_in' => now()->format('d-m-Y H:i:s'),
-            'longitude' => $this->longitude,
-            'latitude' => $this->latitude,
-            'image' => $fileUrl,
-        ]);
-
-        if ($this->distance == 0) {
-            $status = now()->greaterThanOrEqualTo($institution->time_check_in) && now()->lessThanOrEqualTo($institution->time_check_out)
-                ? 'terlambat'
-                : (now()->greaterThan($institution->time_check_out) ? 'terlambat' : 'hadir');
-
-            $attendance->update([
-                'status_attendance' => $status,
-            ]);
         } else {
-            session()->flash('alert', [
-                'type' => 'warning',
-                'message' => 'Bahaya.',
-                'detail' => "anda berada di luar jangkauan radius absensi.",
-            ]);
-
-            return redirect()->route('absence.index');
-        }
-
-        session()->flash('alert', [
-            'type' => 'success',
-            'message' => 'Berhasil.',
-            'detail' => "anda sekarang telah hadir.",
-        ]);
-
-        return redirect()->back();
-
-        }else {
             throw new \Exception('Invalid base64 string');
         }
     }
 
-    public function absenceCheckOut(){
+    public function absenceCheckOut()
+    {
         $absence = Attendance::query()
             ->where('user_id', $this->userId)
             ->whereDate('created_at', now()->toDateString())
@@ -158,7 +160,8 @@ class Index extends Component
         return redirect()->back();
     }
 
-    public function mount(){
+    public function mount()
+    {
         $institution = Institution::first();
 
         $user = User::findOrFail(auth()->user()->id);
@@ -176,7 +179,7 @@ class Index extends Component
             ->where('created_at', '<=', now()->endOfDay())
             ->first();
 
-        if($absence || $permit){
+        if ($absence || $permit) {
             $this->checkAbsence = false;
         }
 
@@ -185,14 +188,14 @@ class Index extends Component
             ->first();
 
         if ($isCheckOut) {
-            if(isset($absence->check_out)){
+            if (isset($absence->check_out)) {
                 $this->isCheckOut = false;
-            }else{
+            } else {
                 $this->isCheckOut = true;
             }
         }
 
-        if(isset($institution) && $institution){
+        if (isset($institution) && $institution) {
             $this->instLatitude = $institution->latitude;
             $this->instLongitude = $institution->longitude;
             $this->radius = $institution->radius;
