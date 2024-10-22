@@ -100,7 +100,7 @@
 
                     <span class="price">
                         <div class="d-flex flex-wrap">
-                            <a class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                            <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id])  }}" class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
                         </div>
                     </span>
                 </div>

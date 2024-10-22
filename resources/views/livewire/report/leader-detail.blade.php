@@ -22,7 +22,7 @@
     <x-slot name="pageTitle">Detail Absensi</x-slot>
 
     <x-slot name="button">
-        <x-datatable.button.back name="Kembali" :route="route('attendance.absence.index')" />
+        <a href="{{ route('daily-report.leader') }}" class="btn btn-sm tf-btn primary">Kembali</a>
     </x-slot>
 
     <x-alert />
@@ -56,7 +56,6 @@
                             'badge',
                             'bg-success-lt' => $this->status == 'tepat waktu',
                             'bg-red-lt' => $this->status == 'terlambat',
-                            'bg-danger' => $this->status == 'alfa',
                             'bg-orange-lt' => $this->status == 'izin',
                         ])>
                                 {{ $this->status }}
@@ -149,7 +148,7 @@
                 var absenceLocation = L.latLng(@this.absenceLat, @this.absenceLng);
                 var comparationLatLang = [institutionLocation, absenceLocation];
 
-                var univIcon = L.icon({
+                var instiIcon = L.icon({
                     iconUrl: @this.institutionLogo,
                     iconSize: [38, 38],
                 });
@@ -162,7 +161,7 @@
                     <td class="text-center"><b>${@this.institutionName}</b></td>
                 </tr>
                 <tr>
-                    <td class="text-center">Universitas Teknologi Akba Makassar</td>
+                    <td class="text-center">Polres Tabes Makassar</td>
                 </tr>
                 <tr>
                     <td class="text-center">${@this.institutionAddress}</td>
@@ -216,7 +215,7 @@
                 }
 
                 if (@this.institutionLogo) {
-                    institutionMarker.setIcon(univIcon);
+                    institutionMarker.setIcon(instiIcon);
                 }
 
                 var polyline = L.polyline(comparationLatLang, {
