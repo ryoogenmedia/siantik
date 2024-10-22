@@ -1,8 +1,36 @@
 <?php
+
+namespace App\Helpers;
+
 use App\Models\Attendance;
 use App\Models\Permission;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+
+class Ryoogen{
+    public static function ATTENDANCE($date = null, $status = null, $id = null){
+        $attendance = Attendance::query()
+            ->when($status, function($query,  $status){
+                $query->where('status_attendance', $status);
+            })
+            ->when($id, function($query, $id){
+                $query->where('user_id', $id);
+            })
+            ->when($date, function($query, $date) use ($id){
+                $query->whereMonth('created_at', Carbon::parse($date)->month)
+                    ->whereYear('created_at', Carbon::parse($date)->year);
+            }, function($query){
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
+            })
+            ->with('akun.personnel')
+            ->get();
+
+        return $attendance;
+    }
+
+}
 
 if (!function_exists('presensi')) {
     function presensi($id) {

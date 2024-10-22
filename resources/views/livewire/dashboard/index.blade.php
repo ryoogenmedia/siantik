@@ -10,6 +10,12 @@
             #map {
                 height: 400px;
             }
+
+            .avatar {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+            }
         </style>
     @endsection
 @endonce
@@ -167,6 +173,16 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-5 ms-1">
+            <h3>Daftar Absensi Hari Ini</h3>
+            <div class="col-12">
+                <div wire:ignore.self class="row p-2">
+                    <div class="col-12" id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="attendance-data" data-attendance="{{ json_encode($this->attendance) }}"></div>
     @endif
 </div>
 
@@ -253,27 +269,34 @@
                 var bounds = L.latLngBounds([lat, lon]);
 
                 var routes = {
-                    detailAttendance: "{{ route('report.admin-detail', ['id' => 'REPLACE_ID']) }}"
+                    adminDetailAttendance: "{{ route('report.admin-detail', ['id' => 'REPLACE_ID']) }}",
+                    leaderDetailAttendance: "{{ route('daily-report.leader-detail', ['id' => 'REPLACE_ID']) }}"
                 };
 
                 attendanceData.forEach(function(value) {
-                    map.setZoom(10);
+                    map.setZoom(18);
+                    var userRole = "{{ auth()->user()->roles }}";
+                    var route;
                     var attendanceId = value.id;
                     var attendanceLat = value.latitude;
                     var attendanceLng = value.longitude;
                     var absenceLocation = L.latLng(attendanceLat, attendanceLng);
                     var comparationLatLang = [institutionLocation, absenceLocation];
-                    var route = routes.detailAttendance.replace('REPLACE_ID', value.id);
+                    if (userRole == "leader") {
+                        route = routes.leaderDetailAttendance.replace('REPLACE_ID', value.id);
+                    } else {
+                        route = routes.adminDetailAttendance.replace('REPLACE_ID', value.id);
+                    }
 
                     bounds.extend(absenceLocation);
 
                     if (value.akun.avatar) {
                         var avatar = `
-                                <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='{{ asset('storage/' . '${value.akun.avatar}') }}' alt='gambar-user'/></td>
+                                <td class="text-center" colspan="3"><img class="avatar rounded-circle" src='{{ asset('storage/' . '${value.akun.avatar}') }}' alt='gambar-user'/></td>
                         `;
                     } else {
                         var avatar = `
-                            <td class="text-center" colspan="3"><img class="rounded-circle" width="50" height="50" style="object-fit: cover;" src='https://gravatar.com/avatar?s=1024' alt='gambar-user'/></td>
+                            <td class="text-center" colspan="3"><img class="avatar rounded-circle" src='https://gravatar.com/avatar?s=1024' alt='gambar-user'/></td>
                         `;
                     }
 
@@ -281,42 +304,26 @@
                             icon: absenceIcon,
                         }).addTo(map)
                         .bindPopup(`<table cellpadding="5">
-                            <tr>
+                             <tr>
                                 ${avatar}
                             </tr>
                             <tr>
-                                <td>Nama</td>
-                                <td>:</td>
-                                <td><b>${value.akun.dosen.name}</b></td>
+                                <td class="text-center" colspan="3"><b>${value.name}</b></td>
                             </tr>
                             <tr>
-                                <td>NIDN</td>
+                                <td>Absen Pagi</td>
                                 <td>:</td>
-                                <td><b>${value.akun.dosen.nidn}</b></td>
+                                <td><b>${value.check_in}</b></td>
                             </tr>
                             <tr>
-                                <td>Nomor Ponsel</td>
+                                <td>Absen Siang</td>
                                 <td>:</td>
-                                <td><b>${value.akun.dosen.phone}</b></td>
+                                <td><b>${value.check_out}</b></td>
                             </tr>
                             <tr>
-                                <td>Email</td>
+                                <td>Keterangan</td>
                                 <td>:</td>
-                                <td><b>${value.akun.dosen.email}</b></td>
-                            </tr>
-                            <tr>
-                                <td>Shift</td>
-                                <td>:</td>
-                                <td>
-                                    <b>${value.shift.name_shift}</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td>:</td>
-                                <td>
-                                    <b>${value.status}</b>
-                                </td>
+                                <td><b>${value.status_attendance}</b></td>
                             </tr>
                             <tr>
                                 <td  class='text-center' colspan='3'>
