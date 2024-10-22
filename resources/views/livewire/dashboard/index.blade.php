@@ -69,7 +69,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="card mb-2">
                     <div class="card-header text-primary">Kehadiran</div>
                     <div class="card-body">
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-12">
                 <div class="card mb-2">
                     <div class="card-header text-primary">Pengajuan Perizinan</div>
                     <div class="card-body">
