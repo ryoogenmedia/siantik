@@ -101,7 +101,6 @@
             </div>
 
             <div id="attendance-data" data-attendance="{{ json_encode($this->attendance) }}"></div>
-
         </div>
     @endif
 
@@ -209,6 +208,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row mt-5">
             <h5>Daftar presensi hari ini.</h5>
             <div class="col-12">
