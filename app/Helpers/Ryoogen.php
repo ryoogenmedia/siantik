@@ -34,7 +34,6 @@ class Ryoogen{
 
 if (!function_exists('presensi')) {
     function presensi($id) {
-        // Mencari pengguna berdasarkan ID
         $pengguna = User::findOrFail($id);
 
         $hadir = 0;
@@ -42,15 +41,16 @@ if (!function_exists('presensi')) {
         $izin = 0;
         $cuti = 0;
         $tugas = 0;
+        $sakit = 0;
         $pendidikan = 0;
 
         $permissions = Permission::where('user_id', $pengguna->id)
-            ->select('status_permission', DB::raw('count(*) as total')) // Menggunakan agregat count()
+            ->select('status_permission', DB::raw('count(*) as total'))
             ->groupBy('status_permission')
             ->get();
 
         $attendances = Attendance::where('user_id', $pengguna->id)
-            ->select('status_attendance', DB::raw('count(*) as total')) // Menggunakan agregat count()
+            ->select('status_attendance', DB::raw('count(*) as total'))
             ->groupBy('status_attendance')
             ->get();
 
@@ -77,6 +77,9 @@ if (!function_exists('presensi')) {
                 case 'tugas' :
                     $tugas += $permission->total;
                 break;
+                case 'sakit' :
+                    $sakit += $permission->total;
+                break;
             }
         }
 
@@ -96,6 +99,9 @@ if (!function_exists('presensi')) {
             'tugas' => $tugas,
             'pendidikan' => $pendidikan,
             'terlambat' => $terlambat,
+            'sakit' => $sakit,
+
+            'total' => $hadir + $terlambat + $izin + $cuti + $tugas + $pendidikan + $terlambat + $sakit,
         ];
     }
 }
