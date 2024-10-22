@@ -101,10 +101,6 @@
     <x-alert />
 
     <div class="card" wire:submit.prevent="save" autocomplete="off">
-        <div class="card-header">
-            Detail Absence
-        </div>
-
         <div class="card-body">
             <div class="row">
                 @if (isset($this->imageAbsence))
@@ -170,21 +166,23 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="mb-4">
-                        <p class="mb-1">Radius Lembaga</p>
-                        <p class="mb-2">Radius Lingkaran : <b>{{ $this->radiusLingkaran ?? '0' }}</b></p>
-                        <div style="width: 100px; height: 10px; background-color: #500A94"></div>
+                        <p class="mb-1 text-black">Radius Lembaga</p>
+                        <p class="mb-2" style="font-size: 13px">Radius Lingkaran :
+                            <b>{{ $this->radiusLingkaran ?? '0' }}</b>
+                        </p>
+                        <div style="width: 100px; height: 10px; background-color: #500A94; font-size: 13px"></div>
                     </div>
 
                     <div>
-                        <p class="mb-1">Jarak Dari Titik Lembaga</p>
-                        <p class="mb-2">Panjang Garis : <b id="distanceToAbsence"></b></p>
+                        <p class="mb-1 text-black">Jarak Dari Titik Lembaga</p>
+                        <p class="mb-2" style="font-size: 13px">Panjang Garis : <b id="distanceToAbsence"></b></p>
                         <div style="width: 100px; height: 10px; background-color: #E54043"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-9">
-                    <h6 class="mb-4">Kesimpulan</h6>
-                    <p id="distanceFromCircleEdge"></p>
+                    <h6 class="mb-4 text-black">Kesimpulan</h6>
+                    <p style="font-size: 13px" id="distanceFromCircleEdge"></p>
                 </div>
             </div>
         </div>
@@ -319,13 +317,14 @@
                     }).addTo(map);
                 }
 
-                document.getElementById('distanceToAbsence').innerText =  Math.floor(map.distance(
+                document.getElementById('distanceToAbsence').innerText = Math.floor(map.distance(
                     institutionLocation,
                     L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
-                document.getElementById('distanceFromCircleEdge').innerText = 'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
-                    Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
-                        @this.radiusLingkaran)) + ' Meter';
+                document.getElementById('distanceFromCircleEdge').innerText =
+                    'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
+                        Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
+                            @this.radiusLingkaran)) + ' Meter';
             }
         });
     </script>

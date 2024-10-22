@@ -87,8 +87,12 @@
                 </div>
             </div>
 
-            <div class="row mt-5 ms-1">
-                <h3>Daftar Absensi Hari Ini</h3>
+            <div class="row mt-5">
+                @if (auth()->user()->roles == 'personnel')
+                    <h5>Lokasi absensi anda hari ini.</h5>
+                @else
+                    <h5>Daftar presensi personnel hari ini.</h5>
+                @endif
                 <div class="col-12">
                     <div wire:ignore.self class="row p-2">
                         <div class="col-12" id="map"></div>
