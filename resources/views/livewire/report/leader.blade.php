@@ -6,8 +6,13 @@
             <x-slot name="pagePretitle">Melihat laporan harian presensi personnel.</x-slot>
         </dir>
 
-        <a target="_blank" class="btn btn-sm tf-btn danger position-absolute"
-            style="width: 90px;top: -90px; right: 0">Cetak</a>
+        <a target="_blank"
+            href="{{ route('print.leader', [
+                'date_start' => $this->tanggalMulai ?? '',
+                'date_end' => $this->tanggalSelesai ?? '',
+                'kategori' => $this->kategori ?? '',
+            ]) }}"
+            class="btn btn-sm tf-btn danger position-absolute" style="width: 90px; top: -90px; right: 0">Cetak</a>
     </div>
 
     <x-alert />
@@ -100,7 +105,8 @@
 
                     <span class="price">
                         <div class="d-flex flex-wrap">
-                            <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id])  }}" class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                            <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
+                                class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
                         </div>
                     </span>
                 </div>
