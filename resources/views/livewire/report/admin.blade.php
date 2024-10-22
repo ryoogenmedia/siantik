@@ -86,6 +86,11 @@
                             style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
                     </p>
                 </div>
+                <span class="price">
+                    <div class="d-flex flex-wrap">
+                        <a href="{{ route('report.admin-detail', ['id' => $row->id])  }}" class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                    </div>
+                </span>
             </div>
         </div>
     @empty

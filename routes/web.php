@@ -48,7 +48,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
 
     Route::prefix('laporan')->name('report.')->group(function(){
         Route::get('/admin', Report\Admin::class)->middleware('roles:admin')->name('admin');
-        Route::get('/admin/detail', Report\AdminDetail::class)->middleware('roles:admin')->name('admin-detail');
+        Route::get('/admin/detail/{id}', Report\AdminDetail::class)->middleware('roles:admin')->name('admin-detail');
     });
 
     Route::prefix('laporan-harian')->name('daily-report.')->group(function(){

@@ -95,7 +95,7 @@
     <x-slot name="pageTitle">Detail Absensi</x-slot>
 
     <x-slot name="button">
-        <a href="{{ route('daily-report.leader') }}" class="btn btn-sm tf-btn primary">Kembali</a>
+        <a href="{{ route('report.admin') }}" class="btn btn-sm tf-btn primary">Kembali</a>
     </x-slot>
 
     <x-alert />
