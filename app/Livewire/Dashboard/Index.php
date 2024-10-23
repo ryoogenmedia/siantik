@@ -43,6 +43,24 @@ class Index extends Component
 
     public function getCounterData(){
         if(auth()->user()->roles == 'admin'){
+            $this->attendance = Ryoogen::ATTENDANCE(now());
+            $institution = Institution::first();
+
+            if(isset($institution) && $institution){
+                if($institution->longitude && $institution->latitude){
+                    $this->checkLocation = true;
+                }
+
+                $this->institutionName = $institution->name;
+                $this->radiusLingkaran = $institution->radius;
+                $this->institutionLat = $institution->latitude;
+                $this->institutionLng = $institution->longitude;
+
+                $this->institutionAddress = $institution->address;
+                $this->institutionLogo = $institution->logo ? Storage::url($institution->logo) : null;
+                $this->markerIcon = asset('assets/images/marker-maps.webp');
+            }
+
             $this->jmlHadir = Attendance::query()
                 ->when($this->bulan, function($query, $bulan){
                     $query->whereMonth('created_at', $bulan)

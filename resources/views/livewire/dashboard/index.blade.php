@@ -217,7 +217,6 @@
                 </div>
             </div>
         </div>
-
         <div id="attendance-data" data-attendance="{{ json_encode($this->attendance) }}"></div>
     @endif
 </div>
