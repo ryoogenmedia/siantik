@@ -6,13 +6,6 @@
             <x-slot name="pagePretitle">Melihat laporan harian presensi personnel.</x-slot>
         </dir>
 
-        <a target="_blank"
-            href="{{ route('print.leader', [
-                'date_start' => $this->tanggalMulai ?? '',
-                'date_end' => $this->tanggalSelesai ?? '',
-                'kategori' => $this->kategori ?? '',
-            ]) }}"
-            class="btn btn-sm tf-btn danger position-absolute" style="width: 90px; top: -90px; right: 0">Cetak</a>
     </div>
 
     <x-alert />
@@ -62,45 +55,19 @@
 
                 <div class="content">
                     <div class="left">
-                        <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $attendance->name }}</h6>
-                        <table>
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">absen pagi</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">{{ $attendance->check_in }}</p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">absen siang</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">{{ $attendance->check_out }}</p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">keterangan</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">{{ $attendance->status_attendance }}
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
+                        <h6 style="font-size: 12px">{{ $attendance->name }}</h6>
+                        <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
+                            {{ $attendance->check_in }}
+                        </p>
+                        <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
+                            {{ $attendance->check_out ?? 'belum dilakukan.' }}
+                        </p>
+                        <p class="text-black" style="font-style: .8rem"><b>Keterangan :</b>
+                            {{ $attendance->status_attendance }}
+                        </p>
+                        <p><span class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
+                                style="font-size: 12px">{{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                        </p>
                     </div>
 
                     <span class="price">
@@ -120,46 +87,18 @@
                 <div class="content">
                     <div class="left">
                         <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $permission->akun->name }}</h6>
-                        <table>
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">tanggal</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">
-                                        {{ $permission->created_at->format('d-m-Y') }}</p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">waktu</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">
-                                        {{ $permission->created_at->format('H:i:s') }}</p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <p class="text-black fw-bold" style="font-size: .8rem">keterangan</p>
-                                </td>
-                                <td>
-                                    <p class="text-black px-2 fw-bold" style="font-size: .8rem">:</p>
-                                </td>
-                                <td>
-                                    <p class="text-black" style="font-size: .8rem">{{ $permission->status_permission }}
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
+                        <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
+                            {{ $permission->created_at->format('d-m-Y') }}
+                        </p>
+                        <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
+                            {{ $permission->created_at->format('d-m-Y') }}
+                        </p>
+                        <p class="text-black fw-bold" style="font-size: .8rem"><b>waktu :</b>
+                            {{ $permission->created_at->format('H:i:s') }}
+                        </p>
+                        <p class="text-black fw-bold" style="font-size: .8rem"><b>keterangan :</b>
+                            {{ $permission->status_permission }}
+                        </p>
                     </div>
                 </div>
             @endforeach

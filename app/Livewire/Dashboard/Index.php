@@ -186,6 +186,9 @@ class Index extends Component
         }
 
         if(auth()->user()->roles == 'personnel'){
+            $user = auth()->user();
+            $this->attendance = Ryoogen::ATTENDANCE(now(),$user->id);
+
             $this->jmlKehadiran = Attendance::query()
                 ->where('user_id',auth()->user()->id)
                 ->count();

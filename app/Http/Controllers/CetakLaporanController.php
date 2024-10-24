@@ -51,38 +51,38 @@ class CetakLaporanController extends Controller
         return $pdf->stream("cetak-laporan-" . "-" . $request->bulan ?? '' . ".pdf");
     }
 
-    public function leader(Request $request)
-    {
-        $data = User::query()
-            ->where('roles', 'personnel')
-            ->where(function ($query) use ($request) {
-                $query->whereHas('permissions', function ($query) use ($request) {
-                    $query->when($request->date_start, function ($query, $date_start) {
-                        $query->whereDate('created_at', '>=', \Carbon\Carbon::parse($date_start));
-                    })
-                    ->when($request->date_end, function ($query, $date_end) {
-                        $query->whereDate('created_at', '<=', \Carbon\Carbon::parse($date_end));
-                    });
-                })
-                ->orWhereHas('attendances', function ($query) use ($request) {
-                    $query->when($request->date_start, function ($query, $date_start) {
-                        $query->whereDate('created_at', '>=', \Carbon\Carbon::parse($date_start));
-                    })
-                    ->when($request->date_end, function ($query, $date_end) {
-                        $query->whereDate('created_at', '<=', \Carbon\Carbon::parse($date_end));
-                    });
-                });
-            })->get();
+    // public function leader(Request $request)
+    // {
+    //     $data = User::query()
+    //         ->where('roles', 'personnel')
+    //         ->where(function ($query) use ($request) {
+    //             $query->whereHas('permissions', function ($query) use ($request) {
+    //                 $query->when($request->date_start, function ($query, $date_start) {
+    //                     $query->whereDate('created_at', '>=', \Carbon\Carbon::parse($date_start));
+    //                 })
+    //                 ->when($request->date_end, function ($query, $date_end) {
+    //                     $query->whereDate('created_at', '<=', \Carbon\Carbon::parse($date_end));
+    //                 });
+    //             })
+    //             ->orWhereHas('attendances', function ($query) use ($request) {
+    //                 $query->when($request->date_start, function ($query, $date_start) {
+    //                     $query->whereDate('created_at', '>=', \Carbon\Carbon::parse($date_start));
+    //                 })
+    //                 ->when($request->date_end, function ($query, $date_end) {
+    //                     $query->whereDate('created_at', '<=', \Carbon\Carbon::parse($date_end));
+    //                 });
+    //             });
+    //         })->get();
 
-        $pdf = \PDF::loadView('pdf.report-leader', [
-            'date_start' => $request->date_start ? Carbon::parse($request->date_start) : null,
-            'date_end' => $request->date_end ? Carbon::parse($request->date_end) : null,
-            'data' => $data,
-        ]);
+    //     $pdf = \PDF::loadView('pdf.report-leader', [
+    //         'date_start' => $request->date_start ? Carbon::parse($request->date_start) : null,
+    //         'date_end' => $request->date_end ? Carbon::parse($request->date_end) : null,
+    //         'data' => $data,
+    //     ]);
 
-        $pdf->setPaper('a4', 'portrait');
+    //     $pdf->setPaper('a4', 'portrait');
 
-        return $pdf->stream("cetak-laporan-harian-" . $request->date_start . "-sampai-" . $request->date_end . ".pdf");
-    }
+    //     return $pdf->stream("cetak-laporan-harian-" . $request->date_start . "-sampai-" . $request->date_end . ".pdf");
+    // }
 
 }
