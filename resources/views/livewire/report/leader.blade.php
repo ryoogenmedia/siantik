@@ -47,61 +47,64 @@
     </x-filter.card>
 
     @forelse ($this->rows as $row)
-        <div class="order-item mb-2 mt-3">
-            @foreach ($row->attendances as $attendance)
-                <div class="img">
-                    <img src="{{ asset($attendance->image) }}" alt="img">
-                </div>
-
-                <div class="content">
-                    <div class="left">
-                        <h6 style="font-size: 12px">{{ $attendance->name }}</h6>
-                        <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
-                            {{ $attendance->check_in }}
-                        </p>
-                        <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
-                            {{ $attendance->check_out ?? 'belum dilakukan.' }}
-                        </p>
-                        <p class="text-black" style="font-style: .8rem"><b>Keterangan :</b>
-                            {{ $attendance->status_attendance }}
-                        </p>
-                        <p><span class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                                style="font-size: 12px">{{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
-                        </p>
+        <div class="order-item mb-2 mt-3 d-flex">
+            <div class="d-flex">
+                @foreach ($row->attendances as $attendance)
+                    <div class="img">
+                        <img src="{{ asset($attendance->image) }}" alt="img">
                     </div>
 
-                    <span class="price">
-                        <div class="d-flex flex-wrap">
-                            <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
-                                class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                    <div class="content ms-1">
+                        <div class="left">
+                            <h6 style="font-size: 14px" class="fw-bold mb-2">{{ $attendance->name }}</h6>
+                            <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
+                                {{ $attendance->check_in }}
+                            </p>
+                            <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
+                                {{ $attendance->check_out ?? 'belum dilakukan.' }}
+                            </p>
+                            <p class="text-black" style="font-size: .8rem"><b>Keterangan :</b>
+                                {{ $attendance->status_attendance }}
+                            </p>
+                            <p><span class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
+                                    style="font-size: 12px">{{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                            </p>
                         </div>
-                    </span>
-                </div>
-            @endforeach
 
-            @foreach ($row->permissions as $permission)
-                <div class="img">
-                    <img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img">
-                </div>
-
-                <div class="content">
-                    <div class="left">
-                        <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $permission->akun->name }}</h6>
-                        <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
-                            {{ $permission->created_at->format('d-m-Y') }}
-                        </p>
-                        <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
-                            {{ $permission->created_at->format('d-m-Y') }}
-                        </p>
-                        <p class="text-black fw-bold" style="font-size: .8rem"><b>waktu :</b>
-                            {{ $permission->created_at->format('H:i:s') }}
-                        </p>
-                        <p class="text-black fw-bold" style="font-size: .8rem"><b>keterangan :</b>
-                            {{ $permission->status_permission }}
-                        </p>
+                        <span class="price">
+                            <div class="d-flex flex-wrap">
+                                <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
+                                    class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                            </div>
+                        </span>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+
+                @foreach ($row->permissions as $permission)
+                    <div class="img">
+                        <img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img">
+                    </div>
+
+                    <div class="content ms-1">
+                        <div class="left">
+                            <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $permission->akun->name }}</h6>
+                            <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
+                                {{ $permission->created_at->format('d-m-Y') }}
+                            </p>
+                            <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
+                                {{ $permission->created_at->format('d-m-Y') }}
+                            </p>
+                            <p class="text-black fw-bold" style="font-size: .8rem"><b>waktu :</b>
+                                {{ $permission->created_at->format('H:i:s') }}
+                            </p>
+                            <p class="text-black fw-bold" style="font-size: .8rem"><b>keterangan :</b>
+                                {{ $permission->status_permission }}
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
         </div>
 
         @if (
