@@ -1,39 +1,13 @@
 <?php
 
-namespace App\Helpers;
-
 use App\Models\Attendance;
 use App\Models\Permission;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Ryoogen{
-    public static function ATTENDANCE($date = null, $status = null, $id = null){
-        $attendance = Attendance::query()
-            ->when($status, function($query,  $status){
-                $query->where('status_attendance', $status);
-            })
-            ->when($id, function($query, $id){
-                $query->where('user_id', $id);
-            })
-            ->when($date, function($query, $date) use ($id){
-                $query->whereMonth('created_at', Carbon::parse($date)->month)
-                    ->whereYear('created_at', Carbon::parse($date)->year);
-            }, function($query){
-                $query->whereMonth('created_at', Carbon::now()->month)
-                    ->whereYear('created_at', Carbon::now()->year);
-            })
-            ->with('akun.personnel')
-            ->get();
-
-        return $attendance;
-    }
-
-}
-
 if (!function_exists('presensi')) {
-    function presensi($id) {
+    function presensi($id)
+    {
         $pengguna = User::findOrFail($id);
 
         $hadir = 0;
@@ -54,39 +28,39 @@ if (!function_exists('presensi')) {
             ->groupBy('status_attendance')
             ->get();
 
-        foreach($permissions as $permission){
-            switch($permission->status_permission){
-                case 'hadir' :
+        foreach ($permissions as $permission) {
+            switch ($permission->status_permission) {
+                case 'hadir':
                     $hadir += $permission->total;
-                break;
-                case 'terlmabat' :
+                    break;
+                case 'terlmabat':
                     $terlambat += $permission->total;
-                break;
-                case 'izin' :
+                    break;
+                case 'izin':
                     $izin += $permission->total;
-                break;
-                case 'cuti' :
+                    break;
+                case 'cuti':
                     $cuti += $permission->total;
-                break;
-                case 'pendidikan' :
+                    break;
+                case 'pendidikan':
                     $pendidikan += $permission->total;
-                break;
-                case 'terlambat' :
+                    break;
+                case 'terlambat':
                     $terlambat += $permission->total;
-                break;
-                case 'tugas' :
+                    break;
+                case 'tugas':
                     $tugas += $permission->total;
-                break;
-                case 'sakit' :
+                    break;
+                case 'sakit':
                     $sakit += $permission->total;
-                break;
+                    break;
             }
         }
 
-        foreach($attendances as $attendance){
-            if($attendance->status_attendance == 'hadir'){
+        foreach ($attendances as $attendance) {
+            if ($attendance->status_attendance == 'hadir') {
                 $hadir += $attendance->total;
-            }else{
+            } else {
                 $terlambat += $attendance->total;
             }
         }

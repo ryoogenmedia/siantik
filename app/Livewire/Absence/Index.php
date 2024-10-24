@@ -114,9 +114,11 @@ class Index extends Component
                     ? 'terlambat'
                     : (now()->greaterThan($institution->time_check_out) ? 'terlambat' : 'hadir');
 
-                $attendance->update([
-                    'status_attendance' => $status,
-                ]);
+                if (isset($status) && $status) {
+                    $attendance->update([
+                        'status_attendance' => $status,
+                    ]);
+                }
             } else {
                 session()->flash('alert', [
                     'type' => 'warning',
