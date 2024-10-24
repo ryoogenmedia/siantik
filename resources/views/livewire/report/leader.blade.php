@@ -73,7 +73,7 @@
                                     </p>
                                 </div>
 
-                                <span class="price">
+                                <span class="price ms-5">
                                     <div class="d-flex flex-wrap">
                                         <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
                                             class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
@@ -103,6 +103,9 @@
                                     </p>
                                     <p class="text-black fw-bold" style="font-size: .8rem"><b>keterangan :</b>
                                         {{ $permission->status_permission }}
+                                    </p>
+                                    <p><span class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
+                                            style="font-size: 12px">{{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
                                     </p>
                                 </div>
                             </div>
