@@ -47,7 +47,7 @@
     </x-filter.card>
 
     @forelse ($this->rows as $row)
-        <div class="order-item mb-2 mt-3 d-flex">
+        <div class="order-item d-flex">
             <div class="row">
                 <div class="col-12">
                     @foreach ($row->attendances as $attendance)
