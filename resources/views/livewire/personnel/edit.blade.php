@@ -23,12 +23,8 @@
             @endforeach
         </x-backend.form.select>
 
-        <x-backend.form.select wire:model='jabatan' name="jabatan" label="Jabatan" required>
-            <option value="">- pilih -</option>
-            @foreach (config('const.position') as $jabatan)
-                <option value="{{ $jabatan }}">{{ $jabatan }}</option>
-            @endforeach
-        </x-backend.form.select>
+        <x-backend.form.input wire:model='jabatan' name='jabatan' type="text" label="Jabatan" required
+        placeholder="Masukkan nama jabatan" />
 
         <hr class="mt-5">
 

@@ -37,7 +37,6 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
 
     Route::prefix('cetak')->name('print.')->group(function(){
         Route::get('/laporan-admin', [CetakLaporanController::class,'admin'])->name('admin');
-        Route::get('/laporan-pimpinan', [CetakLaporanController::class,'leader'])->name('leader');
     });
 
     Route::prefix('permission')->name('permission.')->middleware('roles:admin')->group(function(){

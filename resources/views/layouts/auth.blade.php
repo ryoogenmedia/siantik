@@ -2,11 +2,6 @@
 
 @section('title', $title)
 @section('styles')
-<style>
-   body {
-           overflow: hidden;
-       }
-</style>
 @endsection
 @section('content')
     <div class="signin-area pb-30">
