@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-12">
                     @foreach ($row->attendances as $attendance)
-                        <div class="d-flex">
+                        <div class="d-flex mt-3">
                             <div class="img">
                                 <img src="{{ asset($attendance->image) }}" alt="img">
                             </div>
@@ -84,7 +84,7 @@
                     @endforeach
 
                     @foreach ($row->permissions as $permission)
-                        <div class="d-flex">
+                        <div class="d-flex mt-3">
                             <div class="img">
                                 <img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img">
                             </div>
