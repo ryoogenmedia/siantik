@@ -6,13 +6,12 @@
             <x-slot name="pagePretitle">Melihat laporan bulanan presensi.</x-slot>
         </dir>
 
-        <a target="_blank"
-            href="{{ route('print.admin', [
-                'date_start' => $this->tanggalMulai ?? '',
-                'date_end' => $this->tanggalSelesai ?? '',
-                'kategori' => $this->kategori ?? '',
-                'bulan' => $this->bulan ?? '',
-            ]) }}"
+        <a href="{{ route('print.admin', [
+            'date_start' => $this->tanggalMulai ?? '',
+            'date_end' => $this->tanggalSelesai ?? '',
+            'kategori' => $this->kategori ?? '',
+            'bulan' => $this->bulan ?? '',
+        ]) }}"
             class="btn btn-sm tf-btn danger position-absolute" style="width: 90px;top: -90px; right: 0">Cetak</a>
     </div>
 
@@ -88,7 +87,8 @@
                 </div>
                 <span class="price">
                     <div class="d-flex flex-wrap">
-                        <a href="{{ route('report.admin-detail', ['id' => $row->id])  }}" class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                        <a href="{{ route('report.admin-detail', ['id' => $row->id]) }}" class="btn btn-sm btn-dark"
+                            style="font-size: 12px">Detail</a>
                     </div>
                 </span>
             </div>
