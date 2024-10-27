@@ -190,7 +190,19 @@ class Index extends Component
 
         if (auth()->user()->roles == 'personnel') {
             $user = auth()->user();
-            $this->attendance = Maps::ATTENDANCE(now(), $user->id);
+            $status = null;
+
+            $this->attendance = Maps::ATTENDANCE(now(), $status, $user->id);
+            $institution = Institution::first();
+
+            $this->institutionName = $institution->name;
+            $this->radiusLingkaran = $institution->radius;
+            $this->institutionLat = $institution->latitude;
+            $this->institutionLng = $institution->longitude;
+
+            $this->institutionAddress = $institution->address;
+            $this->institutionLogo = $institution->logo ? Storage::url($institution->logo) : null;
+            $this->markerIcon = asset('assets/images/marker-maps.webp');
 
             $this->jmlKehadiran = Attendance::query()
                 ->where('user_id', auth()->user()->id)

@@ -305,7 +305,7 @@
 
                 var routes = {
                     adminDetailAttendance: "{{ route('report.admin-detail', ['id' => 'REPLACE_ID']) }}",
-                    leaderDetailAttendance: "{{ route('daily-report.leader-detail', ['id' => 'REPLACE_ID']) }}"
+                    leaderDetailAttendance: "{{ route('daily-report.leader-detail', ['id' => 'REPLACE_ID']) }}",
                 };
 
                 attendanceData.forEach(function(value) {
@@ -317,6 +317,7 @@
                     var attendanceLng = value.longitude;
                     var absenceLocation = L.latLng(attendanceLat, attendanceLng);
                     var comparationLatLang = [institutionLocation, absenceLocation];
+
                     if (userRole == "leader") {
                         route = routes.leaderDetailAttendance.replace('REPLACE_ID', value.id);
                     } else {
@@ -325,16 +326,12 @@
 
                     bounds.extend(absenceLocation);
 
-                    if (value.akun.avatar) {
-                        var avatar = `
-                                <td class="text-center" colspan="3"><img class="avatar rounded-circle" src='{{ asset('storage/' . '${value.akun.avatar}') }}' alt='gambar-user'/></td>
-                        `;
-                    } else {
-                        var avatar = `
-                            <td class="text-center" colspan="3"><img class="avatar rounded-circle" src='https://gravatar.com/avatar?s=1024' alt='gambar-user'/></td>
-                        `;
-                    }
+                    // Avatar display logic
+                    var avatar = value.akun.avatar ?
+                        `<td class="text-center" colspan="3"><img class="avatar rounded-circle" src='{{ asset('storage/' . '${value.akun.avatar}') }}' alt='gambar-user'/></td>` :
+                        `<td class="text-center" colspan="3"><img class="avatar rounded-circle" src='https://gravatar.com/avatar?s=1024' alt='gambar-user'/></td>`;
 
+                    // Bind popup based on user role
                     L.marker([attendanceLat, attendanceLng], {
                             icon: absenceIcon,
                         }).addTo(map)
@@ -369,8 +366,11 @@
                                 <td><b>${value.status_attendance}</b></td>
                             </tr>
                             <tr>
-                                <td  class='text-center' colspan='3'>
-                                    <a href="${route}" class="btn bg-success-lt mt-3">Detail Absensi</a>
+                                <td class='text-center' colspan='3'>
+                                    ${userRole === "personnel" ?
+                                        ''
+                                     : `<a href="${route}" class="btn bg-success-lt mt-3">Lihat Detail</a>`
+                                    }
                                 </td>
                             </tr>
                         </table>`);
