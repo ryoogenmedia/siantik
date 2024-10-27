@@ -233,10 +233,10 @@
                     iconSize: [38, 38],
                 });
 
-                var absenceIcon = L.icon({
-                    iconUrl: @this.markerIcon,
-                    iconSize: [38, 38],
-                });
+                // var absenceIcon = L.icon({
+                //     iconUrl: @this.markerIcon,
+                //     iconSize: [38, 38],
+                // });
 
                 var popupInstitution = `
                     <table class="popup-table" cellpadding="5">
@@ -273,11 +273,11 @@
                             <td>:</td>
                             <td><b>${@this.numberIdentity}</b></td>
                         </tr>
-                         <tr>
-                                <td>Nomor Ponsel</td>
-                                <td>:</td>
-                                <td><b>${@this.phoneNumber}</b></td>
-                         </tr>
+                        <tr>
+                            <td>Nomor Ponsel</td>
+                            <td>:</td>
+                            <td><b>${@this.phoneNumber}</b></td>
+                        </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
@@ -304,11 +304,21 @@
                     .bindPopup(popupInstitution)
                     .openPopup();
 
-                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng], {
-                        icon: absenceIcon
-                    }).addTo(map)
+                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng]).addTo(map)
                     .bindPopup(popupAbsence)
                     .openPopup();
+
+                var comparationLatLang = [
+                    [lat, lon],
+                    [@this.absenceLat, @this.absenceLng]
+                ];
+
+                var polyline = L.polyline(comparationLatLang, {
+                    color: 'red',
+                    weight: 4,
+                    opacity: 0.7,
+                    smoothFactor: 1
+                }).addTo(map);
 
                 if (@this.radiusLingkaran) {
                     L.circle(institutionLocation, {
@@ -321,11 +331,11 @@
                     institutionLocation,
                     L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
-                document.getElementById('distanceFromCircleEdge').innerText =
-                    'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
-                        Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
-                            @this.radiusLingkaran)) + ' Meter';
+                document.getElementById('distanceFromCircleEdge').innerText = 'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
+                    Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
+                        @this.radiusLingkaran)) + ' Meter';
             }
         });
     </script>
 @endpush
+

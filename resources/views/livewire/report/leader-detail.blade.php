@@ -235,10 +235,10 @@
                     iconSize: [38, 38],
                 });
 
-                var absenceIcon = L.icon({
-                    iconUrl: @this.markerIcon,
-                    iconSize: [38, 38],
-                });
+                // var absenceIcon = L.icon({
+                //     iconUrl: @this.markerIcon,
+                //     iconSize: [38, 38],
+                // });
 
                 var popupInstitution = `
                     <table class="popup-table" cellpadding="5">
@@ -275,11 +275,11 @@
                             <td>:</td>
                             <td><b>${@this.numberIdentity}</b></td>
                         </tr>
-                         <tr>
-                                <td>Nomor Ponsel</td>
-                                <td>:</td>
-                                <td><b>${@this.phoneNumber}</b></td>
-                         </tr>
+                        <tr>
+                            <td>Nomor Ponsel</td>
+                            <td>:</td>
+                            <td><b>${@this.phoneNumber}</b></td>
+                        </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
@@ -306,11 +306,21 @@
                     .bindPopup(popupInstitution)
                     .openPopup();
 
-                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng], {
-                        icon: absenceIcon
-                    }).addTo(map)
+                var absenceMarker = L.marker([@this.absenceLat, @this.absenceLng]).addTo(map)
                     .bindPopup(popupAbsence)
                     .openPopup();
+
+                var comparationLatLang = [
+                    [lat, lon],
+                    [@this.absenceLat, @this.absenceLng]
+                ];
+
+                var polyline = L.polyline(comparationLatLang, {
+                    color: 'red',
+                    weight: 4,
+                    opacity: 0.7,
+                    smoothFactor: 1
+                }).addTo(map);
 
                 if (@this.radiusLingkaran) {
                     L.circle(institutionLocation, {
@@ -319,7 +329,7 @@
                     }).addTo(map);
                 }
 
-                document.getElementById('distanceToAbsence').innerText =  Math.floor(map.distance(
+                document.getElementById('distanceToAbsence').innerText = Math.floor(map.distance(
                     institutionLocation,
                     L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
@@ -330,3 +340,5 @@
         });
     </script>
 @endpush
+
+
