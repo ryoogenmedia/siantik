@@ -18,6 +18,7 @@ class Index extends Component
     public $latitude;
 
     public $distance;
+    public $inRadius = false;
 
     public $instLongitude;
     public $instLatitude;
@@ -33,11 +34,23 @@ class Index extends Component
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->distance = $distance;
+
+        // Aktifkan tombol jika dalam radius, nonaktifkan jika di luar radius
+        $this->inRadius = $distance <= $this->radius;
     }
 
     #[On('takePicture')]
     public function attendanceNow($base_64)
     {
+        if (!$this->inRadius) {
+            session()->flash('alert', [
+                'type' => 'warning',
+                'message' => 'Bahaya.',
+                'detail' => "Anda berada di luar jangkauan radius absensi.",
+            ]);
+            return;
+        }
+
         if (preg_match('/^data:image\/(\w+);base64,/', $base_64, $type)) {
             $data = substr($base_64, strpos($base_64, ',') + 1);
             $data = str_replace(' ', '+', $data);
@@ -88,19 +101,7 @@ class Index extends Component
                 return back();
             }
 
-            if (!$this->longitude || !$this->latitude || is_null($this->distance)) {
-                session()->flash('alert', [
-                    'type' => 'warning',
-                    'message' => 'Bahaya.',
-                    'detail' => "Aktifkan lokasi Anda sekarang untuk melakukan absensi.",
-                ]);
-
-                return back();
-            }
-
-            $institution = Institution::first();
-
-            $status = $this->distance <= $this->radius ? 'hadir' : 'ditolak';
+            $status = 'hadir';
 
             $attendance = Attendance::create([
                 'user_id' => $user->id,
@@ -113,9 +114,9 @@ class Index extends Component
             ]);
 
             session()->flash('alert', [
-                'type' => $status == 'hadir' ? 'success' : 'warning',
-                'message' => $status == 'hadir' ? 'Berhasil.' : 'Ditolak.',
-                'detail' => $status == 'hadir' ? "Anda sekarang telah hadir." : "Anda berada di luar jangkauan radius absensi.",
+                'type' => 'success',
+                'message' => 'Berhasil.',
+                'detail' => "Anda sekarang telah hadir.",
             ]);
 
             return redirect()->route('absence.index');
