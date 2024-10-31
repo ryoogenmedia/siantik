@@ -35,7 +35,6 @@ class Index extends Component
         $this->longitude = $longitude;
         $this->distance = $distance;
 
-        // Aktifkan tombol jika dalam radius, nonaktifkan jika di luar radius
         $this->inRadius = $distance <= $this->radius;
     }
 
