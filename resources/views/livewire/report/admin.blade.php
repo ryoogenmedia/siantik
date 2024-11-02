@@ -6,13 +6,12 @@
             <x-slot name="pagePretitle">Melihat laporan bulanan presensi.</x-slot>
         </dir>
 
-        <a target="_blank"
-            href="{{ route('print.admin', [
-                'date_start' => $this->tanggalMulai ?? '',
-                'date_end' => $this->tanggalSelesai ?? '',
-                'kategori' => $this->kategori ?? '',
-                'bulan' => $this->bulan ?? '',
-            ]) }}"
+        <a href="{{ route('print.admin', [
+            'date_start' => $this->tanggalMulai ?? '',
+            'date_end' => $this->tanggalSelesai ?? '',
+            'kategori' => $this->kategori ?? '',
+            'bulan' => $this->bulan ?? '',
+        ]) }}"
             class="btn btn-sm tf-btn danger position-absolute" style="width: 90px;top: -90px; right: 0">Cetak</a>
     </div>
 

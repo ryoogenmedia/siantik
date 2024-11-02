@@ -32,7 +32,7 @@
             <div class="overlay"></div>
         </div>
 
-        <button class="btn tf-btn primary mt-3" onclick="takePicture()">Rekam Absensi</button>
+        <button class="btn tf-btn primary mt-3" onclick="takePicture()" {{ $this->inRadius ? '' : 'disabled' }}>Rekam Absensi</button>
     @else
         @if (!$this->isCheckOut && !$this->isPermit)
             <div class="row">
@@ -69,6 +69,11 @@
 
         // TAKE PICTURE FUNCTION
         function takePicture() {
+            if (!@this.inRadius) {
+                alert("Anda berada di luar radius absensi.");
+                return;
+            }
+
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             let ctx = canvas.getContext("2d");

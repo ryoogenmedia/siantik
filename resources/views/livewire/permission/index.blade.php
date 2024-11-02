@@ -38,7 +38,7 @@
                             wire:confirm="Apakah anda yakin ingin menghapus? apa yang anda lakukan tidak adapat di kembalikan."
                             class="btn btn-sm btn-danger me-1" style="font-size: 12px">Hapus</a>
 
-                        <a href="{{ route('permission.edit', $row->id) }}" class="btn btn-sm btn-primary"
+                        <a href="{{ route('permission.edit', $row->id) }}" class="btn btn-sm btn-primary mt-4"
                             style="font-size: 12px">Edit</a>
                     </div>
                 </span>
