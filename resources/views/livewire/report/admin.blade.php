@@ -72,9 +72,15 @@
 
     @forelse ($this->rows as $row)
         <div class="order-item mb-2 mt-3">
-            <div class="img">
-                <img src="{{ asset($row->image) }}" alt="img">
-            </div>
+            @if ($this->kategori == 'izin')
+                <div class="img">
+                    <img src="{{ $row->akun->avatarUrl() }}" alt="img">
+                </div>
+            @else
+                <div class="img">
+                    <img src="{{ asset($row->image) }}" alt="img">
+                </div>
+            @endif
             <div class="content">
                 <div class="left">
                     <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
@@ -88,7 +94,8 @@
                 </div>
                 <span class="price">
                     <div class="d-flex flex-wrap">
-                        <a href="{{ route('report.admin-detail', ['id' => $row->id])  }}" class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                        <a href="{{ route('report.admin-detail', ['id' => $row->id]) }}" class="btn btn-sm btn-dark"
+                            style="font-size: 12px">Detail</a>
                     </div>
                 </span>
             </div>
