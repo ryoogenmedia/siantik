@@ -71,27 +71,46 @@
 
     @forelse ($this->rows as $row)
         <div class="order-item mb-2 mt-3">
-            <div class="img">
-                <img src="{{ asset($row->image) }}" alt="img">
-            </div>
-            <div class="content">
-                <div class="left">
-                    <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
-                    <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
-                        {{ $row->check_in }}</p>
-                    <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
-                        {{ $row->check_out ?? 'belum dilakukan.' }}</p>
-                    <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                            style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
-                    </p>
+            @if ($this->kategori == 'izin')
+                <div class="img">
+                    <img src="{{ $row->akun->avatarUrl() }}" alt="img">
                 </div>
-                <span class="price">
-                    <div class="d-flex flex-wrap">
-                        <a href="{{ route('report.admin-detail', ['id' => $row->id]) }}" class="btn btn-sm btn-dark"
-                            style="font-size: 12px">Detail</a>
+                <div class="content">
+                    <div class="left">
+                        <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
+                        <p class="text-black" style="font-size: .8rem"><b>tanggal :</b>
+                            {{ \Carbon\Carbon::parse($row->craeted_at)->format('d/m/Y') }}</p>
+                        <p class="text-black" style="font-size: .8rem"><b>jam :</b>
+                            {{ \Carbon\Carbon::parse($row->craeted_at)->format('H:i:s') }}</p>
+                        <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
+                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                        </p>
                     </div>
-                </span>
-            </div>
+                </div>
+            @else
+                <div class="img">
+                    <img src="{{ asset($row->image) }}" alt="img">
+                </div>
+                <div class="content">
+                    <div class="left">
+                        <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
+                        <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
+                            {{ $row->check_in }}</p>
+                        <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
+                            {{ $row->check_out ?? 'belum dilakukan.' }}</p>
+                        <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
+                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                        </p>
+                    </div>
+                    <span class="price">
+                        <div class="d-flex flex-wrap">
+                            <a href="{{ route('report.admin-detail', ['id' => $row->id]) }}"
+                                class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
+                        </div>
+                    </span>
+                </div>
+            @endif
+
         </div>
     @empty
         <x-datatable.empty />
