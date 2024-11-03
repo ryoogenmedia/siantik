@@ -1,6 +1,6 @@
 <x-layouts.blank>
     <div class="empty">
-        <div class="mt-5">
+        <div class="pt-5">
             <h1 class="empty-header">403</h1>
             <h2 class="empty-title">Anda Tidak Memiliki Akses</h2>
         </div>
@@ -13,8 +13,8 @@
             @endif
         </p>
 
-        <div class="empty-action">
-            <a href="{{ route('mobile.logout') }}" class="btn btn-primary"
+        <div class="empty-action pt-4 mx-5">
+            <a href="{{ route('logout') }}"class="btn-sm tf-btn primary"
                 onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
