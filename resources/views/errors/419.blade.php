@@ -14,7 +14,7 @@
         </p>
 
         <div class="empty-action pt-4 mx-5">
-            <a href="{{ route('mobile.logout') }}" class="btn-sm tf-btn primary"
+            <a href="{{ route('logout') }}" class="btn-sm tf-btn primary"
                 onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
