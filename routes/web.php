@@ -19,7 +19,7 @@ Route::redirect('/', '/login');
 
 Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function () {
     Route::get('dashboard', Dashboard\Index::class)
-        ->middleware('roles:admin,superadmin,leader,personnel')
+        ->middleware('roles:admin,superadmin,leader,personil')
         ->name('dashboard');
 
     Route::prefix('user')->name('user.')->middleware('roles:superadmin')->group(function () {
@@ -28,11 +28,11 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/{id}/sunting', User\Edit::class)->name('edit');
     });
 
-    Route::prefix('absensi')->name('absence.')->middleware('roles:personnel')->group(function () {
+    Route::prefix('presensi')->name('absence.')->middleware('roles:personil')->group(function () {
         Route::get('/', Absence\Index::class)->name('index');
     });
 
-    Route::prefix('riwayat')->name('history.')->middleware('roles:personnel')->group(function () {
+    Route::prefix('riwayat')->name('history.')->middleware('roles:personil')->group(function () {
         Route::get('/', History\Absence::class)->name('absence');
     });
 
@@ -60,7 +60,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
         Route::get('/', Institution\Index::class)->name('index');
     });
 
-    Route::prefix('personnel')->name('personnel.')->middleware('roles:superadmin')->group(function () {
+    Route::prefix('personil')->name('personnel.')->middleware('roles:superadmin')->group(function () {
         Route::get('/', Personnel\Index::class)->name('index');
         Route::get('/tambah', Personnel\Create::class)->name('create');
         Route::get('/{id}/sunting', Personnel\Edit::class)->name('edit');
@@ -68,7 +68,7 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
 
     Route::prefix('profil')->name('profile.')->group(function () {
         Route::get('/', Profile\Index::class)
-            ->middleware('roles:admin,superadmin,leader,personnel')
+            ->middleware('roles:admin,superadmin,leader,personil')
             ->name('index');
     });
 });

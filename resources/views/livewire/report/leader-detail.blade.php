@@ -88,11 +88,11 @@
 @endonce
 
 <div>
-    <x-slot name="title">Detail Absensi</x-slot>
+    <x-slot name="title">Detail Presensi</x-slot>
 
-    <x-slot name="pagePretitle">Detail Data Absensi</x-slot>
+    <x-slot name="pagePretitle">Detail Data Presensi</x-slot>
 
-    <x-slot name="pageTitle">Detail Absensi</x-slot>
+    <x-slot name="pageTitle">Detail Presensi</x-slot>
 
     <x-slot name="button">
         <a href="{{ route('daily-report.leader') }}" class="btn btn-sm tf-btn primary">Kembali</a>
@@ -102,7 +102,7 @@
 
     <div class="card" wire:submit.prevent="save" autocomplete="off">
         <div class="card-header">
-            Detail Absence
+            Detail Presensi
         </div>
 
         <div class="card-body">
@@ -110,7 +110,7 @@
                 @if (isset($this->imageAbsence))
                     <div class="col-lg-5 col-12">
                         <img class="rounded-md" src="{{ asset($this->imageAbsence) }}"
-                            alt="absensi-pengguna-{{ $this->personnelName }}">
+                            alt="presensi-pengguna-{{ $this->personnelName }}">
                     </div>
                 @endif
 
@@ -147,7 +147,7 @@
         <hr>
 
         <div class="card-body">
-            <h6>Detail Lokasi Absensi</h6>
+            <h6>Detail Lokasi Presensi</h6>
         </div>
 
         <hr>
@@ -333,7 +333,7 @@
                     institutionLocation,
                     L.latLng(@this.absenceLat, @this.absenceLng))) + ' Meter';
 
-                document.getElementById('distanceFromCircleEdge').innerText = 'Jarak dari tepi luar lingkaran ke lokasi absensi : ' + Math.floor(
+                document.getElementById('distanceFromCircleEdge').innerText = 'Jarak dari tepi luar lingkaran ke lokasi presensi : ' + Math.floor(
                     Math.abs(map.distance(institutionLocation, L.latLng(@this.absenceLat, @this.absenceLng)) -
                         @this.radiusLingkaran)) + ' Meter';
             }

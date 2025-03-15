@@ -1,7 +1,7 @@
 <div>
-    <x-slot name="title">Riwayat Absensi</x-slot>
-    <x-slot name="pageTitle">Riwayat Absensi</x-slot>
-    <x-slot name="pagePretitle">Daftar riwayat absensi.</x-slot>
+    <x-slot name="title">Riwayat Presensi</x-slot>
+    <x-slot name="pageTitle">Riwayat Presensi</x-slot>
+    <x-slot name="pagePretitle">Daftar riwayat presensi.</x-slot>
 
     <x-alert />
 
@@ -16,7 +16,7 @@
                     <table>
                         <tr>
                             <td>
-                                <p class="text-black" style="font-size: .8rem"><b>absen pagi</b>
+                                <p class="text-black" style="font-size: .8rem"><b>presensi masuk</b>
                             </td>
                             <td>
                                 <p class="text-black px-3" style="font-size: .8rem"><b>:</b>
@@ -28,7 +28,7 @@
 
                         <tr>
                             <td>
-                                <p class="text-black" style="font-size: .8rem"><b>absen siang</b>
+                                <p class="text-black" style="font-size: .8rem"><b>presensi pulang</b>
                             </td>
                             <td>
                                 <p class="text-black px-3" style="font-size: .8rem"><b>:</b>

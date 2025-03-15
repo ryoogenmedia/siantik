@@ -148,7 +148,7 @@ class Edit extends Component
             $this->listUser = User::where('roles', $this->roles)->get();
         }
 
-        if($this->roles == 'personnel'){
+        if($this->roles == 'personil'){
             $this->nip = $permission->akun->personnel->nip;
             $this->nrp = $permission->akun->personnel->nrp;
             $this->jabatan = $permission->akun->personnel->position;

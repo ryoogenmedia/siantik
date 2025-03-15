@@ -14,7 +14,7 @@
             <option value="">- pilih -</option>
             @foreach (config('const.roles') as $role)
                 @if ($role != 'superadmin' && $role != 'admin')
-                    <option value="{{ $role }}">{{ $role == 'leader' ? 'Pimpinan' : 'Personil' }}</option>
+                    <option value="{{ $role }}">{{ $role == 'leader' ? 'pimpinan' : 'personil' }}</option>
                 @endif
             @endforeach
         </x-backend.form.select>

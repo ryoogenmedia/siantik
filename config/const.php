@@ -6,7 +6,7 @@ return [
         'admin',
         'superadmin',
         'leader',
-        'personnel',
+        'personil',
     ],
 
     'sex' => [

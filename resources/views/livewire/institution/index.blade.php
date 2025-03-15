@@ -46,10 +46,10 @@
         <x-backend.form.input wire:model='alamat' label="Alamat" name="alamat" type="text"
             placeholder="Nama Kota, Nama Jl, Kode Pos" required />
 
-        <x-backend.form.input wire:model='absensiPagi' label="Waktu Absensi Pagi" name="absensiPagi" type="time"
+        <x-backend.form.input wire:model='absensiPagi' label="Waktu Presensi Masuk" name="absensiPagi" type="time"
             required />
 
-        <x-backend.form.input wire:model='absensiSiang' label="Waktu Absensi Siang" name="absensiSiang" type="time"
+        <x-backend.form.input wire:model='absensiSiang' label="Waktu Presensi Pulang" name="absensiSiang" type="time"
             required />
 
         <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran (per Meter)" name="radiusLingkaran"

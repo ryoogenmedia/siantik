@@ -13,7 +13,7 @@ class CetakLaporanController extends Controller
         $data = [];
 
         $data = User::query()
-            ->where('roles', 'personnel')
+            ->where('roles', 'personil')
             ->where(function ($query) use ($request) {
                 $query->whereHas('permissions', function ($query) use ($request) {
                     $query->when($request->date_start, function ($query, $date_start) {

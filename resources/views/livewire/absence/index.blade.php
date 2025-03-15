@@ -13,9 +13,9 @@
 @endpush
 
 <div wire:poll.10s>
-    <x-slot name="title">Absensi</x-slot>
-    <x-slot name="pageTitle">Absensi</x-slot>
-    <x-slot name="pagePretitle">Melakukan absensi.</x-slot>
+    <x-slot name="title">Presensi</x-slot>
+    <x-slot name="pageTitle">Presensi</x-slot>
+    <x-slot name="pagePretitle">Melakukan presensi.</x-slot>
 
     <x-alert />
 
@@ -32,21 +32,21 @@
             <div class="overlay"></div>
         </div>
 
-        <button class="btn tf-btn primary mt-3" onclick="takePicture()" {{ $this->inRadius ? '' : 'disabled' }}>Rekam Absensi</button>
+        <button class="btn tf-btn primary mt-3" onclick="takePicture()" {{ $this->inRadius ? '' : 'disabled' }}>Rekam Presensi</button>
     @else
         @if (!$this->isCheckOut && !$this->isPermit)
             <div class="row">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h6>anda telah melakukan absensi atau telah di izinkan.</h6>
-                        <p class="text-muted" style="font-size:12px">silahkan melakukan absensi esok hari.
+                        <h6>anda telah melakukan presensi atau telah di izinkan.</h6>
+                        <p class="text-muted" style="font-size:12px">silahkan melakukan presensi esok hari.
                         </p>
                     </div>
                 </div>
             </div>
         @else
-            <p style="font-size: 14px">Pencet Tombol Untuk Absensi Pulang (Siang)</p>
-            <button wire:click='absenceCheckOut' class="btn tf-btn success mt-3">Absensi Siang</button>
+            <p style="font-size: 14px">Pencet Tombol Untuk Presensi Pulang (Siang)</p>
+            <button wire:click='absenceCheckOut' class="btn tf-btn success mt-3">Presensi Siang</button>
         @endif
     @endif
 </div>
@@ -70,7 +70,7 @@
         // TAKE PICTURE FUNCTION
         function takePicture() {
             if (!@this.inRadius) {
-                alert("Anda berada di luar radius absensi.");
+                alert("Anda berada di luar radius presensi.");
                 return;
             }
 

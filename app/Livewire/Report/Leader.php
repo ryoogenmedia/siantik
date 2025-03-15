@@ -17,6 +17,18 @@ class Leader extends Component
 
     public $rows = [];
 
+    public function updatedSearch(){
+        $this->getDataRows();
+    }
+
+    public function filterActive(){
+        $this->getDataRows();
+    }
+
+    public function resetFilter(){
+        $this->reset(['keterangan','search','tanggalMulai','tanggalSelesai']);
+    }
+
     public function getDataRows(){
         $rows = [];
 
@@ -51,29 +63,16 @@ class Leader extends Component
             //     })
             //     ->whereDate('created_at', now()->toDateString())
             //     ->where('created_at', '<=', now()->endOfDay());
-            // })->where('roles', 'personnel')
+            // })->where('roles', 'personil')
             ->get();
 
         $this->rows = $rows;
     }
 
-    public function updatedSearch(){
-        $this->getDataRows();
-    }
-
-    public function filterActive(){
-        $this->getDataRows();
-    }
-
     public function mount(){
         $this->getDataRows();
-        // dd($this->rows);
     }
 
-    public function resetFilter(){
-        $this->reset(['keterangan','search','tanggalMulai','tanggalSelesai']);
-        $this->getDataRows();
-    }
 
     public function render()
     {

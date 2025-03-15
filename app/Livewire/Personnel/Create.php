@@ -22,7 +22,7 @@ class Create extends Component
     public $surel;
     public $kataSandi;
     public $konfirmasiKataSandi;
-    public $roles = 'personnel';
+    public $roles = 'personil';
     public $avatar;
 
     public function rules(){
@@ -76,7 +76,7 @@ class Create extends Component
             session()->flash('alert', [
                 'type' => 'danger',
                 'message' => 'Gagal!',
-                'detail' => 'Personnel gagal ditambah.',
+                'detail' => 'Personil gagal ditambah.',
             ]);
 
             return redirect()->back();
@@ -85,7 +85,7 @@ class Create extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil!',
-            'detail' => 'Personnel berhasil ditambah.',
+            'detail' => 'personil berhasil ditambah.',
         ]);
 
         return redirect()->route('personnel.index');

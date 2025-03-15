@@ -83,7 +83,7 @@
                         <p class="text-black" style="font-size: .8rem"><b>jam :</b>
                             {{ \Carbon\Carbon::parse($row->craeted_at)->format('H:i:s') }}</p>
                         <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'pimpinan' : 'personil' }}</span>
                         </p>
                     </div>
                 </div>
@@ -94,12 +94,12 @@
                 <div class="content">
                     <div class="left">
                         <h6 style="font-size: 12px">{{ $row->akun->name }}</h6>
-                        <p class="text-black" style="font-size: .8rem"><b>absen pagi :</b>
+                        <p class="text-black" style="font-size: .8rem"><b>presensi pagi :</b>
                             {{ $row->check_in }}</p>
-                        <p class="text-black" style="font-size: .8rem"><b>absen siang :</b>
+                        <p class="text-black" style="font-size: .8rem"><b>presensi siang :</b>
                             {{ $row->check_out ?? 'belum dilakukan.' }}</p>
                         <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                                style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'pimpinan' : 'personil' }}</span>
                         </p>
                     </div>
                     <span class="price">

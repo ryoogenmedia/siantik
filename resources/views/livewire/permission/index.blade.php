@@ -1,7 +1,7 @@
 <div>
     <x-slot name="title">Perizinan</x-slot>
     <x-slot name="pageTitle">Perizinan</x-slot>
-    <x-slot name="pagePretitle">Daftar izin personnel & pimpinan.</x-slot>
+    <x-slot name="pagePretitle">Daftar izin personil & pimpinan.</x-slot>
 
     <x-slot name="button">
         <a href="{{ route('permission.create') }}" class="btn btn-sm tf-btn primary">Tambah</a>
@@ -23,7 +23,7 @@
                     <p class="text-black" style="font-size: .8rem"><b>status :</b>
                         {{ $row->status_permission }}</p>
                     <p><span class="bg-{{ $row->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                            style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'Pimpinan' : 'Personel' }}</span>
+                            style="font-size: 12px">{{ $row->akun->roles == 'leader' ? 'pimpinan' : 'personil' }}</span>
                     </p>
                 </div>
 

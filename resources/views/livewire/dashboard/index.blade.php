@@ -57,7 +57,7 @@
     <x-slot name="pageTitle">Dashboard</x-slot>
     <x-slot name="pagePretitle">Ringkasan aplikasi anda berada disini.</x-slot>
 
-    @if (auth()->user()->roles == 'personnel' || auth()->user()->roles == 'leader')
+    @if (auth()->user()->roles == 'personil' || auth()->user()->roles == 'leader')
         <div class="row mb-2">
             <div class="col-12">
                 <div class="card border border-success">
@@ -89,10 +89,10 @@
         </div>
 
         <div class="row mt-5">
-            @if (auth()->user()->roles == 'personnel')
-                <h5>Lokasi absensi anda hari ini.</h5>
+            @if (auth()->user()->roles == 'personil')
+                <h5>Lokasi Presensi anda hari ini.</h5>
             @else
-                <h5>Daftar presensi personnel hari ini.</h5>
+                <h5>Daftar presensi Personil hari ini.</h5>
             @endif
             <div class="col-12">
                 <div wire:ignore.self class="row p-2">
@@ -117,7 +117,7 @@
 
             <div class="col-6">
                 <div class="card mb-2">
-                    <div class="card-header text-primary">Jumlah Personnel</div>
+                    <div class="card-header text-primary">Jumlah Personil</div>
                     <div class="card-body">
                         <h3>{{ $this->jmlPersonnel ?? 0 }}</h3>
                     </div>
@@ -128,7 +128,7 @@
         <div class="row mt-3">
             <div class="col-12">
                 <div class="card mb-2">
-                    <div class="card-header text-primary">Radius Lingkaran Absensi</div>
+                    <div class="card-header text-primary">Radius Lingkaran Presensi</div>
                     <div class="card-body">
                         <h3>{{ $this->radiusLingkaran ?? 0 }}</h3>
                     </div>
@@ -367,7 +367,7 @@
                             </tr>
                             <tr>
                                 <td class='text-center' colspan='3'>
-                                    ${userRole === "personnel" ?
+                                    ${userRole === "personil" ?
                                         ''
                                      : `<a href="${route}" class="btn bg-success-lt mt-3">Lihat Detail</a>`
                                     }

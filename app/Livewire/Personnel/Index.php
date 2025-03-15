@@ -25,7 +25,7 @@ class Index extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil!',
-            'detail' => 'Personnel berhasil dihapus.',
+            'detail' => 'Personil berhasil dihapus.',
         ]);
 
         return redirect()->back();

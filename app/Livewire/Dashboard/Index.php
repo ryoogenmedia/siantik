@@ -188,7 +188,7 @@ class Index extends Component
             $this->radiusLingkaran = Institution::first()->radius ?? null;
         }
 
-        if (auth()->user()->roles == 'personnel') {
+        if (auth()->user()->roles == 'personil') {
             $user = auth()->user();
             $status = null;
 

@@ -45,7 +45,7 @@ class Index extends Component
             session()->flash('alert', [
                 'type' => 'warning',
                 'message' => 'Bahaya.',
-                'detail' => "Anda berada di luar jangkauan radius absensi.",
+                'detail' => "Anda berada di luar jangkauan radius presensi.",
             ]);
             return;
         }
@@ -84,7 +84,7 @@ class Index extends Component
                 session()->flash('alert', [
                     'type' => 'warning',
                     'message' => 'Bahaya.',
-                    'detail' => "Anda hanya dapat melakukan absensi sekali dalam sehari.",
+                    'detail' => "Anda hanya dapat melakukan presensi sekali dalam sehari.",
                 ]);
 
                 return redirect()->back();
@@ -94,7 +94,7 @@ class Index extends Component
                 session()->flash('alert', [
                     'type' => 'warning',
                     'message' => 'Bahaya.',
-                    'detail' => "Admin belum mengaktifkan lokasi instansi. Anda tidak bisa absen sekarang.",
+                    'detail' => "Admin belum mengaktifkan lokasi instansi. Anda tidak bisa presensi sekarang.",
                 ]);
 
                 return back();
@@ -138,7 +138,7 @@ class Index extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil.',
-            'detail' => "Anda telah melakukan absensi pulang.",
+            'detail' => "Anda telah melakukan presensi pulang.",
         ]);
 
         return redirect()->back();
