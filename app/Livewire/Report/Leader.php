@@ -31,22 +31,18 @@ class Leader extends Component
     public function getDataRows(){
         $query = User::query()
             ->whereHas('attendances', function($query) {
-                // Filter berdasarkan kata kunci pencarian
-                if ($this->search) {
+                $query->when($this->search, function($query) {
                     $query->where('name', 'LIKE', "%{$this->search}%");
-                }
-                // Filter berdasarkan status kehadiran
-                if ($this->keterangan) {
+                })
+                ->when($this->keterangan, function($query) {
                     $query->where('status_attendance', $this->keterangan);
-                }
-                // Filter berdasarkan tanggal mulai
-                if ($this->tanggalMulai) {
+                })
+                ->when($this->tanggalMulai, function($query) {
                     $query->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
-                }
-                // Filter berdasarkan tanggal selesai
-                if ($this->tanggalSelesai) {
+                })
+                ->when($this->tanggalSelesai, function($query) {
                     $query->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
-                }
+                });
             })
             ->where('roles', 'personil') // Menyaring user dengan peran "personil"
             ->get();
