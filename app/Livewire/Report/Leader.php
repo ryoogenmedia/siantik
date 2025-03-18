@@ -33,24 +33,39 @@ class Leader extends Component
     public function getDataRows()
     {
         $query = User::query()
-            ->where('roles', 'personil') // Hanya user dengan peran "personil"
-            ->when($this->search, function ($query, $search) {
-                $query->whereHas('attendances', fn($q) => $q->where('name', 'LIKE', "%{$search}%"));
+        ->where('roles', 'personil')
+        ->when($this->search, function ($query, $search) {
+            $query->where('name', 'LIKE', "%$search%");
+        })
+        ->when($this->keterangan, function ($query) {
+            $query
+            ->whereHas('permissions', function($q){
+                $q->where('status_permission', $this->keterangan);
             })
-            ->when($this->keterangan, function ($query, $keterangan) {
-                $query->whereHas('attendances', fn($q) => $q->where('status_attendance', $keterangan));
+            ->orWhereHas('attendances', function ($q) {
+                $q->where('status_attendance', $this->keterangan);
+            });
+        })
+        ->when($this->tanggalMulai, function ($query) {
+            $query
+            ->whereHas('permissions', function($q){
+                $q->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
             })
-            ->when($this->tanggalMulai, function ($query, $tanggalMulai) {
-                $query->whereHas('attendances', fn($q) =>
-                    $q->whereDate('created_at', '>=', Carbon::parse($tanggalMulai))
-                );
+            ->orWhereHas('attendances', function ($q) {
+                $q->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
+            });
+        })
+        ->when($this->tanggalSelesai, function ($query) {
+            $query
+            ->whereHas('permissions', function($q){
+                $q->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
             })
-            ->when($this->tanggalSelesai, function ($query, $tanggalSelesai) {
-                $query->whereHas('attendances', fn($q) =>
-                    $q->whereDate('created_at', '<=', Carbon::parse($tanggalSelesai)->endOfDay())
-                );
-            })
-            ->get();
+            ->orWhereHas('attendances', function ($q) {
+                $q->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
+            });
+        })
+        ->get();
+
 
         $this->rows = $query;
     }
