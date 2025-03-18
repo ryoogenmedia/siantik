@@ -5,7 +5,6 @@ namespace App\Livewire\Report;
 use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
-use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Leader extends Component
@@ -14,7 +13,6 @@ class Leader extends Component
     public $search;
     public $tanggalMulai;
     public $tanggalSelesai;
-
     public $rows = [];
 
     public function updatedSearch(){
@@ -27,52 +25,38 @@ class Leader extends Component
 
     public function resetFilter(){
         $this->reset(['keterangan','search','tanggalMulai','tanggalSelesai']);
+        $this->getDataRows();
     }
 
     public function getDataRows(){
-        $rows = [];
-
-        $rows = User::query()
-            // ->whereHas('permissions', function($query){
-            //     $query->when($this->keterangan, function($query, $keterangan){
-            //         $query->where('status_permission', $keterangan);
-            //     })
-            //     ->when($this->tanggalMulai, function($query, $tanggalMulai){
-            //         $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-            //     })
-            //     ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
-            //         $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-            //         $query->where('created_at', '<=', $date_end);
-            //     })
-            //     ->whereDate('created_at', now()->toDateString())
-            //     ->where('created_at', '<=', now()->endOfDay());
-            // })
-            // ->whereHas('attendances', function($query){
-            //     $query->when($this->search, function($query, $search){
-            //         $query->where('name', 'LIKE', "%$search%");
-            //     })
-            //     ->when($this->keterangan, function($query, $keterangan){
-            //         $query->where('status_attendance', $keterangan);
-            //     })
-            //     ->when($this->tanggalMulai, function($query, $tanggalMulai){
-            //         $query->where('created_at', '>=', Carbon::parse($tanggalMulai));
-            //     })
-            //     ->when($this->tanggalSelesai, function($query, $tanggalSelesai){
-            //         $date_end = \Carbon\Carbon::parse($tanggalSelesai)->endOfDay();
-            //         $query->where('created_at', '<=', $date_end);
-            //     })
-            //     ->whereDate('created_at', now()->toDateString())
-            //     ->where('created_at', '<=', now()->endOfDay());
-            // })->where('roles', 'personil')
+        $query = User::query()
+            ->whereHas('attendances', function($query) {
+                // Filter berdasarkan kata kunci pencarian
+                if ($this->search) {
+                    $query->where('name', 'LIKE', "%{$this->search}%");
+                }
+                // Filter berdasarkan status kehadiran
+                if ($this->keterangan) {
+                    $query->where('status_attendance', $this->keterangan);
+                }
+                // Filter berdasarkan tanggal mulai
+                if ($this->tanggalMulai) {
+                    $query->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
+                }
+                // Filter berdasarkan tanggal selesai
+                if ($this->tanggalSelesai) {
+                    $query->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
+                }
+            })
+            ->where('roles', 'personil') // Menyaring user dengan peran "personil"
             ->get();
 
-        $this->rows = $rows;
+        $this->rows = $query;
     }
 
     public function mount(){
         $this->getDataRows();
     }
-
 
     public function render()
     {
