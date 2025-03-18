@@ -30,22 +30,25 @@ class Leader extends Component
 
     public function getDataRows(){
         $query = User::query()
-            ->whereHas('attendances', function($query) {
-                $query->when($this->search, function($query) {
+        ->when($this->search || $this->keterangan || $this->tanggalMulai || $this->tanggalSelesai, function ($query) {
+            $query->whereHas('attendances', function ($query) {
+                $query->when($this->search, function ($query) {
                     $query->where('name', 'LIKE', "%{$this->search}%");
                 })
-                ->when($this->keterangan, function($query) {
+                ->when($this->keterangan, function ($query) {
                     $query->where('status_attendance', $this->keterangan);
                 })
-                ->when($this->tanggalMulai, function($query) {
+                ->when($this->tanggalMulai, function ($query) {
                     $query->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
                 })
-                ->when($this->tanggalSelesai, function($query) {
+                ->when($this->tanggalSelesai, function ($query) {
                     $query->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
                 });
-            })
-            ->where('roles', 'personil') // Menyaring user dengan peran "personil"
-            ->get();
+            });
+        })
+        ->where('roles', 'personil') // Menyaring user dengan peran "personil"
+        ->get();
+
 
         $this->rows = $query;
     }
