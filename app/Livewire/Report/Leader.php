@@ -9,10 +9,10 @@ use Livewire\Component;
 
 class Leader extends Component
 {
-    public $keterangan;
-    public $search;
-    public $tanggalMulai;
-    public $tanggalSelesai;
+    public $keterangan = "";
+    public $search = "";
+    public $tanggalMulai = "";
+    public $tanggalSelesai = "";
     public $rows = [];
 
     public function updatedSearch(){
