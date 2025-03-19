@@ -78,7 +78,7 @@ class Index extends Component
 
             $this->isPermit = $permit ? true : false;
 
-            if ($absence || $permit) {
+            if ($absence && $absence->check_out || $permit) {
                 $this->checkAbsence = false;
 
                 session()->flash('alert', [
