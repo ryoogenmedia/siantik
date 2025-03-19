@@ -1,9 +1,9 @@
 <div>
     <div class="position-relative">
         <dir>
-            <x-slot name="title">Laporan Bulanan</x-slot>
-            <x-slot name="pageTitle">Laporan Bulanan</x-slot>
-            <x-slot name="pagePretitle">Melihat laporan bulanan presensi.</x-slot>
+            <x-slot name="title">Laporan Harian Dan Bulanan</x-slot>
+            <x-slot name="pageTitle">Laporan Harian Dan Bulanan</x-slot>
+            <x-slot name="pagePretitle">Melihat laporan harian dan bulanan presensi.</x-slot>
         </dir>
 
         <a href="{{ route('print.admin', [
