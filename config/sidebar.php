@@ -42,7 +42,7 @@ return [
     ],
 
     [
-        'title' => 'Laporan Bulanan',
+        'title' => 'Laporan Harian Dan Bulanan',
         'icon' => 'home',
         'route-name' => 'report.admin',
         'description' => 'Untuk melihat daftar laporan admin.',
