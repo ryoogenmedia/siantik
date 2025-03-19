@@ -45,8 +45,8 @@
                 </div>
             </div>
         @else
-            <p style="font-size: 14px">Pencet Tombol Untuk Presensi Pulang (Siang)</p>
-            <button wire:click='absenceCheckOut' class="btn tf-btn success mt-3">Presensi Siang</button>
+            <p style="font-size: 14px">Pencet Tombol Untuk Presensi Pulang</p>
+            <button wire:click='absenceCheckOut' class="btn tf-btn success mt-3">Presensi Pulang</button>
         @endif
     @endif
 </div>
