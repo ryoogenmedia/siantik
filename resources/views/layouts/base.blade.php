@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/font-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('icon/line-awesome/css/line-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet"type="text/css" href="{{ asset('assets/css/nouislider.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">

@@ -4,7 +4,8 @@
     <x-slot name="pagePretitle">Menyunting Personil.</x-slot>
 
     <x-slot name="button">
-        <a href="{{ route('personnel.index') }}" class="btn btn-sm tf-btn primary">Kemabali</a>
+        <a href="{{ route('personnel.index') }}" class="btn btn-sm tf-btn primary"><span
+                class="las la-arrow-left me-1"></span>Kembali</a>
     </x-slot>
 
     <x-alert />
@@ -24,7 +25,7 @@
         </x-backend.form.select>
 
         <x-backend.form.input wire:model='jabatan' name='jabatan' type="text" label="Jabatan" required
-        placeholder="Masukkan nama jabatan" />
+            placeholder="Masukkan nama jabatan" />
 
         <hr class="mt-5">
 

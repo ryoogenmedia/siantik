@@ -4,7 +4,8 @@
     <x-slot name="pagePretitle">Menambah Personil.</x-slot>
 
     <x-slot name="button">
-        <a href="{{ route('personnel.index') }}" class="btn btn-sm tf-btn primary">Kemabali</a>
+        <a href="{{ route('personnel.index') }}" class="btn btn-sm tf-btn primary"><span
+                class="las la-arrow-left me-1"></span>Kembali</a>
     </x-slot>
 
     <x-alert />

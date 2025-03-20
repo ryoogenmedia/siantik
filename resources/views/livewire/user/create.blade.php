@@ -4,7 +4,8 @@
     <x-slot name="pagePretitle">Menambah pengguna.</x-slot>
 
     <x-slot name="button">
-        <a href="{{ route('user.index') }}" class="btn btn-sm tf-btn primary">Kembali</a>
+        <a href="{{ route('user.index') }}" class="btn btn-sm tf-btn primary"><span class="las la-arrow-left"></span>
+            Kembali</a>
     </x-slot>
 
     <x-alert />

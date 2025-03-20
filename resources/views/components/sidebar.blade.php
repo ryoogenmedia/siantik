@@ -13,11 +13,13 @@
             <div class="sidebar-content">
                 <div class="d-flex gap-10 align-items-center pb-20 line-bt">
                     <div class="avatar avt-40">
-                        <img src="{{ auth()->user()->avatarUrl() }}" alt="img">
+                        <img style="border-radius: 100%" src="{{ auth()->user()->avatarUrl() }}" alt="img">
                     </div>
                     <div class="content-right">
-                        <p class="text-1">{{ auth()->user()->roles }}</p>
-                        <h6 class="fw-7">{{ auth()->user()->name }}</h6>
+                        <p class="text-1 py-1 px-2 d-inline rounded-2"
+                            style="font-size: 13px; background-color: #bfffb9; color: #41a722">
+                            {{ auth()->user()->roles }}</p>
+                        <h6 class="fw-7 mt-1">{{ auth()->user()->name }}</h6>
                     </div>
                 </div>
 
@@ -28,18 +30,21 @@
                         @if (in_array(auth()->user()->roles, $sidebar['roles']))
                             <li class="mt-18 sub-menu" id="accordionExample">
                                 <a href="{{ route($sidebar['route-name']) }}" class="nav-link-item not-link">
-                                    <span>{{ $sidebar['title'] }}</span>
+                                    <div><span style="font-weight: bold"
+                                            class="me-2 text-primary las la-{{ $sidebar['icon'] }}"></span>
+                                        {{ $sidebar['title'] }}
+                                    </div>
                                 </a>
                             </li>
                         @endif
                     @endforeach
 
-                    <li class="mt-16">
-                        <a href="{{ route('logout') }}"
+                    <li style="margin-top: 60px" class="d-flex justify-content-center">
+                        <a class="btn btn-danger text-white w-100" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                             class="nav-link-item not-link">
-                            <span>Logout</span>
+                            <b>Keluar Aplikasi <span class="ms-1 las la-arrow-right fw-bold"></span></b>
                         </a>
                     </li>
                 </ul>

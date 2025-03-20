@@ -25,12 +25,13 @@ class Create extends Component
     public $roles = 'personil';
     public $avatar;
 
-    public function rules(){
+    public function rules()
+    {
         return [
-            'namaLengkap' => ['required','string','min:2','max:255'],
-            'nomorIdentitas' => ['required','string','min:2','max:255'],
-            'jenisKelamin' => ['required','string','min:2','max:255',Rule::in(config('const.sex'))],
-            'jabatan' => ['required','string','min:2','max:255'],
+            'namaLengkap' => ['required', 'string', 'min:2', 'max:255'],
+            'nomorIdentitas' => ['required', 'string', 'min:2', 'max:255'],
+            'jenisKelamin' => ['required', 'string', 'min:2', 'max:255', Rule::in(config('const.sex'))],
+            'jabatan' => ['required', 'string', 'min:2', 'max:255'],
 
             'surel' => [
                 'required',
@@ -38,15 +39,16 @@ class Create extends Component
                 'unique:users,email',
             ],
             'kataSandi' => ['required', 'min:6', 'same:konfirmasiKataSandi'],
-            'avatar' => ['required', 'file', 'image', 'max:1024'],
-            'roles' => ['required','string','min:2','max:255', Rule::in(config('const.roles'))],
+            'avatar' => ['nullable', 'file', 'image', 'max:1024'],
+            'roles' => ['required', 'string', 'min:2', 'max:255', Rule::in(config('const.roles'))],
         ];
     }
 
-    public function save(){
+    public function save()
+    {
         $this->validate();
 
-        try{
+        try {
             DB::beginTransaction();
 
             $user = User::create([
@@ -57,7 +59,7 @@ class Create extends Component
                 'roles' => $this->roles,
             ]);
 
-            if($this->avatar){
+            if ($this->avatar) {
                 $user->update([
                     'avatar' => $this->avatar->store('avatar', 'public'),
                 ]);
@@ -72,7 +74,7 @@ class Create extends Component
             ]);
 
             DB::commit();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             session()->flash('alert', [
                 'type' => 'danger',
                 'message' => 'Gagal!',

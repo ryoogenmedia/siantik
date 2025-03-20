@@ -21,7 +21,8 @@ class Create extends Component
 
     public $roles;
 
-    public function rules(){
+    public function rules()
+    {
         return [
             'username' => [
                 'required',
@@ -36,11 +37,12 @@ class Create extends Component
                 'unique:users,email',
             ],
             'kataSandi' => ['required', 'min:6', 'same:konfirmasiKataSandi'],
-            'avatar' => ['required', 'file', 'image', 'max:1024'],
+            'avatar' => ['nullable', 'file', 'image', 'max:1024'],
         ];
     }
 
-    public function save(){
+    public function save()
+    {
         $this->validate();
 
         try {
@@ -49,11 +51,16 @@ class Create extends Component
             User::create([
                 'username' => $this->username,
                 'email' => $this->surel,
-                'avatar' => $this->avatar->store('avatar', 'public'),
                 'password' => bcrypt($this->kataSandi),
                 'name' => $this->namaLengkap,
                 'roles' => $this->roles,
             ]);
+
+            if ($this->avatar) {
+                User::create([
+                    'avatar' => $this->avatar->store('avatar', 'public'),
+                ]);
+            }
 
             DB::commit();
         } catch (Exception $e) {
