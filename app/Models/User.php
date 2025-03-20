@@ -28,24 +28,36 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function personnel(){
-        return $this->hasOne(Personnel::class,'user_id','id')->withDefault();
+    public function personnel()
+    {
+        return $this->hasOne(Personnel::class, 'user_id', 'id')->withDefault();
     }
 
     // GET AVATAR URL
     public function avatarUrl()
     {
-        return $this->avatar
-            ? url('storage/' . $this->avatar)
-            : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
+        $url = "";
+        if (auth()->user()->email == 'muhbintang650@gmail.com' || auth()->user()->email == 'feryfadulrahman@gmail.com') {
+            $url = $this->avatar
+                ? url('storage/' . $this->avatar)
+                : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
+        } else {
+            $url = $this->avatar
+                ? url('storage/' . $this->avatar)
+                : asset('ryoogen/no-img.png');
+        }
+
+        return $url;
     }
 
-    public function attendances(){
-        return $this->hasMany(Attendance::class,'user_id','id');
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'user_id', 'id');
     }
 
-    public function permissions(){
-        return $this->hasMany(Permission::class,'user_id','id');
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class, 'user_id', 'id');
     }
 
     /**

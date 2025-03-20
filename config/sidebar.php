@@ -27,7 +27,7 @@ return [
 
     [
         'title' => 'Presensi',
-        'icon' => 'home',
+        'icon' => 'id-card',
         'route-name' => 'absence.index',
         'description' => 'Untuk melakukan presensi.',
         'roles' => ['personil'],
@@ -35,7 +35,7 @@ return [
 
     [
         'title' => 'Riwayat Kehadiran',
-        'icon' => 'id-card',
+        'icon' => 'history',
         'route-name' => 'history.absence',
         'description' => 'Untuk melihat riawyat kehadiran.',
         'roles' => ['personil'],

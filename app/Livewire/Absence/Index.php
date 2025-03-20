@@ -13,20 +13,10 @@ use Livewire\Component;
 class Index extends Component
 {
     public $userId;
-
-    public $longitude;
-    public $latitude;
-
-    public $distance;
+    public $longitude, $latitude, $distance;
     public $inRadius = false;
-
-    public $instLongitude;
-    public $instLatitude;
-    public $radius;
-
-    public $checkAbsence = true;
-    public $isCheckOut = false;
-    public $isPermit = false;
+    public $instLongitude, $instLatitude, $radius;
+    public $checkAbsence = true, $isCheckOut = false, $isPermit = false;
 
     #[On('location')]
     public function getLocationAttendance($latitude, $longitude, $distance)
@@ -34,7 +24,6 @@ class Index extends Component
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->distance = $distance;
-
         $this->inRadius = $distance <= $this->radius;
     }
 
@@ -51,71 +40,61 @@ class Index extends Component
         }
 
         if (preg_match('/^data:image\/(\w+);base64,/', $base_64, $type)) {
-            $data = substr($base_64, strpos($base_64, ',') + 1);
-            $data = str_replace(' ', '+', $data);
-            $data = base64_decode($data);
+            $data = base64_decode(substr($base_64, strpos($base_64, ',') + 1));
 
             if ($data === false) {
                 throw new \Exception('Decoding base64 failed');
             }
 
-            $extension = strtolower($type[1]);
-            $fileName = uniqid() . '.' . $extension;
+            $fileName = uniqid() . '.' . strtolower($type[1]);
             $filePath = 'public/attendance-picture/' . $fileName;
             Storage::put($filePath, $data);
             $fileUrl = Storage::url('attendance-picture/' . $fileName);
 
             $user = User::findOrFail($this->userId);
-            $absence = Attendance::query()
-                ->where('user_id', $user->id)
+            $absence = Attendance::where('user_id', $user->id)
                 ->whereDate('created_at', now()->toDateString())
                 ->first();
 
-            $permit = Permission::query()
-                ->where('user_id', $user->id)
+            $permit = Permission::where('user_id', $user->id)
                 ->whereDate('created_at', now()->toDateString())
-                ->first();
+                ->exists();
 
-            $this->isPermit = $permit ? true : false;
+            $this->isPermit = $permit;
 
-            if ($absence && $absence->check_out || $permit) {
+            if ($absence || $permit) {
                 $this->checkAbsence = false;
-
                 session()->flash('alert', [
                     'type' => 'warning',
-                    'message' => 'Bahaya.',
+                    'message' => 'Presensi sudah dilakukan.',
                     'detail' => "Anda hanya dapat melakukan presensi sekali dalam sehari.",
                 ]);
-
                 return redirect()->back();
             }
 
             if (!$this->instLatitude || !$this->instLongitude) {
                 session()->flash('alert', [
                     'type' => 'warning',
-                    'message' => 'Bahaya.',
-                    'detail' => "Admin belum mengaktifkan lokasi instansi. Anda tidak bisa presensi sekarang.",
+                    'message' => 'Lokasi tidak aktif.',
+                    'detail' => "Admin belum mengaktifkan lokasi instansi.",
                 ]);
-
                 return back();
             }
 
-            $status = 'hadir';
-
-            $attendance = Attendance::create([
+            Attendance::create([
                 'user_id' => $user->id,
                 'name' => $user->name,
-                'check_in' => now()->format('d-m-Y H:i:s'),
+                'check_in' => now()->format('Y-m-d H:i:s'),
                 'longitude' => $this->longitude,
                 'latitude' => $this->latitude,
                 'image' => $fileUrl,
-                'status_attendance' => $status,
+                'status_attendance' => 'hadir',
             ]);
 
             session()->flash('alert', [
                 'type' => 'success',
-                'message' => 'Berhasil.',
-                'detail' => "Anda sekarang telah hadir.",
+                'message' => 'Berhasil!',
+                'detail' => "Anda telah berhasil presensi.",
             ]);
 
             return redirect()->route('absence.index');
@@ -126,20 +105,21 @@ class Index extends Component
 
     public function absenceCheckOut()
     {
-        $absence = Attendance::query()
-            ->where('user_id', $this->userId)
+        $absence = Attendance::where('user_id', $this->userId)
             ->whereDate('created_at', now()->toDateString())
             ->first();
 
-        $absence->update([
-            'check_out' => now()->format('d-m-Y H:i:s'),
-        ]);
+        if ($absence) {
+            $absence->update([
+                'check_out' => now()->format('Y-m-d H:i:s'),
+            ]);
 
-        session()->flash('alert', [
-            'type' => 'success',
-            'message' => 'Berhasil.',
-            'detail' => "Anda telah melakukan presensi pulang.",
-        ]);
+            session()->flash('alert', [
+                'type' => 'success',
+                'message' => 'Presensi Pulang Berhasil.',
+                'detail' => "Anda telah melakukan presensi pulang.",
+            ]);
+        }
 
         return redirect()->back();
     }
@@ -147,31 +127,22 @@ class Index extends Component
     public function mount()
     {
         $institution = Institution::first();
-
-        $user = User::findOrFail(auth()->user()->id);
+        $user = auth()->user();
         $this->userId = $user->id;
 
-        $absence = Attendance::query()
-            ->where('user_id', $user->id)
+        $absence = Attendance::where('user_id', $user->id)
             ->whereDate('created_at', now()->toDateString())
             ->first();
 
-        $permit = Permission::query()
-            ->where('user_id', $user->id)
+        $this->isPermit = Permission::where('user_id', $user->id)
             ->whereDate('created_at', now()->toDateString())
-            ->first();
+            ->exists();
 
-        if ($absence || $permit) {
+        if ($absence || $this->isPermit) {
             $this->checkAbsence = false;
         }
 
-        $isCheckOut = Institution::query()
-            ->where('time_check_out', '<=', now()->format('H:i:s'))
-            ->first();
-
-        if ($isCheckOut) {
-            $this->isCheckOut = !isset($absence->check_out);
-        }
+        $this->isCheckOut = now()->format('H:i:s') >= optional($institution)->time_check_out_end;
 
         if ($institution) {
             $this->instLatitude = $institution->latitude;

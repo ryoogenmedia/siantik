@@ -27,6 +27,7 @@ return [
         'tugas',
         'pendidikan',
         'terlambat',
+        'alpa',
     ],
 
     'month' => [
