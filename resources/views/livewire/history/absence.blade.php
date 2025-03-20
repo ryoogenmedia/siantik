@@ -22,7 +22,7 @@
                         <td style="font-size: 10px;">
                             <b>{{ Carbon\Carbon::parse($row->check_in)->diffForHumans() ?? 'tidak ada waktu' }}</b>
                             <p>
-                                <span class="py-1 px-2 ms-2 d-inline rounded-2"
+                                <span class="py-1 px-2 d-inline rounded-2"
                                     style="font-size: 10px; font-weight: bold;
                                 background-color: {{ $row->status_check_in == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
                                 color: {{ $row->status_check_in == 'tepat waktu' ? '#41a722' : '#a72222' }};">
@@ -38,7 +38,7 @@
                         <td style="font-size: 10px;">
                             <b>{{ Carbon\Carbon::parse($row->check_out)->diffForHumans() ?? 'tidak ada waktu' }}</b>
                             <p>
-                                <span class="py-1 px-2 ms-2 d-inline rounded-2"
+                                <span class="py-1 px-2 d-inline rounded-2"
                                     style="font-size: 10px; font-weight: bold;
                             background-color: {{ $row->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
                             color: {{ $row->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
