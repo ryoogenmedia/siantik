@@ -21,8 +21,10 @@ class Index extends Component
     public $latitude;
     public $radiusLingkaran = 0;
     public $alamat;
-    public $absensiPagi;
-    public $absensiSiang;
+    public $checkInMulai;
+    public $checkInSelesai;
+    public $checkOutMulai;
+    public $checkOutSelesai;
     public $logo;
     public $showLogo;
     public $checkLocation = false;
@@ -34,13 +36,15 @@ class Index extends Component
     {
         return [
             'namaInstitusi'   => ['required', 'string', 'min:2', 'max:255'],
-            'radiusLingkaran' => ['required'],
             'longitude'       => ['required', 'min:2', 'max:255'],
             'latitude'        => ['required', 'min:2', 'max:255'],
             'alamat'          => ['required', 'string', 'min:2'],
-            'absensiPagi'     => ['required'],
-            'absensiSiang'    => ['required'],
             'logo'            => ['nullable', 'image'],
+            'radiusLingkaran' => ['required'],
+            'checkInMulai'    => ['required'],
+            'checkInSelesai'  => ['required'],
+            'checkOutMulai'   => ['required'],
+            'checkOutSelesai' => ['required'],
         ];
     }
 
@@ -53,7 +57,7 @@ class Index extends Component
 
         if ($institution) {
             $institution->update([
-                'latitude' => null,
+                'latitude'  => null,
                 'longitude' => null,
             ]);
 
@@ -90,13 +94,16 @@ class Index extends Component
             $institution = Institution::first();
 
             $data = [
-                'name'           => $this->namaInstitusi,
-                'longitude'      => $this->longitude,
-                'latitude'       => $this->latitude,
-                'radius'         => $this->radiusLingkaran,
-                'address'        => $this->alamat,
-                'time_check_in'  => $this->absensiPagi,
-                'time_check_out' => $this->absensiSiang,
+                'name'                 => $this->namaInstitusi,
+                'longitude'            => $this->longitude,
+                'latitude'             => $this->latitude,
+                'radius'               => $this->radiusLingkaran,
+                'address'              => $this->alamat,
+
+                'time_check_in_start'  => $this->checkInMulai,
+                'time_check_in_end'    => $this->checkInSelesai,
+                'time_check_out_start' => $this->checkOutMulai,
+                'time_check_out_end'   => $this->checkOutSelesai,
             ];
 
             if ($institution) {
@@ -155,9 +162,12 @@ class Index extends Component
             $this->longitude      = $institution->longitude;
             $this->latitude       = $institution->latitude;
             $this->alamat         = $institution->address;
-            $this->absensiPagi    = $institution->time_check_in;
-            $this->absensiSiang   = $institution->time_check_out;
             $this->showLogo       = $institution->logo ? Storage::url($institution->logo) : null;
+
+            $this->checkInMulai    = $institution->time_check_in_start;
+            $this->checkInSelesai    = $institution->time_check_in_end;
+            $this->checkOutMulai   = $institution->time_check_out_start;
+            $this->checkOutSelesai   = $institution->time_check_out_end;
         }
     }
 

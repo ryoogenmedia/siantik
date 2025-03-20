@@ -16,8 +16,10 @@ class Institution extends Model
         'longitude',
         'latitude',
         'address',
-        'time_check_in',
-        'time_check_out',
+        'time_check_in_start',
+        'time_check_in_end',
+        'time_check_out_start',
+        'time_check_out_end',
         'logo',
         'radius',
     ];

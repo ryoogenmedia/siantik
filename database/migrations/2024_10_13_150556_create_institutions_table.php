@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('latitude')->nullable();
             $table->string('name')->nullable();
             $table->text('address')->nullable();
-            $table->time('time_check_in')->nullable();
-            $table->time('time_check_out')->nullable();
+            $table->time('time_check_in_start')->nullable();
+            $table->time('time_check_in_end')->nullable();
+            $table->time('time_check_out_start')->nullable();
+            $table->time('time_check_out_end')->nullable();
             $table->string('logo')->nullable();
             $table->string('radius')->nullable();
             $table->timestamps();

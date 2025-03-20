@@ -37,24 +37,50 @@
             </div>
         </div>
 
-        <x-backend.form.input wire:model='logo' label="Logo" name="logo" type="file"
-            optional="Abaikan jika tidak ingin mengubah" />
+        <div class="row mx-1 my-5 pb-5 rounded-3" style="background-color: #d1d1d1">
+            <div class="col-12">
+                <x-backend.form.input wire:model='logo' label="Logo" name="logo" type="file"
+                    optional="Abaikan jika tidak ingin mengubah" />
 
-        <x-backend.form.input wire:model='namaInstitusi' label="Nama Institusi" name="namaInstitusi" type="text"
-            placeholder="masukkan nama institusi" autofocus required />
+                <x-backend.form.input wire:model='namaInstitusi' label="Nama Institusi" name="namaInstitusi"
+                    type="text" placeholder="masukkan nama institusi" autofocus required />
 
-        <x-backend.form.input wire:model='alamat' label="Alamat" name="alamat" type="text"
-            placeholder="Nama Kota, Nama Jl, Kode Pos" required />
+                <x-backend.form.input wire:model='alamat' label="Alamat" name="alamat" type="text"
+                    placeholder="Nama Kota, Nama Jl, Kode Pos" required />
+            </div>
+        </div>
 
-        <x-backend.form.input wire:model='absensiPagi' label="Waktu Presensi Masuk" name="absensiPagi" type="time"
-            required />
+        <div class="row px-3 mx-1 rounded-3 mt-5 pb-5" style="background-color: #ffd3ae">
+            <h1 style="font-size: 15px; margin-top: 14px">Presensi Masuk</h1>
+            <div class="col-6">
+                <x-backend.form.input wire:model='checkInMulai' label="Mulai" name="checkInMulai" type="time" />
+            </div>
 
-        <x-backend.form.input wire:model='absensiSiang' label="Waktu Presensi Pulang" name="absensiSiang" type="time"
-            required />
+            <div class="col-6">
+                <x-backend.form.input wire:model='checkInSelesai' label="Selesai" name="checkInSelesai" type="time"
+                    required />
+            </div>
+        </div>
 
-        <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran (per Meter)" name="radiusLingkaran"
-            min="0" type="number" required />
+        <div class="row px-3 mt-3 mx-1 rounded-3 pb-5" style="background-color: #ffd3ae">
+            <h1 style="font-size: 15px; margin-top: 14px">Presensi Pulang</h1>
+            <div class="col-6">
+                <x-backend.form.input wire:model='checkOutMulai' label="Mulai" name="checkOutMulai" type="time"
+                    required />
+            </div>
 
+            <div class="col-6">
+                <x-backend.form.input wire:model='checkOutSelesai' label="Selesai" name="checkOutSelesai" type="time"
+                    required />
+            </div>
+        </div>
+
+        <div class="row pb-5 mx-1 rounded-3 mt-5" style="background-color: #d1d1d1">
+            <div class="col-12">
+                <x-backend.form.input wire:model='radiusLingkaran' label="Radius Lingkaran (per Meter)"
+                    name="radiusLingkaran" min="0" type="number" required />
+            </div>
+        </div>
 
         <div class="row mt-5">
             @unless ($this->checkLocation)
