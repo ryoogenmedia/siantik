@@ -21,12 +21,14 @@
                         <td style="font-size: 10px; padding: 0 10px;">:</td>
                         <td style="font-size: 10px;">
                             <b>{{ Carbon\Carbon::parse($row->check_in)->diffForHumans() ?? 'tidak ada waktu' }}</b>
-                            <span class="py-1 px-2 ms-2 d-inline rounded-2"
-                                style="font-size: 10px; font-weight: bold;
+                            <p>
+                                <span class="py-1 px-2 ms-2 d-inline rounded-2"
+                                    style="font-size: 10px; font-weight: bold;
                                 background-color: {{ $row->status_check_in == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
                                 color: {{ $row->status_check_in == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                {{ $row->status_check_in }}
-                            </span>
+                                    {{ $row->status_check_in }}
+                                </span>
+                            </p>
                         </td>
                     </tr>
 
@@ -35,12 +37,14 @@
                         <td style="font-size: 10px; padding: 0 10px;">:</td>
                         <td style="font-size: 10px;">
                             <b>{{ Carbon\Carbon::parse($row->check_out)->diffForHumans() ?? 'tidak ada waktu' }}</b>
-                            <span class="py-1 px-2 ms-2 d-inline rounded-2"
-                                style="font-size: 10px; font-weight: bold;
-                                background-color: {{ $row->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
-                                color: {{ $row->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                {{ $row->status_check_out }}
-                            </span>
+                            <p>
+                                <span class="py-1 px-2 ms-2 d-inline rounded-2"
+                                    style="font-size: 10px; font-weight: bold;
+                            background-color: {{ $row->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
+                            color: {{ $row->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
+                                    {{ $row->status_check_out }}
+                                </span>
+                            </p>
                         </td>
                     </tr>
 
