@@ -53,25 +53,25 @@
         <div class="row px-3 mx-1 rounded-3 mt-5 pb-5" style="background-color: #ffd3ae">
             <h1 style="font-size: 15px; margin-top: 14px">Presensi Masuk</h1>
             <div class="col-6">
-                <x-backend.form.input wire:model='checkInMulai' label="Mulai" name="checkInMulai" type="time" />
+                <x-backend.form.input wire:model='checkInMulai' label="Mulai" name="checkInMulai" type="time-local" />
             </div>
 
             <div class="col-6">
-                <x-backend.form.input wire:model='checkInSelesai' label="Selesai" name="checkInSelesai" type="time"
-                    required />
+                <x-backend.form.input wire:model='checkInSelesai' label="Selesai" name="checkInSelesai"
+                    type="time-local" />
             </div>
         </div>
 
         <div class="row px-3 mt-3 mx-1 rounded-3 pb-5" style="background-color: #ffd3ae">
             <h1 style="font-size: 15px; margin-top: 14px">Presensi Pulang</h1>
             <div class="col-6">
-                <x-backend.form.input wire:model='checkOutMulai' label="Mulai" name="checkOutMulai" type="time"
-                    required />
+                <x-backend.form.input wire:model='checkOutMulai' label="Mulai" name="checkOutMulai"
+                    type="time-local" />
             </div>
 
             <div class="col-6">
-                <x-backend.form.input wire:model='checkOutSelesai' label="Selesai" name="checkOutSelesai" type="time"
-                    required />
+                <x-backend.form.input wire:model='checkOutSelesai' label="Selesai" name="checkOutSelesai"
+                    type="time-local" />
             </div>
         </div>
 
@@ -101,12 +101,12 @@
             @endunless
         </div>
 
-        <div wire:ignore class="row px-3 mb-5 mt-3">
-            <div class="col-5 mb-2 px-0 mx-0">
-                <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset
-                    Lokasi</button>
-            </div>
+        <div class="mb-2 px-0 mx-0">
+            <button wire:click='resetLocation' class="btn btn-sm tf-btn primary" type="button">Reset
+                Lokasi Saat Ini <span class="ms-1 las la-redo-alt"></span></button>
+        </div>
 
+        <div wire:ignore class="row px-3 mb-5 mt-3">
             <div class="col-12 px-3" id="map"></div>
         </div>
 

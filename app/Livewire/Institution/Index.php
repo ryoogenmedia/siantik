@@ -60,15 +60,15 @@ class Index extends Component
                 'latitude'  => null,
                 'longitude' => null,
             ]);
-
-            session()->flash('alert', [
-                'type'    => 'success',
-                'message' => 'Berhasil.',
-                'detail'  => 'Data lokasi berhasil direset.',
-            ]);
         }
 
-        return redirect()->back();
+        session()->flash('alert', [
+            'type'    => 'success',
+            'message' => 'Berhasil.',
+            'detail'  => 'Data lokasi berhasil direset.',
+        ]);
+
+        return redirect()->route('institution.index');
     }
 
     /**
@@ -156,18 +156,18 @@ class Index extends Component
         $institution = Institution::first();
 
         if ($institution) {
-            $this->checkLocation  = !empty($institution->longitude) && !empty($institution->latitude);
-            $this->namaInstitusi  = $institution->name;
+            $this->checkLocation   = !empty($institution->longitude) && !empty($institution->latitude);
+            $this->namaInstitusi   = $institution->name;
             $this->radiusLingkaran = $institution->radius;
-            $this->longitude      = $institution->longitude;
-            $this->latitude       = $institution->latitude;
-            $this->alamat         = $institution->address;
-            $this->showLogo       = $institution->logo ? Storage::url($institution->logo) : null;
+            $this->longitude       = $institution->longitude;
+            $this->latitude        = $institution->latitude;
+            $this->alamat          = $institution->address;
+            $this->showLogo        = $institution->logo ? Storage::url($institution->logo) : null;
 
             $this->checkInMulai    = $institution->time_check_in_start;
-            $this->checkInSelesai    = $institution->time_check_in_end;
+            $this->checkInSelesai  = $institution->time_check_in_end;
             $this->checkOutMulai   = $institution->time_check_out_start;
-            $this->checkOutSelesai   = $institution->time_check_out_end;
+            $this->checkOutSelesai = $institution->time_check_out_end;
         }
     }
 
