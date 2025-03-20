@@ -1,12 +1,7 @@
 <div>
-    <div class="position-relative">
-        <dir>
-            <x-slot name="title">Laporan Harian</x-slot>
-            <x-slot name="pageTitle">Laporan Harian</x-slot>
-            <x-slot name="pagePretitle">Melihat laporan harian presensi personil.</x-slot>
-        </dir>
-
-    </div>
+    <x-slot name="title">Laporan Harian</x-slot>
+    <x-slot name="pageTitle">Laporan Harian</x-slot>
+    <x-slot name="pagePretitle">Melihat laporan harian presensi personil.</x-slot>
 
     <x-alert />
 
@@ -17,7 +12,6 @@
                     <x-backend.form.input wire:model.live='search' name="search" type="text" class-form-group
                         placeholder="Cari nama personil..." />
                 </div>
-
                 <x-filter.button target="report-leader" />
             </div>
         </div>
@@ -33,12 +27,10 @@
                     @endforeach
                 </x-backend.form.select>
             </div>
-
             <div class="col-12">
                 <x-backend.form.input wire:model.live='tanggalMulai' name="tanggalMulai" label="Tanggal Awal"
                     type="date" />
             </div>
-
             <div class="col-12">
                 <x-backend.form.input wire:model.live='tanggalSelesai' name="tanggalSelesai" label="Tanggal Akhir"
                     type="date" />
@@ -46,85 +38,84 @@
         </div>
     </x-filter.card>
 
-    @forelse ($this->rows as $row)
-        <div class="order-item d-flex">
-            <div class="row">
-                <div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th style="font-size: 10px">Foto</th>
+                    <th style="font-size: 10px">Nama</th>
+                    <th style="font-size: 10px">Presensi Masuk</th>
+                    <th style="font-size: 10px">Presensi Pulang</th>
+                    <th style="font-size: 10px">Keterangan</th>
+                    <th style="font-size: 10px">Level</th>
+                    <th style="font-size: 10px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($this->rows as $row)
                     @foreach ($row->attendances as $attendance)
-                        <div class="d-flex mt-5 justify-content-between">
-                            <div class="img">
-                                <img src="{{ asset($attendance->image) }}" alt="img">
-                            </div>
-
-                            <div class="content ms-1">
-                                <div class="left">
-                                    <h6 style="font-size: 14px" class="fw-bold mb-2">{{ $attendance->name }}</h6>
-                                    <p class="text-black" style="font-size: .8rem"><b>presensi masuk :</b>
-                                        {{ $attendance->check_in }}
+                        <tr>
+                            <td><img style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover"
+                                    src="{{ asset($attendance->imageUrl()) }}" alt="img" width="50"></td>
+                            <td style="font-size:10px">{{ $attendance->name }}</td>
+                            <td style="font-size:10px; padding-right: 20px">{{ $attendance->check_in }}
+                                <p> <span class="py-1 px-2 d-inline rounded-2"
+                                        style="font-size: 10px; font-weight: bold;
+                                    background-color: {{ $attendance->status_check_in == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
+                                    color: {{ $attendance->status_check_in == 'tepat waktu' ? '#41a722' : '#a72222' }};">
+                                        {{ $attendance->status_check_in == 'tepat waktu' ? 'tepat' : 'terlambat' }}
+                                    </span></p>
+                            </td>
+                            <td style="font-size:10px; padding-right: 20px">
+                                {{ $attendance->check_out ?? 'belum dilakukan' }}
+                                @if ($attendance->check_out)
+                                    <p>
+                                        <span class="py-1 px-2 d-inline rounded-2"
+                                            style="font-size: 10px; font-weight: bold;
+                                        background-color: {{ $attendance->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
+                                        color: {{ $attendance->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
+                                            {{ $attendance->status_check_in == 'tepat waktu' ? 'tepat' : 'terlambat' }}
+                                        </span>
                                     </p>
-                                    <p class="text-black" style="font-size: .8rem"><b>presensi pulang :</b>
-                                        {{ $attendance->check_out ?? 'belum dilakukan.' }}
-                                    </p>
-                                    <p class="text-black" style="font-size: .8rem"><b>Keterangan :</b>
-                                        {{ $attendance->status_attendance }}
-                                    </p>
-                                    <p><span class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                                            style="font-size: 12px">{{ $attendance->akun->roles == 'leader' ? 'pimpinan' : 'personil' }}</span>
-                                    </p>
-                                </div>
-
-                                <span class="price ms-5">
-                                    <div class="d-flex flex-wrap">
-                                        <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
-                                            class="btn btn-sm btn-dark" style="font-size: 12px">Detail</a>
-                                    </div>
+                                @endif
+                            </td>
+                            <td style="font-size:10px">{{ $attendance->status_attendance }}</td>
+                            <td style="font-size:10px">
+                                <span
+                                    class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2">
+                                    {{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personil' }}
                                 </span>
-                            </div>
-                        </div>
+                            </td>
+                            <td>
+                                <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
+                                    class="btn btn-sm btn-dark"><span class="las la-eye"></span></a>
+                            </td>
+                        </tr>
                     @endforeach
 
                     @foreach ($row->permissions as $permission)
-                        <div class="d-flex mt-5 justify-between">
-                            <div class="img">
-                                <img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img">
-                            </div>
-
-                            <div class="content ms-1">
-                                <div class="left">
-                                    <h6 class="fw-bold mb-2" style="font-size: 14px">{{ $permission->akun->name }}</h6>
-                                    <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
-                                        {{ $permission->created_at->format('d-m-Y') }}
-                                    </p>
-                                    <p class="text-black fw-bold" style="font-size: .8rem"><b>tanggal :</b>
-                                        {{ $permission->created_at->format('d-m-Y') }}
-                                    </p>
-                                    <p class="text-black fw-bold" style="font-size: .8rem"><b>waktu :</b>
-                                        {{ $permission->created_at->format('H:i:s') }}
-                                    </p>
-                                    <p class="text-black fw-bold" style="font-size: .8rem"><b>keterangan :</b>
-                                        {{ $permission->status_permission }}
-                                    </p>
-                                    <p><span class="bg-{{ $permission->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2"
-                                            style="font-size: 12px">{{ $permission->akun->roles == 'leader' ? 'pimpinan' : 'personil' }}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <tr>
+                            <td><img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img" width="50">
+                            </td>
+                            <td>{{ $permission->akun->name }}</td>
+                            <td>{{ $permission->created_at->format('d-m-Y') }}</td>
+                            <td>{{ $permission->created_at->format('H:i:s') }}</td>
+                            <td>{{ $permission->status_permission }}</td>
+                            <td>
+                                <span
+                                    class="bg-{{ $permission->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2">
+                                    {{ $permission->akun->roles == 'leader' ? 'Pimpinan' : 'Personil' }}
+                                </span>
+                            </td>
+                            <td>-</td>
+                        </tr>
                     @endforeach
-                </div>
-            </div>
-
-        </div>
-
-        @if (
-            !isset($row->attendances) &&
-                count($row->attendances) <= 0 &&
-                !isset($row->permissions) &&
-                count($row->permissions) <= 0)
-            <x-datatable.empty />
-        @endif
-    @empty
-        <x-datatable.empty />
-    @endforelse
-
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Tidak ada data</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
