@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('check_out')->nullable();
             $table->string('image')->nullable();
             $table->string('status_attendance')->nullable();
+            $table->string('status_check_in')->nullable();
+            $table->string('status_check_out')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->timestamps();
