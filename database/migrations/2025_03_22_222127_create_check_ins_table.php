@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('check_ins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('check_in_id')->nullable();
-            $table->foreignId('check_out_id')->nullable();
-            $table->foreignId('permission_id')->nullable();
-            $table->string('status_attendance')->nullable();
-            $table->boolean('is_permission')->default(false)->nullable();
+            $table->foreignId('user_id');
+            $table->boolean('status')->default(false)->nullable();
+            $table->string('image')->nullable();
+            $table->string('longitude');
+            $table->string('latitude');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('check_ins');
     }
 };

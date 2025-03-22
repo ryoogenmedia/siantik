@@ -12,27 +12,15 @@ class Attendance extends Model
     protected $table = 'attendances';
 
     protected $fillable = [
-        'user_id',
-        'name',
-        'check_in',
-        'check_out',
+        'check_in_id',
+        'check_out_id',
+        'permission_id',
         'status_attendance',
-        'status_check_in',
-        'status_check_out',
-        'longitude',
-        'latitude',
-        'image',
+        'is_permission',
     ];
 
     public function akun()
     {
         return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
-    }
-
-    public function imageUrl()
-    {
-        return $this->image
-            ? url('storage/' . $this->image)
-            : asset('ryoogen/no-img.png');
     }
 }
