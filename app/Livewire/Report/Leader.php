@@ -48,7 +48,6 @@ class Leader extends Component
                 $q->where('name', 'LIKE', "%{$this->search}%");
             })
             ->when(!empty($this->keterangan), function ($q) {
-                dd($this->keterangan);
                 if ($this->permission) {
                     // Jika mode Perizinan aktif, filter berdasarkan `status_permission`
                     $q->whereHas('permissions', function ($q) {
