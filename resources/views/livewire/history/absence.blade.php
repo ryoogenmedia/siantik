@@ -1,69 +1,81 @@
 <div>
     <x-slot name="title">Riwayat Presensi</x-slot>
+
+    <x-slot name="pagePretitle">Riwayat Presensi</x-slot>
+
     <x-slot name="pageTitle">Riwayat Presensi</x-slot>
-    <x-slot name="pagePretitle">Daftar riwayat presensi.</x-slot>
 
-    <x-alert />
+    <div class="d-flex flex-wrap flex-column">
+        @foreach ($this->attendances as $attendance)
+            @if (in_array($attendance->status_attendance, config('const.presensi_status')))
+                <div class="d-flex mb-1 mt-3 pb-5 pt-3 flex-wrap border-bottom">
+                    @if ($attendance->check_in_id && isset($attendance->check_in))
+                        <div class="order-item pe-2">
+                            <div class="d-flex pe-3">
+                                <img class="m-auto"
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%"
+                                    src="{{ $attendance->check_in->imageUrl() }}"
+                                    alt="Check-in {{ $attendance->akun->name }}">
+                            </div>
+                            <table style="font-size: 13px; color: #000">
+                                <tr>
+                                    <td colspan="2">
+                                        <p class="py-1 px-2 d-inline rounded-2 mb-3"
+                                            style="background-color: #bfffb9; color: #41a722">
+                                            Presensi Masuk</p>
+                                    </td>
+                                </tr>
 
-    @forelse ($this->rows as $row)
-        <div class="order-item my-1 border-bottom pb-3">
-            <div class="img d-flex">
-                <img class="m-auto" style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%"
-                    src="{{ $row->imageUrl() }}" alt="Foto presensi {{ $row->akun->name }}">
-            </div>
-            <div class="content w-100">
-                <h6 class="fw-bold mb-2" style="font-size: 12px">
-                    {{ ucwords(strtolower($row->akun->name)) }}
-                </h6>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="font-size: 10px;"><b>Presensi Masuk</b></td>
-                        <td style="font-size: 10px; padding: 0 10px;">:</td>
-                        <td style="font-size: 10px;">
-                            <b>{{ Carbon\Carbon::parse($row->check_in)->diffForHumans() ?? 'tidak ada waktu' }}</b>
-                            <p>
-                                <span class="py-1 px-2 d-inline rounded-2"
-                                    style="font-size: 10px; font-weight: bold;
-                                background-color: {{ $row->status_check_in == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
-                                color: {{ $row->status_check_in == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                    {{ $row->status_check_in }}
-                                </span>
-                            </p>
-                        </td>
-                    </tr>
+                                <tr>
+                                    <td><b>Waktu</b></td>
+                                    <td style="padding: 0 5px">:</td>
+                                    <td>{{ Carbon\Carbon::parse($attendance->created_at)->format('d/m/y - H:i:s') }}
+                                    </td>
+                                </tr>
 
-                    <tr>
-                        <td style="font-size: 10px;"><b>Presensi Pulang</b></td>
-                        <td style="font-size: 10px; padding: 0 10px;">:</td>
-                        <td style="font-size: 10px;">
-                            <b>{{ Carbon\Carbon::parse($row->check_out)->diffForHumans() ?? 'tidak ada waktu' }}</b>
-                            <p>
-                                <span class="py-1 px-2 d-inline rounded-2"
-                                    style="font-size: 10px; font-weight: bold;
-                            background-color: {{ $row->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
-                            color: {{ $row->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                    {{ $row->status_check_out }}
-                                </span>
-                            </p>
-                        </td>
-                    </tr>
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td style="padding: 0 5px">:</td>
+                                    <td>{{ strtoupper($attendance->status_attendance) }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    @endif
 
-                    <tr>
-                        <td style="font-size: 10px;"><b>Keterangan</b></td>
-                        <td style="font-size: 10px; padding: 0 10px;">:</td>
-                        <td style="font-size: 10px;">
-                            <span class="py-1 px-2 d-inline rounded-2"
-                                style="font-size: 10px; font-weight: bold;
-                                background-color: {{ $row->status_attendance == 'hadir' ? '#bfffb9' : '#ffb9b9' }};
-                                color: {{ $row->status_attendance == 'hadir' ? '#41a722' : '#a72222' }};">
-                                {{ $row->status_attendance }}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    @empty
-        <x-datatable.empty />
-    @endforelse
+                    @if ($attendance->check_out_id && isset($attendance->check_out))
+                        <div class="order-item mt-5">
+                            <div class="d-flex pe-3">
+                                <img class="m-auto"
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%"
+                                    src="{{ $attendance->check_out->imageUrl() }}"
+                                    alt="Check-in {{ $attendance->akun->name }}">
+                            </div>
+                            <table style="font-size: 13px; color: #000">
+                                <tr>
+                                    <td colspan="2">
+                                        <p class="py-1 px-2 d-inline rounded-2 mb-3"
+                                            style="background-color: #ffb9b9; color: #a72222">
+                                            Presensi Keluar</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Waktu</b></td>
+                                    <td style="padding: 0 5px">:</td>
+                                    <td>{{ Carbon\Carbon::parse($attendance->created_at)->format('d/m/y - H:i:s') }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td style="padding: 0 5px">:</td>
+                                    <td>{{ strtoupper($attendance->status_attendance) }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+            @endif
+        @endforeach
+    </div>
 </div>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable();
             $table->foreignId('check_in_id')->nullable();
             $table->foreignId('check_out_id')->nullable();
             $table->foreignId('permission_id')->nullable();

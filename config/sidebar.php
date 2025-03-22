@@ -34,10 +34,18 @@ return [
     ],
 
     [
-        'title' => 'Riwayat Kehadiran',
+        'title' => 'Riwyat Presensi',
         'icon' => 'history',
         'route-name' => 'history.absence',
-        'description' => 'Untuk melihat riawyat kehadiran.',
+        'description' => 'Untuk meilhat riwayat presensi.',
+        'roles' => ['personil'],
+    ],
+
+    [
+        'title' => 'Riwyat Perizinan',
+        'icon' => 'history',
+        'route-name' => 'history.permission',
+        'description' => 'Untuk meilhat riwayat perizinan.',
         'roles' => ['personil'],
     ],
 

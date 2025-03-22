@@ -16,7 +16,7 @@ class PersonelTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        foreach (range(1, 20) as $i) {
+        foreach (range(1, 100) as $i) {
             $user = User::create([
                 'username'          => $faker->userName,
                 'name'              => $faker->name,

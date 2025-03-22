@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Helpers\Maps;
 use App\Models\Attendance;
+use App\Models\CheckIn;
 use App\Models\Institution;
 use App\Models\Permission;
 use App\Models\Personnel;
@@ -205,17 +206,20 @@ class Index extends Component
             $this->markerIcon = asset('assets/images/marker-maps.webp');
 
             $this->jmlKehadiran = Attendance::query()
-                ->where('user_id', auth()->user()->id)
+                ->whereHas('check_in')
+                ->whereHas('check_out')
+                ->where('user_id', auth()->id())
                 ->count();
 
-            $this->jmlPerizinan = Permission::query()
-                ->where('user_id', auth()->user()->id)
+            $this->jmlPerizinan = Attendance::where('is_permission', true)
+                ->where('user_id', auth()->id())
                 ->count();
+
 
             $absence = Attendance::query()
-                ->where('user_id', auth()->user()->id)
                 ->whereDate('created_at', now()->toDateString())
                 ->where('created_at', '<=', now()->endOfDay())
+                ->where('user_id', auth()->id())
                 ->first();
 
             if (isset($absence) && $absence) {
@@ -245,16 +249,16 @@ class Index extends Component
             $this->jmlKehadiran = Attendance::query()
                 ->whereDate('created_at', now()->toDateString())
                 ->where('created_at', '<=', now()->endOfDay())
-                ->whereNot('user_id', auth()->user()->id)
+                ->whereNot('user_id', auth()->id())
                 ->count();
 
             $this->jmlPerizinan = Permission::query()
                 ->whereDate('created_at', now()->toDateString())
-                ->whereNot('user_id', auth()->user()->id)
+                ->whereNot('user_id', auth()->id())
                 ->count();
 
             $absence = Attendance::query()
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id', auth()->id())
                 ->whereDate('created_at', now()->toDateString())
                 ->first();
 

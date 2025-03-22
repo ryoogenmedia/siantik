@@ -20,7 +20,8 @@ class Permission extends Model
         'date_end',
     ];
 
-    public function akun(){
-        return $this->belongsTo(User::class,'user_id','id')->withDefault();
+    public function akun()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
     }
 }

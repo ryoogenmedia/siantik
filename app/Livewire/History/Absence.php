@@ -3,23 +3,20 @@
 namespace App\Livewire\History;
 
 use App\Models\Attendance;
-use App\Models\User;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Absence extends Component
 {
-    public $rows;
 
-    public function mount(){
-        $user = User::findOrFail(auth()->user()->id);
+    #[Computed()]
+    public function attendances()
+    {
+        $data = [];
 
-        $rows = [];
+        $data = Attendance::where('user_id', auth()->id())->latest()->get();
 
-        $rows = Attendance::query()
-            ->where('user_id', $user->id)
-            ->get();
-
-        $this->rows = $rows;
+        return $data;
     }
 
     public function render()

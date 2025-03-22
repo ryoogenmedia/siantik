@@ -30,6 +30,12 @@ return [
         'alpa',
     ],
 
+    'presensi_status' => [
+        'hadir',
+        'terlambat',
+        'alpa',
+    ],
+
     'month' => [
         1 => 'januari',
         2 => 'februari',

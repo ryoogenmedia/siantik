@@ -14,7 +14,7 @@ class Maps
                 $query->where('status_attendance', $status);
             })
             ->when($id, function ($query, $id) {
-                $query->where('user_id', $id);
+                $query->where('user_id', auth()->id());
             })
             ->when($date, function ($query, $date) use ($id) {
                 $query->whereMonth('created_at', Carbon::parse($date)->month)

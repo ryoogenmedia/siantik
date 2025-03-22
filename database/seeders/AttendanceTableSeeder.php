@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Attendance;
-use App\Models\User;
-use Faker\Factory;
+use App\Models\{Attendance, CheckIn, CheckOut, Institution, Permission, User};
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class AttendanceTableSeeder extends Seeder
 {
@@ -14,27 +14,50 @@ class AttendanceTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create();
+        $faker = Faker::create();
+        $userIds = User::where('roles', 'personil')->pluck('id');
+        $institution = Institution::first(['id', 'longitude', 'latitude']);
+        $permission_status = ['sakit', 'cuti', 'izin', 'tugas', 'pendidikan'];
 
-        $users = User::where('roles', 'personil')->pluck('id')->toArray();
+        foreach ($userIds as $userId) {
+            foreach (config('const.category_attendance') as $status_attendance) {
+                $attendance = Attendance::create([
+                    'user_id' => $userId,
+                    'status_attendance' => $status_attendance
+                ]);
 
-        if (empty($users)) {
-            $this->command->info('Tidak ada user dengan peran personil.');
-            return;
-        }
+                if (in_array($status_attendance, $permission_status)) {
+                    Permission::create([
+                        'user_id' => $userId,
+                        'status_permission' => $attendance->status_attendance,
+                        'information' => $faker->sentence(),
+                        'date_start' => Carbon::today()->toDateString(),
+                        'date_end' => Carbon::today()->addWeek()->toDateString(),
+                    ]);
 
-        foreach ($users as $i) {
-            Attendance::create([
-                'user_id'            => $faker->randomElement($users),
-                'name'               => $faker->name,
-                'check_in'           => $faker->dateTimeBetween('-1 week', 'now'),
-                'check_out'          => $faker->optional()->dateTimeBetween('now', '+1 week'),
-                'status_attendance'  => $faker->randomElement(['hadir', 'alpa']),
-                'status_check_in'    => $faker->randomElement(['tepat waktu', 'terlambat']),
-                'status_check_out'   => $faker->randomElement(['tepat waktu', 'terlambat']),
-                'longitude'          => 119.5562,
-                'latitude'           => -5.0823,
-            ]);
+                    $attendance->update(['is_permission' => true]);
+                } else {
+                    $checkIn = CheckIn::create([
+                        'user_id' => $userId,
+                        'status' => true,
+                        'longitude' => $institution->longitude,
+                        'latitude' => $institution->latitude,
+                    ]);
+
+                    $checkOut = CheckOut::create([
+                        'user_id' => $userId,
+                        'status' => true,
+                        'longitude' => $institution->longitude,
+                        'latitude' => $institution->latitude,
+                    ]);
+
+                    $attendance->update([
+                        'check_in_id' => $checkIn->id,
+                        'check_out_id' => $checkOut->id,
+                        'is_permission' => false,
+                    ]);
+                }
+            }
         }
     }
 }

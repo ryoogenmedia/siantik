@@ -18,4 +18,16 @@ class CheckIn extends Model
         'longitude',
         'latitude',
     ];
+
+    public function akun()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
+    }
+
+    public function imageUrl()
+    {
+        return $this->image ?
+            asset('storage/' . $this->image) :
+            asset('ryoogen/no-img.png');
+    }
 }

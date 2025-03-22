@@ -33,8 +33,10 @@ Route::middleware('auth', 'verified')->namespace('App\Livewire')->group(function
     });
 
     Route::prefix('riwayat')->name('history.')->middleware('roles:personil')->group(function () {
-        Route::get('/', History\Absence::class)->name('absence');
+        Route::get('/kehadiran', History\Absence::class)->name('absence');
+        Route::get('/perizinan', History\Permission::class)->name('permission');
     });
+
 
     Route::prefix('cetak')->name('print.')->group(function () {
         Route::get('/laporan-admin', [CetakLaporanController::class, 'admin'])->name('admin');
