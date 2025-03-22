@@ -30,6 +30,14 @@ return [
         'alpa',
     ],
 
+    'permission_status' => [
+        'sakit',
+        'cuti',
+        'izin',
+        'tugas',
+        'pendidikan',
+    ],
+
     'presensi_status' => [
         'hadir',
         'terlambat',

@@ -1,6 +1,9 @@
 <x-layouts.auth title="Login">
-    <form class="mt-32" action="{{ route('login') }}" method="POST" autocomplete="off">
-        <h4 class="text-center mb-5">Masuk Ke Aplikasi</h4>
+    <form class="mt-3" action="{{ route('login') }}" method="POST" autocomplete="off">
+        <div class="text-center mb-5 pb-4">
+            <h4 class="mb-1">Masuk Ke Aplikasi</h4>
+            <p>Silahkan masukkan data akun anda untuk masuk.</p>
+        </div>
         @csrf
 
         <fieldset>

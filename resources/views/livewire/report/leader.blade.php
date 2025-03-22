@@ -14,19 +14,27 @@
                 </div>
                 <x-filter.button target="report-leader" />
             </div>
+            <div class="d-flex gap-12 justify-content-between align-items-center mt-2">
+                <div class="search-box">
+                    <x-backend.form.select wire:model.lazy="keterangan" name="keterangan">
+                        <option value="">- semua -</option>
+                        @if ($this->permission)
+                            @foreach (config('const.permission_status') as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                            @endforeach
+                        @else
+                            @foreach (config('const.presensi_status') as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                            @endforeach
+                        @endif
+                    </x-backend.form.select>
+                </div>
+            </div>
         </div>
     </div>
 
     <x-filter.card target="report-leader" title="Filter Laporan">
         <div class="row">
-            <div class="col-12">
-                <x-backend.form.select wire:model.live='keterangan' name="keterangan" label="Keterangan">
-                    <option value="">- pilih -</option>
-                    @foreach (config('const.category_attendance') as $category)
-                        <option value="{{ $category }}">{{ ucwords($category) }}</option>
-                    @endforeach
-                </x-backend.form.select>
-            </div>
             <div class="col-12">
                 <x-backend.form.input wire:model.live='tanggalMulai' name="tanggalMulai" label="Tanggal Awal"
                     type="date" />
@@ -38,84 +46,191 @@
         </div>
     </x-filter.card>
 
-    <div class="table-responsive">
-        <table class="table table-bordered mt-4">
-            <thead>
-                <tr>
-                    <th style="font-size: 10px">Foto</th>
-                    <th style="font-size: 10px">Nama</th>
-                    <th style="font-size: 10px">Presensi Masuk</th>
-                    <th style="font-size: 10px">Presensi Pulang</th>
-                    <th style="font-size: 10px">Keterangan</th>
-                    <th style="font-size: 10px">Level</th>
-                    <th style="font-size: 10px"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($this->rows as $row)
-                    @foreach ($row->attendances as $attendance)
-                        <tr>
-                            <td><img style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover"
-                                    src="{{ asset($attendance->imageUrl()) }}" alt="img" width="50"></td>
-                            <td style="font-size:10px">{{ $attendance->name }}</td>
-                            <td style="font-size:10px; padding-right: 20px">{{ $attendance->check_in }}
-                                <p> <span class="py-1 px-2 d-inline rounded-2"
-                                        style="font-size: 10px; font-weight: bold;
-                                    background-color: {{ $attendance->status_check_in == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
-                                    color: {{ $attendance->status_check_in == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                        {{ $attendance->status_check_in == 'tepat waktu' ? 'tepat' : 'terlambat' }}
-                                    </span></p>
-                            </td>
-                            <td style="font-size:10px; padding-right: 20px">
-                                {{ $attendance->check_out ?? 'belum dilakukan' }}
-                                @if ($attendance->check_out)
-                                    <p>
-                                        <span class="py-1 px-2 d-inline rounded-2"
-                                            style="font-size: 10px; font-weight: bold;
-                                        background-color: {{ $attendance->status_check_out == 'tepat waktu' ? '#bfffb9' : '#ffb9b9' }};
-                                        color: {{ $attendance->status_check_out == 'tepat waktu' ? '#41a722' : '#a72222' }};">
-                                            {{ $attendance->status_check_in == 'tepat waktu' ? 'tepat' : 'terlambat' }}
-                                        </span>
-                                    </p>
-                                @endif
-                            </td>
-                            <td style="font-size:10px">{{ $attendance->status_attendance }}</td>
-                            <td style="font-size:10px">
-                                <span
-                                    class="bg-{{ $attendance->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2">
-                                    {{ $attendance->akun->roles == 'leader' ? 'Pimpinan' : 'Personil' }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('daily-report.leader-detail', ['id' => $attendance->id]) }}"
-                                    class="btn btn-sm btn-dark"><span class="las la-eye"></span></a>
-                            </td>
-                        </tr>
-                    @endforeach
+    <div class="d-flex gap-3">
+        <button wire:click="showPermission(false)"
+            class="btn {{ !$this->permission ? 'btn-primary' : 'btn-outline-primary' }}">
+            Presensi
+        </button>
 
-                    @foreach ($row->permissions as $permission)
-                        <tr>
-                            <td><img src="{{ asset($permission->akun->avatarUrl()) }}" alt="img" width="50">
-                            </td>
-                            <td>{{ $permission->akun->name }}</td>
-                            <td>{{ $permission->created_at->format('d-m-Y') }}</td>
-                            <td>{{ $permission->created_at->format('H:i:s') }}</td>
-                            <td>{{ $permission->status_permission }}</td>
-                            <td>
-                                <span
-                                    class="bg-{{ $permission->akun->roles == 'leader' ? 'success' : 'primary' }} text-white rounded-2 px-2">
-                                    {{ $permission->akun->roles == 'leader' ? 'Pimpinan' : 'Personil' }}
-                                </span>
-                            </td>
-                            <td>-</td>
-                        </tr>
-                    @endforeach
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center">Tidak ada data</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <button wire:click="showPermission(true)"
+            class="btn {{ $this->permission ? 'btn-primary' : 'btn-outline-primary' }}">
+            Perizinan
+        </button>
     </div>
+
+    @unless ($this->permission)
+        <div class="d-flex flex-wrap flex-column">
+            @foreach ($this->rows as $row)
+                @foreach ($row->attendances as $attendance)
+                    @if (isset($attendance->status_attendance) && in_array($attendance->status_attendance, config('const.presensi_status')))
+                        <div class="d-flex mb-1 mt-3 pb-5 pt-3 flex-wrap border-bottom">
+                            @if ($attendance->check_in_id && isset($attendance->check_in))
+                                <div class="order-item pe-2">
+                                    <div class="d-flex pe-3">
+                                        <img class="m-auto"
+                                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%"
+                                            src="{{ $attendance->check_in->imageUrl() }}"
+                                            alt="Check-in {{ $attendance->akun->name }}">
+                                    </div>
+                                    <table style="font-size: 13px; color: #000">
+                                        <tr>
+                                            <td colspan="2">
+                                                <p class="py-1 px-2 d-inline rounded-2 mb-3"
+                                                    style="background-color: #bfffb9; color: #41a722">
+                                                    Presensi Masuk</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Nama Personil</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->name }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Jenis Kelamin</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->sex }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>NRP / NIP</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->number_identity }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Posisi</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->position }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Waktu Masuk</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ Carbon\Carbon::parse($attendance->created_at)->format('d/m/y - H:i:s') }}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Status</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ strtoupper($attendance->status_attendance) }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            @endif
+
+                            @if ($attendance->check_out_id && isset($attendance->check_out))
+                                <div class="order-item mt-5">
+                                    <div class="d-flex pe-3">
+                                        <img class="m-auto"
+                                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%"
+                                            src="{{ $attendance->check_out->imageUrl() }}"
+                                            alt="Check-in {{ $attendance->akun->name }}">
+                                    </div>
+                                    <table style="font-size: 13px; color: #000">
+                                        <tr>
+                                            <td colspan="2">
+                                                <p class="py-1 px-2 d-inline rounded-2 mb-3"
+                                                    style="background-color: #ffb9b9; color: #a72222">
+                                                    Presensi Keluar</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Nama Personil</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->name }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Jenis Kelamin</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->sex }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>NRP / NIP</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->number_identity }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Posisi</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ $attendance->akun->personnel->position }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Waktu Keluar</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ Carbon\Carbon::parse($attendance->created_at)->format('d/m/y - H:i:s') }}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Status</b></td>
+                                            <td style="padding: 0 5px">:</td>
+                                            <td>{{ strtoupper($attendance->status_attendance) }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                @endforeach
+            @endforeach
+        </div>
+    @endunless
+
+    @if ($this->permission)
+        <div class="d-flex flex-wrap flex-column justify-content-center">
+            @foreach ($this->rows as $row)
+                @foreach ($row->permissions as $permission)
+                    <div class="d-flex mb-1 mt-3 pb-5 pt-3 border-bottom">
+                        <div class="order-item">
+                            <table style="font-size: 13px; color: #000">
+                                <tr>
+                                    <td colspan="2">
+                                        <p class="fs-7 fw-bolde">{{ strtoupper($permission->status_permission) }}</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 40%"><b>Keterangan</b></td>
+                                    <td style="padding: 0 20px">:</td>
+                                    <td class="pb-3" style="width: 50%">{{ $permission->information }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 40%"><b>Tanggal Pengajuan</b></td>
+                                    <td style="padding: 0 20px">:</td>
+                                    <td style="width: 50%">
+                                        {{ Carbon\Carbon::parse($permission->created_at)->format('d/m/Y - H:i:s') }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 40%"><b>Batas Perizinan</b></td>
+                                    <td style="padding: 0 20px">:</td>
+                                    <td style="width: 50%">
+                                        {{ Carbon\Carbon::parse($permission->date_start)->format('d/m/Y') }}
+                                        -
+                                        {{ Carbon\Carbon::parse($permission->date_end)->format('d/m/Y') }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 40%" class="pt-3"><b>File / Surat</b></td>
+                                    <td style="padding: 0 20px"></td>
+                                    <td style="width: 50%"><a class="btn btn-sm btn-dark"
+                                            href="/{{ $permission->file }}"><span class="las la-eye"></span></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+        </div>
+    @endif
 </div>

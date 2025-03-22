@@ -4,6 +4,7 @@ namespace App\Livewire\Report;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Leader extends Component
@@ -13,15 +14,25 @@ class Leader extends Component
     public $tanggalMulai = "";
     public $tanggalSelesai = "";
     public $rows = [];
+    public $permission = false;
 
-    public function updatedSearch()
+    public function showPermission($status)
     {
+        $this->permission = $status;
         $this->getDataRows();
     }
 
-    public function filterActive()
+    public function updated($propertyName)
     {
-        $this->getDataRows();
+        if (in_array($propertyName, ['search', 'keterangan', 'tanggalMulai', 'tanggalSelesai'])) {
+            $this->getDataRows();
+        }
+    }
+
+    #[Computed()]
+    public function personnels()
+    {
+        return User::where('roles', 'personil')->get();
     }
 
     public function resetFilter()
@@ -32,42 +43,36 @@ class Leader extends Component
 
     public function getDataRows()
     {
-        $query = User::query()
-        ->where('roles', 'personil')
-        ->when($this->search, function ($query, $search) {
-            $query->where('name', 'LIKE', "%$search%");
-        })
-        ->when($this->keterangan, function ($query) {
-            $query
-            ->whereHas('permissions', function($q){
-                $q->where('status_permission', $this->keterangan);
+        $query = User::where('roles', 'personil')
+            ->when(!empty($this->search), function ($q) {
+                $q->where('name', 'LIKE', "%{$this->search}%");
             })
-            ->orWhereHas('attendances', function ($q) {
-                $q->where('status_attendance', $this->keterangan);
-            });
-        })
-        ->when($this->tanggalMulai, function ($query) {
-            $query
-            ->whereHas('permissions', function($q){
-                $q->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
+            ->when(!empty($this->keterangan), function ($q) {
+                dd($this->keterangan);
+                if ($this->permission) {
+                    // Jika mode Perizinan aktif, filter berdasarkan `status_permission`
+                    $q->whereHas('permissions', function ($q) {
+                        $q->where('status_permission', $this->keterangan);
+                    });
+                } else {
+                    // Jika mode Presensi aktif, filter berdasarkan `status_attendance`
+                    $q->whereHas('attendances', function ($q) {
+                        $q->where('status_attendance', $this->keterangan);
+                    });
+                }
             })
-            ->orWhereHas('attendances', function ($q) {
-                $q->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai));
-            });
-        })
-        ->when($this->tanggalSelesai, function ($query) {
-            $query
-            ->whereHas('permissions', function($q){
-                $q->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
+            ->when(!empty($this->tanggalMulai), function ($q) {
+                $q->whereHas('attendances', function ($q) {
+                    $q->whereDate('created_at', '>=', Carbon::parse($this->tanggalMulai)->startOfDay());
+                });
             })
-            ->orWhereHas('attendances', function ($q) {
-                $q->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
+            ->when(!empty($this->tanggalSelesai), function ($q) {
+                $q->whereHas('attendances', function ($q) {
+                    $q->whereDate('created_at', '<=', Carbon::parse($this->tanggalSelesai)->endOfDay());
+                });
             });
-        })
-        ->get();
 
-
-        $this->rows = $query;
+        $this->rows = $query->get();
     }
 
     public function mount()
